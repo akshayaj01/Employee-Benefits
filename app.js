@@ -3,6 +3,11 @@ const themeToggle = document.querySelector("[data-theme-toggle]");
 const toastRegion = document.querySelector("[data-toast-region]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const transactions = document.querySelectorAll("[data-wallet]");
+const virtualCardToggle = document.querySelector("[data-virtual-card-toggle]");
+const cardOverlay = document.querySelector("[data-card-overlay]");
+const overlayCloseButtons = document.querySelectorAll("[data-card-overlay-close]");
+const walletButtons = document.querySelectorAll("[data-wallet-cta]");
+const toastButtons = document.querySelectorAll("[data-toast]");
 
 let toastTimer;
 
@@ -23,21 +28,9 @@ themeToggle?.addEventListener("click", () => {
   showToast(isDark ? "Dark theme enabled" : "Light theme enabled");
 });
 
-document.querySelectorAll("[data-toast]").forEach((button) => {
+toastButtons.forEach((button) => {
   button.addEventListener("click", () => {
     showToast(button.dataset.toast);
-  });
-});
-
-document.querySelectorAll(".product-tabs button").forEach((button) => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".product-tabs button").forEach((tab) => {
-      tab.classList.remove("active");
-      tab.removeAttribute("aria-current");
-    });
-    button.classList.add("active");
-    button.setAttribute("aria-current", "page");
-    showToast(`${button.textContent.trim()} selected`);
   });
 });
 
@@ -55,5 +48,34 @@ filterButtons.forEach((button) => {
       const shouldShow = selectedWallet === "all" || transaction.dataset.wallet === selectedWallet;
       transaction.classList.toggle("is-hidden", !shouldShow);
     });
+  });
+});
+
+function closeCardOverlay() {
+  if (!cardOverlay || !virtualCardToggle) return;
+  virtualCardToggle.setAttribute("aria-expanded", "false");
+  cardOverlay.classList.remove("is-open");
+  window.setTimeout(() => {
+    cardOverlay.hidden = true;
+  }, 320);
+}
+
+virtualCardToggle?.addEventListener("click", () => {
+  if (!cardOverlay) return;
+  virtualCardToggle.setAttribute("aria-expanded", "true");
+  cardOverlay.hidden = false;
+  window.requestAnimationFrame(() => {
+    cardOverlay.classList.add("is-open");
+  });
+  showToast("Virtual card details revealed");
+});
+
+overlayCloseButtons.forEach((button) => {
+  button.addEventListener("click", closeCardOverlay);
+});
+
+walletButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    showToast(button.dataset.walletCta);
   });
 });

@@ -3,11 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pine Labs Prepaid Card</title>
+    <title>Lens Prepaid Card</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -76,12 +80,12 @@
       </symbol>
     </svg>
 
-    <main class="phone-shell" aria-label="Pine Labs prepaid card app">
+    <main class="phone-shell" aria-label="Lens prepaid card app">
       <section class="hero-panel" aria-label="Account overview">
         <header class="topbar">
           <button class="avatar-button" type="button" aria-label="Open profile">V</button>
-          <a class="brand" href="#" aria-label="Pine Labs home">
-            <span class="brand-mark">Pine</span><span>labs</span>
+          <a class="brand" href="#" aria-label="Lens home">
+            <span>Lens</span>
           </a>
           <div class="header-actions">
             <button class="icon-button" type="button" data-theme-toggle aria-label="Toggle color theme">
@@ -93,74 +97,97 @@
           </div>
         </header>
 
-        <div class="hero-copy">
-          <span>Prepaid card</span>
-          <h1>₹24,850</h1>
-          <p>Available · Full KYC · Visa ending 7845</p>
-        </div>
-
+        <section class="balance-card" aria-labelledby="balance-title">
+          <div class="card-strip">
+            <span class="category-title">Pine Visa</span>
+            <span class="status-pill">Full KYC</span>
+          </div>
+          <div class="balance-copy">
+            <div>
+              <p id="balance-title">Current balance</p>
+              <strong>₹24,850</strong>
+              <span class="balance-caption">Available balance across wallets</span>
+            </div>
+            <button
+              class="mini-card"
+              type="button"
+              aria-label="Show virtual card details"
+              aria-expanded="false"
+              data-virtual-card-toggle
+            >
+              <span>•••• 7845</span>
+              <small>Virtual card</small>
+            </button>
+          </div>
+          <div class="balance-insights" aria-label="Balance details">
+            <div>
+              <span>Monthly limit</span>
+              <strong>₹40,000</strong>
+            </div>
+            <div>
+              <span>Last top up</span>
+              <strong>10 Dec</strong>
+            </div>
+          </div>
+        </section>
       </section>
 
-      <section class="balance-card" aria-labelledby="balance-title">
-        <div class="card-strip">
-          <span>PINE VISA</span>
-          <span class="status-pill">Full KYC</span>
+      <section class="upi-panel" aria-label="UPI payment">
+        <div class="section-heading compact-heading">
+          <h2>UPI</h2>
+          <a href="#">Manage</a>
         </div>
-        <div class="balance-copy">
-          <div>
-            <p id="balance-title">Current balance</p>
-            <strong>₹24,850</strong>
-          </div>
-          <div class="mini-card" aria-label="Card ending 7845">
-            <span>•••• 7845</span>
-            <small>Virtual</small>
-          </div>
-        </div>
-        <div class="balance-insights" aria-label="Balance details">
-          <div>
-            <span>Monthly limit</span>
-            <strong>₹40,000</strong>
-          </div>
-          <div>
-            <span>Last top up</span>
-            <strong>10 Dec</strong>
-          </div>
-        </div>
+        <button class="upi-card" type="button" data-toast="UPI settings opened">
+          <span class="upi-icon"><i class="ri-qr-code-line" aria-hidden="true"></i></span>
+          <span class="upi-copy">
+            <strong>Lens UPI</strong>
+            <small>akshay@lens</small>
+          </span>
+          <span class="upi-status">Active</span>
+        </button>
       </section>
 
       <section class="wallet-strip" aria-label="Wallet balances">
-        <article class="wallet-chip main">
-          <span>Main Wallet</span>
-          <strong>₹18,450</strong>
-          <small>74% of balance</small>
-        </article>
-        <article class="wallet-chip travel">
-          <span>Travel Wallet</span>
-          <strong>₹1,200</strong>
-          <small>Ready for transit</small>
-        </article>
-        <article class="wallet-chip shop">
-          <span>Shop Wallet</span>
-          <strong>₹3,200</strong>
-          <small>Offers active</small>
-        </article>
+        <button class="wallet-chip meal" type="button" data-wallet-cta="Meal Wallet selected">
+          <span class="wallet-icon meal-icon" aria-hidden="true"><i class="ri-restaurant-line"></i></span>
+          <span>Meal Wallet</span>
+          <strong>₹6,400</strong>
+          <small>Daily essentials</small>
+        </button>
+        <button class="wallet-chip fuel" type="button" data-wallet-cta="Fuel Wallet selected">
+          <span class="wallet-icon fuel-icon" aria-hidden="true"><i class="ri-gas-station-line"></i></span>
+          <span>Fuel Wallet</span>
+          <strong>₹3,150</strong>
+          <small>Commute ready</small>
+        </button>
+        <button class="wallet-chip misc" type="button" data-wallet-cta="Miscellaneous Wallet selected">
+          <span class="wallet-icon misc-icon" aria-hidden="true"><i class="ri-shapes-line"></i></span>
+          <span>Miscellaneous Wallet</span>
+          <strong>₹9,100</strong>
+          <small>Flexible spends</small>
+        </button>
+        <button class="wallet-chip gift" type="button" data-wallet-cta="Gift Wallet selected">
+          <span class="wallet-icon gift-icon" aria-hidden="true"><i class="ri-gift-2-line"></i></span>
+          <span>Gift Wallet</span>
+          <strong>₹6,200</strong>
+          <small>Rewards and gifting</small>
+        </button>
       </section>
 
       <section class="quick-actions" aria-label="Quick actions">
         <button type="button">
           <span><svg><use href="#icon-wallet" /></svg></span>
+          <small>Wallet</small>
           My Wallets
         </button>
         <button type="button">
           <span><svg><use href="#icon-settings" /></svg></span>
+          <small>Control</small>
           Manage Cards
         </button>
         <button type="button">
-          <span><svg><use href="#icon-refresh" /></svg></span>
-          Auto-Load
-        </button>
-        <button type="button">
           <span><svg><use href="#icon-card" /></svg></span>
+          <small>Request</small>
           Physical Card
         </button>
       </section>
@@ -168,16 +195,17 @@
       <section class="transactions-section" aria-labelledby="transactions-title">
         <div class="section-heading">
           <h2 id="transactions-title">Recent Transactions</h2>
-          <a href="#">All Transactions</a>
+          <a href="#">View all</a>
         </div>
         <div class="filter-chips" role="tablist" aria-label="Transaction wallets">
           <button class="active" type="button" data-filter="all" role="tab" aria-selected="true">All</button>
-          <button type="button" data-filter="main" role="tab" aria-selected="false">Main Wallet</button>
-          <button type="button" data-filter="travel" role="tab" aria-selected="false">Travel Wallet</button>
-          <button type="button" data-filter="shop" role="tab" aria-selected="false">Shop Wallet</button>
+          <button type="button" data-filter="meal" role="tab" aria-selected="false">Meal</button>
+          <button type="button" data-filter="fuel" role="tab" aria-selected="false">Fuel</button>
+          <button type="button" data-filter="misc" role="tab" aria-selected="false">Miscellaneous</button>
+          <button type="button" data-filter="gift" role="tab" aria-selected="false">Gift</button>
         </div>
         <div class="transaction-list" data-transaction-list>
-          <article class="transaction-item" data-wallet="shop">
+          <article class="transaction-item" data-wallet="gift">
             <span class="transaction-icon"><svg><use href="#icon-bag" /></svg></span>
             <div class="transaction-meta">
               <strong>Amazon</strong>
@@ -188,7 +216,7 @@
               <span>20 Dec 2025</span>
             </div>
           </article>
-          <article class="transaction-item" data-wallet="main">
+          <article class="transaction-item" data-wallet="meal">
             <span class="transaction-icon"><svg><use href="#icon-food" /></svg></span>
             <div class="transaction-meta">
               <strong>Zomato Payment</strong>
@@ -199,7 +227,7 @@
               <span>14 Dec 2025</span>
             </div>
           </article>
-          <article class="transaction-item" data-wallet="travel">
+          <article class="transaction-item" data-wallet="fuel">
             <span class="transaction-icon"><svg><use href="#icon-car" /></svg></span>
             <div class="transaction-meta">
               <strong>Uber</strong>
@@ -210,7 +238,7 @@
               <span>12 Dec 2025</span>
             </div>
           </article>
-          <article class="transaction-item" data-wallet="main">
+          <article class="transaction-item" data-wallet="misc">
             <span class="transaction-icon"><svg><use href="#icon-money" /></svg></span>
             <div class="transaction-meta">
               <strong>Top Up</strong>
@@ -240,6 +268,55 @@
       </nav>
       <div class="home-indicator" aria-hidden="true"></div>
     </main>
+
+    <div class="card-overlay" data-card-overlay hidden>
+      <button class="overlay-backdrop" type="button" aria-label="Close card details" data-card-overlay-close></button>
+      <section class="card-overlay-panel" aria-label="Virtual card details">
+        <div class="card-overlay-visual">
+          <div class="overlay-card">
+            <span class="overlay-card-brand">PINE VISA</span>
+            <span class="overlay-card-number">4356 2468 0089 7845</span>
+            <div class="overlay-card-meta">
+              <div>
+                <span>VALID THRU</span>
+                <strong>08/29</strong>
+              </div>
+              <div>
+                <span>CVV</span>
+                <strong>482</strong>
+              </div>
+            </div>
+            <strong class="overlay-card-name">V. SHARMA</strong>
+          </div>
+        </div>
+        <div class="overlay-details">
+          <div class="section-heading overlay-heading">
+            <h2>Virtual Card</h2>
+            <button class="overlay-close" type="button" aria-label="Close card details" data-card-overlay-close>
+              <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
+          </div>
+          <div class="card-details-row">
+            <span>Card number</span>
+            <strong>4356 2468 0089 7845</strong>
+          </div>
+          <div class="card-details-meta">
+            <div>
+              <span>Expiry</span>
+              <strong>08/29</strong>
+            </div>
+            <div>
+              <span>CVV</span>
+              <strong>482</strong>
+            </div>
+            <div>
+              <span>Name</span>
+              <strong>V. Sharma</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <div class="toast" role="status" aria-live="polite" data-toast-region></div>
     <script src="./app.js"></script>
