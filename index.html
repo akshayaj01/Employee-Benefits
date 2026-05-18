@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pine Labs Prepaid Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="icon-moon" viewBox="0 0 24 24">
+        <path d="M20.6 14.2a7.4 7.4 0 0 1-10.8-10 8.3 8.3 0 1 0 10.8 10Z" />
+      </symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24">
+        <path d="M18 8.8a6 6 0 0 0-12 0c0 7-2.5 7.7-2.5 7.7h17S18 15.8 18 8.8Z" />
+        <path d="M9.8 20a2.4 2.4 0 0 0 4.4 0" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14" />
+      </symbol>
+      <symbol id="icon-send" viewBox="0 0 24 24">
+        <path d="m4 4 16 8-16 8 3.4-8L4 4Z" />
+        <path d="M7.4 12H20" />
+      </symbol>
+      <symbol id="icon-wallet" viewBox="0 0 24 24">
+        <path d="M4.8 6.5h13.7A2.5 2.5 0 0 1 21 9v8.2a2.3 2.3 0 0 1-2.3 2.3H5.3A2.3 2.3 0 0 1 3 17.2V8.3a1.8 1.8 0 0 1 1.8-1.8Z" />
+        <path d="M16.5 13.5h4.5v-4h-4.5a2 2 0 0 0 0 4Z" />
+        <path d="M6 6.5 16.5 3v3.5" />
+      </symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24">
+        <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
+        <path d="m19.4 15.2.4 2.8-2.7 1.6-2.2-1.7a7 7 0 0 1-1.4.4l-.9 2.7H9.4l-.9-2.7a7 7 0 0 1-1.4-.4l-2.2 1.7L2.2 18l.4-2.8a6.8 6.8 0 0 1-.7-1.2L0 12l1.9-2c.2-.4.4-.8.7-1.2L2.2 6l2.7-1.6 2.2 1.7c.5-.2.9-.3 1.4-.4L9.4 3h3.2l.9 2.7c.5.1 1 .2 1.4.4l2.2-1.7L19.8 6l-.4 2.8c.3.4.5.8.7 1.2L22 12l-1.9 2c-.2.4-.4.8-.7 1.2Z" />
+      </symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24">
+        <path d="M20 11a8 8 0 0 0-14.2-5" />
+        <path d="M20 5v6h-6" />
+        <path d="M4 13a8 8 0 0 0 14.2 5" />
+        <path d="M4 19v-6h6" />
+      </symbol>
+      <symbol id="icon-card" viewBox="0 0 24 24">
+        <path d="M4.8 6h14.4A2.8 2.8 0 0 1 22 8.8v6.4a2.8 2.8 0 0 1-2.8 2.8H4.8A2.8 2.8 0 0 1 2 15.2V8.8A2.8 2.8 0 0 1 4.8 6Z" />
+        <path d="M2 10h20M6 15h4" />
+      </symbol>
+      <symbol id="icon-trophy" viewBox="0 0 24 24">
+        <path d="M8 4h8v3a4 4 0 0 1-8 0V4Z" />
+        <path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4M12 11v5M9 20h6M8 16h8" />
+      </symbol>
+      <symbol id="icon-scan" viewBox="0 0 24 24">
+        <path d="M7 3H4a1 1 0 0 0-1 1v3M17 3h3a1 1 0 0 1 1 1v3M7 21H4a1 1 0 0 1-1-1v-3M17 21h3a1 1 0 0 0 1-1v-3" />
+        <path d="M8 12h8M12 8v8" />
+      </symbol>
+      <symbol id="icon-receipt" viewBox="0 0 24 24">
+        <path d="M6 3h12v18l-3-1.8-3 1.8-3-1.8L6 21V3Z" />
+        <path d="M9 8h6M9 12h6M9 16h3" />
+      </symbol>
+      <symbol id="icon-bag" viewBox="0 0 24 24">
+        <path d="M6.5 8h11L19 21H5L6.5 8Z" />
+        <path d="M9 8a3 3 0 0 1 6 0" />
+      </symbol>
+      <symbol id="icon-food" viewBox="0 0 24 24">
+        <path d="M6 3v18M4 3v6a2 2 0 0 0 4 0V3M14 3v18M14 3c3.5 1 5 3.8 5 7.3h-5" />
+      </symbol>
+      <symbol id="icon-car" viewBox="0 0 24 24">
+        <path d="M5 16h14l-1.7-5.2A2.6 2.6 0 0 0 14.8 9H9.2a2.6 2.6 0 0 0-2.5 1.8L5 16Z" />
+        <path d="M6 16v3M18 16v3M7 19h10M8 13h8" />
+      </symbol>
+      <symbol id="icon-money" viewBox="0 0 24 24">
+        <path d="M4 7h16v10H4V7Z" />
+        <path d="M8 12h8M12 9v6" />
+      </symbol>
+    </svg>
+
+    <main class="phone-shell" aria-label="Pine Labs prepaid card app">
+      <section class="hero-panel" aria-label="Account overview">
+        <header class="topbar">
+          <button class="avatar-button" type="button" aria-label="Open profile">V</button>
+          <a class="brand" href="#" aria-label="Pine Labs home">
+            <span class="brand-mark">Pine</span><span>labs</span>
+          </a>
+          <div class="header-actions">
+            <button class="icon-button" type="button" data-theme-toggle aria-label="Toggle color theme">
+              <svg><use href="#icon-moon" /></svg>
+            </button>
+            <button class="icon-button has-dot" type="button" aria-label="Open notifications">
+              <svg><use href="#icon-bell" /></svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="hero-copy">
+          <span>Prepaid card</span>
+          <h1>₹24,850</h1>
+          <p>Available · Full KYC · Visa ending 7845</p>
+        </div>
+
+      </section>
+
+      <section class="balance-card" aria-labelledby="balance-title">
+        <div class="card-strip">
+          <span>PINE VISA</span>
+          <span class="status-pill">Full KYC</span>
+        </div>
+        <div class="balance-copy">
+          <div>
+            <p id="balance-title">Current balance</p>
+            <strong>₹24,850</strong>
+          </div>
+          <div class="mini-card" aria-label="Card ending 7845">
+            <span>•••• 7845</span>
+            <small>Virtual</small>
+          </div>
+        </div>
+        <div class="balance-insights" aria-label="Balance details">
+          <div>
+            <span>Monthly limit</span>
+            <strong>₹40,000</strong>
+          </div>
+          <div>
+            <span>Last top up</span>
+            <strong>10 Dec</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="wallet-strip" aria-label="Wallet balances">
+        <article class="wallet-chip main">
+          <span>Main Wallet</span>
+          <strong>₹18,450</strong>
+          <small>74% of balance</small>
+        </article>
+        <article class="wallet-chip travel">
+          <span>Travel Wallet</span>
+          <strong>₹1,200</strong>
+          <small>Ready for transit</small>
+        </article>
+        <article class="wallet-chip shop">
+          <span>Shop Wallet</span>
+          <strong>₹3,200</strong>
+          <small>Offers active</small>
+        </article>
+      </section>
+
+      <section class="quick-actions" aria-label="Quick actions">
+        <button type="button">
+          <span><svg><use href="#icon-wallet" /></svg></span>
+          My Wallets
+        </button>
+        <button type="button">
+          <span><svg><use href="#icon-settings" /></svg></span>
+          Manage Cards
+        </button>
+        <button type="button">
+          <span><svg><use href="#icon-refresh" /></svg></span>
+          Auto-Load
+        </button>
+        <button type="button">
+          <span><svg><use href="#icon-card" /></svg></span>
+          Physical Card
+        </button>
+      </section>
+
+      <section class="transactions-section" aria-labelledby="transactions-title">
+        <div class="section-heading">
+          <h2 id="transactions-title">Recent Transactions</h2>
+          <a href="#">All Transactions</a>
+        </div>
+        <div class="filter-chips" role="tablist" aria-label="Transaction wallets">
+          <button class="active" type="button" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button type="button" data-filter="main" role="tab" aria-selected="false">Main Wallet</button>
+          <button type="button" data-filter="travel" role="tab" aria-selected="false">Travel Wallet</button>
+          <button type="button" data-filter="shop" role="tab" aria-selected="false">Shop Wallet</button>
+        </div>
+        <div class="transaction-list" data-transaction-list>
+          <article class="transaction-item" data-wallet="shop">
+            <span class="transaction-icon"><svg><use href="#icon-bag" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Amazon</strong>
+              <span>Ref ID: 1234566788</span>
+            </div>
+            <div class="transaction-amount">
+              <strong>- ₹4,250</strong>
+              <span>20 Dec 2025</span>
+            </div>
+          </article>
+          <article class="transaction-item" data-wallet="main">
+            <span class="transaction-icon"><svg><use href="#icon-food" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Zomato Payment</strong>
+              <span>Ref ID: 1234566788</span>
+            </div>
+            <div class="transaction-amount">
+              <strong>- ₹650</strong>
+              <span>14 Dec 2025</span>
+            </div>
+          </article>
+          <article class="transaction-item" data-wallet="travel">
+            <span class="transaction-icon"><svg><use href="#icon-car" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Uber</strong>
+              <span>Ref ID: 1234566788</span>
+            </div>
+            <div class="transaction-amount">
+              <strong>- ₹650</strong>
+              <span>12 Dec 2025</span>
+            </div>
+          </article>
+          <article class="transaction-item" data-wallet="main">
+            <span class="transaction-icon"><svg><use href="#icon-money" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Top Up</strong>
+              <span>Ref ID: 1234566788</span>
+            </div>
+            <div class="transaction-amount positive">
+              <strong>+ ₹5,000</strong>
+              <span>10 Dec 2025</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Primary navigation">
+        <button type="button">
+          <svg><use href="#icon-trophy" /></svg>
+          <span>Rewards</span>
+        </button>
+        <button class="scan-button" type="button" aria-label="Scan and pay">
+          <span><svg><use href="#icon-scan" /></svg></span>
+          Scan & Pay
+        </button>
+        <button type="button">
+          <svg><use href="#icon-receipt" /></svg>
+          <span>Transactions</span>
+        </button>
+      </nav>
+      <div class="home-indicator" aria-hidden="true"></div>
+    </main>
+
+    <div class="toast" role="status" aria-live="polite" data-toast-region></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
