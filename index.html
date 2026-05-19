@@ -99,6 +99,11 @@
         <path d="M5 12h14" />
         <path d="m13 6 6 6-6 6" />
       </symbol>
+      <symbol id="icon-nfc" viewBox="0 0 24 24">
+        <path d="M8 9a5 5 0 0 1 0 6" />
+        <path d="M11 6a9 9 0 0 1 0 12" />
+        <path d="M14 3a13 13 0 0 1 0 18" />
+      </symbol>
       <symbol id="icon-headset" viewBox="0 0 24 24">
         <path d="M4 12a8 8 0 0 1 16 0" />
         <path d="M5.5 11.5h1.2a1.8 1.8 0 0 1 1.8 1.8v2.4a1.8 1.8 0 0 1-1.8 1.8H5.5A1.5 1.5 0 0 1 4 16v-3a1.5 1.5 0 0 1 1.5-1.5Z" />
@@ -201,16 +206,24 @@
         </div>
       </section>
 
-      <section class="wallets-panel" aria-labelledby="wallets-title" data-pluspay-hide>
+      <section class="wallet-experience-panel" aria-label="Wallets" data-pluspay-hide>
         <div class="section-heading compact-heading">
-          <h2 id="wallets-title">Wallets</h2>
+          <div>
+            <h2>Wallets</h2>
+            <p class="section-caption">Choose a wallet first. We’ll only show the payment modes that work for it.</p>
+          </div>
         </div>
-        <div class="wallet-strip" aria-label="Wallet balances">
+        <div class="wallet-list">
           <button
             class="wallet-chip meal"
             type="button"
             data-wallet-card
-            data-wallet-cta="Meal Wallet selected"
+            data-wallet-name="Meal Wallet"
+            data-wallet-balance="₹6,400"
+            data-wallet-description="Daily essentials"
+            data-wallet-detail="RuPay-enabled meal spends with contactless checkout for cafeterias and food merchants."
+            data-wallet-actions="tap"
+            data-wallet-cta="Meal Wallet ready for Tap & Pay"
             aria-pressed="false"
           >
             <div class="wallet-topline">
@@ -219,13 +232,21 @@
             </div>
             <span class="wallet-name">Meal Wallet</span>
             <strong>₹6,400</strong>
-            <small>Daily essentials</small>
+            <div class="wallet-rail-pills" aria-hidden="true">
+              <span class="wallet-rail-pill is-active"><svg><use href="#icon-nfc" /></svg>Tap &amp; Pay</span>
+            </div>
+            <small>RuPay contactless only</small>
           </button>
           <button
             class="wallet-chip fuel"
             type="button"
             data-wallet-card
-            data-wallet-cta="Fuel Wallet selected"
+            data-wallet-name="Fuel Wallet"
+            data-wallet-balance="₹3,150"
+            data-wallet-description="Commute ready"
+            data-wallet-detail="Built for on-the-go spends with both card-present tap and QR-based merchant acceptance."
+            data-wallet-actions="tap,scan"
+            data-wallet-cta="Fuel Wallet supports Tap & Pay and Scan & Pay"
             aria-pressed="false"
           >
             <div class="wallet-topline">
@@ -234,36 +255,56 @@
             </div>
             <span class="wallet-name">Fuel Wallet</span>
             <strong>₹3,150</strong>
-            <small>Commute ready</small>
+            <div class="wallet-rail-pills" aria-hidden="true">
+              <span class="wallet-rail-pill is-active"><svg><use href="#icon-nfc" /></svg>Tap &amp; Pay</span>
+              <span class="wallet-rail-pill is-active"><i class="ri-qr-scan-2-line"></i>Scan &amp; Pay</span>
+            </div>
+            <small>QR and UPI enabled</small>
           </button>
           <button
             class="wallet-chip misc"
             type="button"
             data-wallet-card
-            data-wallet-cta="Miscellaneous Wallet selected"
+            data-wallet-name="Reimbursement Wallet"
+            data-wallet-balance="₹9,100"
+            data-wallet-description="Flexible spends"
+            data-wallet-detail="PPI on UPI flow for reimbursement-led spend categories where QR acceptance matters most."
+            data-wallet-actions="scan"
+            data-wallet-cta="Reimbursement Wallet ready for Scan & Pay"
             aria-pressed="false"
           >
             <div class="wallet-topline">
-              <span class="wallet-icon misc-icon" aria-hidden="true"><i class="ri-shapes-line"></i></span>
+              <span class="wallet-icon misc-icon" aria-hidden="true"><i class="ri-qr-scan-2-line"></i></span>
               <span class="wallet-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </div>
-            <span class="wallet-name">Miscellaneous Wallet</span>
+            <span class="wallet-name">Reimbursement Wallet</span>
             <strong>₹9,100</strong>
-            <small>Flexible spends</small>
+            <div class="wallet-rail-pills" aria-hidden="true">
+              <span class="wallet-rail-pill is-active"><i class="ri-qr-scan-2-line"></i>Scan &amp; Pay</span>
+            </div>
+            <small>PPI on UPI flow</small>
           </button>
           <button
             class="wallet-chip gift"
             type="button"
             data-wallet-card
-            data-wallet-cta="Gift Wallet selected"
+            data-wallet-name="Gift Wallet"
+            data-wallet-balance="₹6,200"
+            data-wallet-description="Rewards and gifting"
+            data-wallet-detail="Gift balance for card-linked spends and brand redemption journeys when gifting is the primary intent."
+            data-wallet-actions="card"
+            data-wallet-cta="Gift Wallet details opened"
             aria-pressed="false"
           >
             <div class="wallet-topline">
-              <span class="wallet-icon gift-icon" aria-hidden="true"><i class="ri-gift-2-line"></i></span>
+              <span class="wallet-icon gift-icon" aria-hidden="true"><i class="ri-gift-line"></i></span>
               <span class="wallet-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </div>
             <span class="wallet-name">Gift Wallet</span>
             <strong>₹6,200</strong>
+            <div class="wallet-rail-pills" aria-hidden="true">
+              <span class="wallet-rail-pill"><svg><use href="#icon-card" /></svg>Card Access</span>
+            </div>
             <small>Rewards and gifting</small>
           </button>
         </div>
@@ -357,14 +398,13 @@
           <span class="nav-icon-shell"><svg><use href="#icon-trophy" /></svg></span>
           <span>Home</span>
         </button>
-        <button class="scan-button" type="button" aria-label="Scan and pay">
-          <span><svg><use href="#icon-scan" /></svg></span>
-          Scan & Pay
+        <button class="claims-button" type="button" aria-label="Claims">
+          <span><svg><use href="#icon-receipt" /></svg></span>
+          <span>Claims</span>
         </button>
         <button class="nav-item" type="button">
-          <span class="nav-icon-shell nav-claims-icon"><svg><use href="#icon-receipt" /></svg></span>
-          <span class="nav-icon-shell nav-settings-icon" aria-hidden="true"><svg><use href="#icon-settings" /></svg></span>
-          <span data-lens-text="Claims" data-pluspay-text="Settings">Claims</span>
+          <span class="nav-icon-shell"><svg><use href="#icon-settings" /></svg></span>
+          <span>Settings</span>
         </button>
       </nav>
       <button class="chatbot-fab" type="button" aria-label="Open support assistant" data-toast="Assistant opened" data-pluspay-hide>
@@ -418,6 +458,48 @@
               <strong>V. Sharma</strong>
             </div>
           </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="wallet-overlay" data-wallet-overlay hidden>
+      <button class="wallet-overlay-backdrop" type="button" aria-label="Close wallet details" data-wallet-overlay-close></button>
+      <section class="wallet-overlay-panel" aria-label="Wallet details">
+        <header class="wallet-overlay-header">
+          <button class="wallet-overlay-back" type="button" aria-label="Close wallet details" data-wallet-overlay-close>
+            <svg aria-hidden="true"><use href="#icon-arrow-right" /></svg>
+          </button>
+          <div class="wallet-overlay-title-group">
+            <span class="wallet-overlay-eyebrow">Wallet details</span>
+            <h2 data-wallet-overlay-name>Meal Wallet</h2>
+          </div>
+        </header>
+        <div class="wallet-overlay-scroll">
+          <section class="wallet-overlay-summary meal" data-wallet-overlay-tone="meal">
+            <div class="wallet-overlay-summary-top">
+              <span class="wallet-icon meal-icon" aria-hidden="true" data-wallet-overlay-icon><i class="ri-restaurant-line"></i></span>
+              <span class="wallet-overlay-balance-label">Available balance</span>
+            </div>
+            <strong data-wallet-overlay-balance>₹6,400</strong>
+            <p data-wallet-overlay-description>RuPay-enabled meal spends with contactless checkout for cafeterias and food merchants.</p>
+            <div class="wallet-overlay-pill-row" data-wallet-overlay-pills></div>
+          </section>
+          <section class="wallet-overlay-section">
+            <div class="wallet-overlay-section-head">
+              <h3>Available actions</h3>
+            </div>
+            <div class="wallet-overlay-action-grid" data-wallet-overlay-actions></div>
+          </section>
+          <section class="wallet-overlay-section wallet-overlay-meta">
+            <div class="wallet-overlay-meta-row">
+              <span>Eligibility</span>
+              <strong data-wallet-overlay-eligibility>Merchant enabled</strong>
+            </div>
+            <div class="wallet-overlay-meta-row">
+              <span>Payment route</span>
+              <strong data-wallet-overlay-route>RuPay</strong>
+            </div>
+          </section>
         </div>
       </section>
     </div>

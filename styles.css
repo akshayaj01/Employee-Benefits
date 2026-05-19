@@ -32,6 +32,12 @@
   --space-24: 24px;
   --space-28: 28px;
   --space-32: 32px;
+  --text-12: 12px;
+  --text-14: 14px;
+  --text-16: 16px;
+  --text-18: 18px;
+  --text-20: 20px;
+  --text-32: 32px;
   --bg: #f6fbf6;
   --bg-soft: #eef8f1;
   --surface: rgba(255, 255, 255, 0.92);
@@ -171,7 +177,6 @@ svg {
 .hero-panel,
 .upi-panel,
 .pluspay-actions-panel,
-.wallets-panel,
 .utility-panel,
 .transactions-section,
 .bottom-nav,
@@ -189,7 +194,7 @@ svg {
 .topbar {
   display: grid;
   gap: var(--space-12);
-  min-height: 86px;
+  min-height: 88px;
 }
 
 .topbar-row {
@@ -219,7 +224,7 @@ svg {
 }
 
 .avatar-button {
-  font-size: 0.86rem;
+  font-size: var(--text-14);
   font-weight: 900;
 }
 
@@ -232,7 +237,7 @@ svg {
   font-family:
     "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  font-size: 1.28rem;
+  font-size: var(--text-20);
   font-weight: 900;
   padding-top: 2px;
 }
@@ -268,9 +273,9 @@ svg {
 .pluspay-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-8);
   min-height: 36px;
-  padding: 4px 10px 4px 4px;
+  padding: var(--space-4) var(--space-8) var(--space-4) var(--space-4);
   border: 1px solid rgba(255, 255, 255, 0.26);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
@@ -308,7 +313,7 @@ svg {
 }
 
 .pluspay-toggle-label {
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 900;
   white-space: nowrap;
 }
@@ -321,7 +326,7 @@ svg {
 }
 
 .category-title {
-  font-size: 0.82rem;
+  font-size: var(--text-12);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -366,7 +371,7 @@ svg {
   justify-content: space-between;
   gap: var(--space-12);
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 900;
 }
 
@@ -377,7 +382,7 @@ svg {
   border-radius: 999px;
   background: var(--mint-soft);
   color: var(--success);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 900;
 }
 
@@ -391,14 +396,14 @@ svg {
 .balance-copy p {
   margin: 0 0 var(--space-4);
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--text-12);
   font-weight: 500;
 }
 
 .balance-copy strong {
   display: block;
   color: var(--brand-900);
-  font-size: clamp(2.15rem, 11vw, 2.55rem);
+  font-size: clamp(32px, 11vw, 40px);
   line-height: 0.98;
   font-family:
     "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -410,7 +415,7 @@ svg {
   display: block;
   margin-top: var(--space-8);
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 400;
 }
 
@@ -476,7 +481,7 @@ svg {
   position: relative;
   z-index: 1;
   justify-self: end;
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 900;
   letter-spacing: 0.04em;
 }
@@ -485,7 +490,7 @@ svg {
   position: relative;
   z-index: 1;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -507,13 +512,13 @@ svg {
 
 .balance-insights span {
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 500;
 }
 
 .balance-insights strong {
   color: var(--ink);
-  font-size: 0.98rem;
+  font-size: var(--text-16);
   font-weight: 900;
 }
 
@@ -529,11 +534,18 @@ svg {
   margin-bottom: var(--space-16);
 }
 
+.section-caption {
+  margin: var(--space-8) 0 0;
+  color: var(--subtle);
+  font-size: var(--text-12);
+  line-height: 1.45;
+}
+
 .section-heading h1,
 .section-heading h2 {
   margin: 0;
   color: var(--brand-900);
-  font-size: 1.24rem;
+  font-size: var(--text-20);
   line-height: 1.06;
   font-weight: 600;
 }
@@ -541,13 +553,13 @@ svg {
 .section-heading a {
   flex: 0 0 auto;
   color: var(--brand-700);
-  font-size: 0.82rem;
+  font-size: var(--text-12);
   font-weight: 900;
 }
 
 .upi-panel,
 .pluspay-actions-panel,
-.wallets-panel,
+.wallet-experience-panel,
 .utility-panel,
 .transactions-section {
   margin-top: var(--space-24);
@@ -607,7 +619,7 @@ body.is-pluspay .transactions-section {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  font-size: 1.2rem;
+  font-size: var(--text-20);
 }
 
 .upi-icon {
@@ -622,13 +634,13 @@ body.is-pluspay .transactions-section {
 }
 
 .upi-copy strong {
-  font-size: 0.92rem;
+  font-size: var(--text-16);
   font-weight: 900;
 }
 
 .upi-copy small {
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 400;
 }
 
@@ -637,7 +649,7 @@ body.is-pluspay .transactions-section {
   border-radius: 999px;
   background: #f4ffeb;
   color: var(--success);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 900;
 }
 
@@ -689,14 +701,14 @@ body.is-pluspay .transactions-section {
 
 .pluspay-action-card small {
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .pluspay-action-card strong {
   color: var(--ink);
-  font-size: 1rem;
+  font-size: var(--text-16);
   line-height: 1.28;
   font-weight: 900;
 }
@@ -709,7 +721,14 @@ body.is-pluspay .transactions-section {
   color: var(--ink);
 }
 
-.wallet-strip {
+.wallet-strip,
+.wallet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-12);
+}
+
+.wallet-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-12);
@@ -717,22 +736,27 @@ body.is-pluspay .transactions-section {
 
 .wallet-chip {
   display: grid;
+  align-content: start;
   gap: var(--space-8);
   min-width: 0;
   padding: var(--space-16);
+  min-height: 152px;
   border: 1px solid transparent;
   border-radius: 18px;
   box-shadow: 0 14px 28px rgba(0, 86, 86, 0.06);
   text-align: left;
+  cursor: pointer;
   transition:
     transform 180ms ease,
     box-shadow 180ms ease,
-    border-color 180ms ease;
+    border-color 180ms ease,
+    background 180ms ease;
 }
 
 .wallet-chip.is-active {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 18px 34px rgba(0, 86, 86, 0.12);
+  border-color: rgba(0, 86, 86, 0.24);
 }
 
 .wallet-chip.meal {
@@ -755,24 +779,30 @@ body.is-pluspay .transactions-section {
   border-color: #bee4cd;
 }
 
-.wallet-topline {
+.wallet-topline,
+.wallet-primary-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
   gap: var(--space-8);
+}
+
+.wallet-topline {
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
 .wallet-name {
   display: block;
   color: var(--muted);
-  font-size: 0.88rem;
+  font-size: var(--text-16);
   font-weight: 900;
-  line-height: 1.24;
+  line-height: 1.16;
 }
 
 .wallet-chip strong {
   color: var(--ink);
-  font-size: 1rem;
+  font-size: var(--text-18);
   font-weight: 900;
 }
 
@@ -784,6 +814,7 @@ body.is-pluspay .transactions-section {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.62);
   color: var(--brand-700);
+  transition: transform 180ms ease;
 }
 
 .wallet-arrow svg {
@@ -791,11 +822,47 @@ body.is-pluspay .transactions-section {
   height: 14px;
 }
 
+.wallet-chip.is-active .wallet-arrow {
+  transform: translateX(1px);
+}
+
 .wallet-chip small {
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 400;
   line-height: 1.28;
+}
+
+.wallet-rail-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: 0;
+}
+
+.wallet-rail-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--brand-700);
+  font-size: var(--text-12);
+  font-weight: 900;
+}
+
+.wallet-rail-pill.is-active {
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: inset 0 0 0 1px rgba(0, 86, 86, 0.08);
+}
+
+.wallet-rail-pill svg,
+.wallet-rail-pill i {
+  font-size: var(--text-12);
+  width: var(--text-12);
+  height: var(--text-12);
 }
 
 .wallet-icon {
@@ -820,6 +887,291 @@ body.is-pluspay .transactions-section {
 .gift-icon {
   background: linear-gradient(180deg, #e3f7ea, #caefd9);
   color: #1c8d59;
+}
+
+.wallet-experience-panel {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.wallet-detail-action,
+.wallet-overlay-action {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  padding: var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 10px 22px rgba(0, 86, 86, 0.06);
+  text-align: left;
+}
+
+.wallet-detail-action-icon,
+.wallet-overlay-action-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #e7f4f0, #d4f0e7);
+  color: var(--brand-700);
+}
+
+.wallet-detail-action-icon svg,
+.wallet-detail-action-icon i,
+.wallet-overlay-action-icon svg,
+.wallet-overlay-action-icon i {
+  width: var(--text-20);
+  height: var(--text-20);
+  font-size: var(--text-20);
+}
+
+.wallet-detail-action-copy,
+.wallet-overlay-action-copy {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.wallet-detail-action-copy strong,
+.wallet-overlay-action-copy strong {
+  font-size: var(--text-14);
+  font-weight: 900;
+}
+
+.wallet-detail-action-copy span,
+.wallet-overlay-action-copy span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  line-height: 1.3;
+}
+
+.wallet-detail-action-arrow,
+.wallet-overlay-action-arrow {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(0, 86, 86, 0.06);
+  color: var(--brand-700);
+}
+
+.wallet-detail-action-arrow svg,
+.wallet-overlay-action-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.wallet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+}
+
+.wallet-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 31, 29, 0.36);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.wallet-overlay-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 251, 247, 0.98));
+  transform: translateY(100%);
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wallet-overlay.is-open .wallet-overlay-backdrop {
+  opacity: 1;
+}
+
+.wallet-overlay.is-open .wallet-overlay-panel {
+  transform: translateY(0);
+}
+
+.wallet-overlay-header {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-12);
+  padding: calc(env(safe-area-inset-top, 0px) + 18px) var(--space-16) var(--space-16);
+  border-bottom: 1px solid rgba(0, 86, 86, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(16px);
+}
+
+.wallet-overlay-back {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 86, 86, 0.06);
+  color: var(--brand-700);
+}
+
+.wallet-overlay-back svg {
+  width: 18px;
+  height: 18px;
+  transform: rotate(180deg);
+}
+
+.wallet-overlay-title-group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.wallet-overlay-eyebrow {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.wallet-overlay-title-group h2,
+.wallet-overlay-section h3 {
+  margin: 0;
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  color: var(--brand-900);
+}
+
+.wallet-overlay-title-group h2 {
+  font-size: var(--text-20);
+  font-weight: 600;
+}
+
+.wallet-overlay-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + 28px);
+}
+
+.wallet-overlay-summary {
+  display: grid;
+  gap: var(--space-12);
+  padding: var(--space-16);
+  border: 1px solid transparent;
+  border-radius: 24px;
+  box-shadow: 0 18px 34px rgba(0, 86, 86, 0.08);
+}
+
+.wallet-overlay-summary.meal {
+  background: linear-gradient(180deg, #fffef9, var(--meal));
+  border-color: #f4d6a1;
+}
+
+.wallet-overlay-summary.fuel {
+  background: linear-gradient(180deg, #fbfeff, var(--fuel));
+  border-color: #c6dff6;
+}
+
+.wallet-overlay-summary.misc {
+  background: linear-gradient(180deg, #fdfcff, var(--misc));
+  border-color: #d9d1ff;
+}
+
+.wallet-overlay-summary.gift {
+  background: linear-gradient(180deg, #fcfffd, var(--gift));
+  border-color: #bee4cd;
+}
+
+.wallet-overlay-summary-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.wallet-overlay-balance-label {
+  color: var(--muted);
+  font-size: var(--text-12);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.wallet-overlay-summary strong {
+  font-size: var(--text-32);
+  line-height: 0.95;
+  font-weight: 900;
+}
+
+.wallet-overlay-summary p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-12);
+  line-height: 1.45;
+}
+
+.wallet-overlay-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.wallet-overlay-section {
+  display: grid;
+  gap: var(--space-12);
+  margin-top: var(--space-20);
+}
+
+.wallet-overlay-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wallet-overlay-section h3 {
+  font-size: var(--text-16);
+  font-weight: 600;
+}
+
+.wallet-overlay-action-grid {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.wallet-overlay-meta {
+  padding: var(--space-16);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.wallet-overlay-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  min-height: 42px;
+  border-bottom: 1px solid rgba(0, 86, 86, 0.08);
+}
+
+.wallet-overlay-meta-row:last-child {
+  min-height: 38px;
+  padding-top: var(--space-8);
+  border-bottom: 0;
+}
+
+.wallet-overlay-meta-row span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+}
+
+.wallet-overlay-meta-row strong {
+  color: var(--ink);
+  font-size: var(--text-14);
+  font-weight: 900;
 }
 
 .utility-grid {
@@ -860,14 +1212,14 @@ body.is-pluspay .transactions-section {
 
 .utility-card small {
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .utility-card strong {
   color: var(--ink);
-  font-size: 0.9rem;
+  font-size: var(--text-14);
   line-height: 1.28;
   font-weight: 900;
 }
@@ -893,7 +1245,7 @@ body.is-pluspay .transactions-section {
   border-radius: 999px;
   background: var(--surface-strong);
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: var(--text-12);
   font-weight: 900;
 }
 
@@ -955,7 +1307,7 @@ body.is-pluspay .transactions-section {
 .transaction-meta strong {
   overflow: hidden;
   color: var(--ink);
-  font-size: 0.92rem;
+  font-size: var(--text-16);
   font-weight: 900;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -965,7 +1317,7 @@ body.is-pluspay .transactions-section {
 .transaction-amount span {
   overflow: hidden;
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -978,7 +1330,7 @@ body.is-pluspay .transactions-section {
 
 .transaction-amount strong {
   color: var(--ink);
-  font-size: 0.94rem;
+  font-size: var(--text-16);
   font-weight: 900;
 }
 
@@ -1028,7 +1380,7 @@ body.is-pluspay .transactions-section {
   gap: var(--space-4);
   min-height: 100%;
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 900;
   text-align: center;
 }
@@ -1056,98 +1408,58 @@ body.is-pluspay .transactions-section {
   background: linear-gradient(180deg, #e8f6f0, #dceee7);
 }
 
-.nav-settings-icon {
-  display: none;
-}
-
-body.is-pluspay .nav-claims-icon {
-  display: none;
-}
-
-body.is-pluspay .nav-settings-icon {
-  display: grid;
-}
-
 .bottom-nav > button > svg,
 .nav-icon-shell svg {
   width: 20px;
   height: 20px;
 }
 
-.scan-button {
+.claims-button {
   position: relative;
-  color: var(--brand-900) !important;
+  display: grid;
+  justify-items: center;
+  align-content: end;
   gap: 6px;
-  transform: translateY(-38px);
+  color: var(--brand-900) !important;
+  transform: translateY(-30px);
   z-index: 2;
 }
 
-.scan-button::before {
+.claims-button::before {
   content: "";
   position: absolute;
   top: -2px;
   left: 50%;
   z-index: 0;
-  width: 112px;
-  height: 112px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(208, 242, 85, 0.32), transparent 66%);
+  background: radial-gradient(circle, rgba(208, 242, 85, 0.22), transparent 66%);
   transform: translateX(-50%);
-  animation: scan-halo 2.6s ease-in-out infinite;
 }
 
-.scan-button span {
+.claims-button span:first-child {
   position: relative;
   isolation: isolate;
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
-  border: 9px solid var(--bg);
+  width: 66px;
+  height: 66px;
+  border: 8px solid var(--bg);
   border-radius: 50%;
   background: linear-gradient(145deg, var(--brand-700), #1b8a75 66%, var(--brand-500));
   color: white;
-  box-shadow: 0 18px 34px rgba(0, 86, 86, 0.2);
-  overflow: hidden;
+  box-shadow: 0 18px 34px rgba(0, 86, 86, 0.18);
 }
 
-.scan-button span::before {
-  content: "";
-  position: absolute;
-  background: linear-gradient(120deg, transparent 22%, rgba(255, 255, 255, 0.42) 50%, transparent 78%);
-  border: 0;
-  inset: auto;
-  width: 35px;
-  height: 115px;
-  top: -18px;
-  left: -28px;
-  border-radius: 12px;
-  transform: rotate(18deg);
-  animation: scan-sweep 2.15s linear infinite;
-  pointer-events: none;
-  z-index: 0;
+.claims-button span:first-child svg {
+  width: 26px;
+  height: 26px;
 }
 
-.scan-button span::after {
-  content: "";
-  position: absolute;
-  inset: -9px;
-  border: 1px solid rgba(208, 242, 85, 0.42);
-  border-radius: 50%;
-  background: none;
-  animation: scan-ring 2s ease-out infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.scan-button span > * {
+.claims-button span:last-child {
   position: relative;
   z-index: 1;
-}
-
-.scan-button svg {
-  width: 29px;
-  height: 29px;
 }
 
 .home-indicator {
@@ -1254,14 +1566,14 @@ body.is-pluspay .nav-settings-icon {
 
 .overlay-card-brand,
 .overlay-card-name {
-  font-size: 0.86rem;
+  font-size: var(--text-14);
   font-weight: 900;
   letter-spacing: 0.04em;
 }
 
 .overlay-card-number {
   align-self: end;
-  font-size: 1.22rem;
+  font-size: var(--text-20);
   font-weight: 900;
   letter-spacing: 0.08em;
 }
@@ -1275,12 +1587,12 @@ body.is-pluspay .nav-settings-icon {
   display: block;
   margin-bottom: var(--space-4);
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 800;
 }
 
 .overlay-card-meta strong {
-  font-size: 0.9rem;
+  font-size: var(--text-14);
   font-weight: 900;
 }
 
@@ -1312,14 +1624,14 @@ body.is-pluspay .nav-settings-icon {
 .card-details-row span,
 .card-details-meta span {
   color: var(--subtle);
-  font-size: 0.75rem;
+  font-size: var(--text-12);
   font-weight: 700;
 }
 
 .card-details-row strong,
 .card-details-meta strong {
   color: var(--ink);
-  font-size: 0.92rem;
+  font-size: var(--text-16);
   font-weight: 900;
 }
 
@@ -1346,7 +1658,7 @@ body.is-pluspay .nav-settings-icon {
   background: var(--surface-strong);
   box-shadow: var(--shadow-card);
   color: var(--ink);
-  font-size: 0.84rem;
+  font-size: var(--text-14);
   font-weight: 900;
   opacity: 0;
   pointer-events: none;
