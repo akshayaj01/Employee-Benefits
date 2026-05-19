@@ -144,7 +144,7 @@ svg {
   background-size: 170% 170%;
   clip-path: polygon(0 0, 100% 0, 100% 84%, 0 100%);
   pointer-events: none;
-  animation: topbar-shift 6.2s linear infinite alternate;
+  animation: topbar-shift 8s linear infinite;
 }
 
 .phone-shell::after {
@@ -164,7 +164,7 @@ svg {
   clip-path: polygon(0 0, 100% 0, 100% 84%, 0 100%);
   opacity: 0.7;
   pointer-events: none;
-  animation: topbar-shift 6.2s linear infinite alternate, geo-lines 6.2s ease-in-out infinite alternate;
+  animation: topbar-shift 8s linear infinite, geo-lines 8s linear infinite;
 }
 
 .hero-panel,
@@ -1324,13 +1324,17 @@ svg {
 
 @keyframes geo-lines {
   0% {
-    transform: translateY(0) scale(1);
+    background-position: 0% 0%;
     opacity: 0.48;
   }
 
+  50% {
+    opacity: 0.72;
+  }
+
   100% {
-    transform: translateY(6px) scale(1.02);
-    opacity: 0.78;
+    background-position: 100% 100%;
+    opacity: 0.48;
   }
 }
 
