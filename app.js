@@ -8,6 +8,8 @@ const walletButtons = document.querySelectorAll("[data-wallet-card]");
 const toastButtons = document.querySelectorAll("[data-toast]");
 const pluspayToggle = document.querySelector("[data-pluspay-toggle]");
 const pluspayLabel = document.querySelector("[data-pluspay-label]");
+const swapTextNodes = document.querySelectorAll("[data-lens-text][data-pluspay-text]");
+const lensFilterButton = document.querySelector('[data-filter="all"]');
 
 let toastTimer;
 
@@ -27,12 +29,35 @@ toastButtons.forEach((button) => {
   });
 });
 
+function applyMode(isPluspay) {
+  document.body.classList.toggle("is-pluspay", isPluspay);
+  pluspayToggle?.setAttribute("aria-pressed", String(isPluspay));
+
+  if (pluspayLabel) {
+    pluspayLabel.textContent = isPluspay ? "Lens" : "Pluspay";
+  }
+
+  swapTextNodes.forEach((node) => {
+    node.textContent = isPluspay ? node.dataset.pluspayText : node.dataset.lensText;
+  });
+
+  if (isPluspay) {
+    closeCardOverlay();
+    filterButtons.forEach((chip) => {
+      chip.classList.remove("active");
+      chip.setAttribute("aria-selected", "false");
+    });
+    lensFilterButton?.classList.add("active");
+    lensFilterButton?.setAttribute("aria-selected", "true");
+    transactions.forEach((transaction) => {
+      transaction.classList.remove("is-hidden");
+    });
+  }
+}
+
 pluspayToggle?.addEventListener("click", () => {
   const nextState = pluspayToggle.getAttribute("aria-pressed") !== "true";
-  pluspayToggle.setAttribute("aria-pressed", String(nextState));
-  if (pluspayLabel) {
-    pluspayLabel.textContent = nextState ? "Lens" : "Pluspay";
-  }
+  applyMode(nextState);
   showToast(nextState ? "Switched to Pluspay" : "Switched to Lens");
 });
 
@@ -63,6 +88,7 @@ function closeCardOverlay() {
 }
 
 virtualCardToggle?.addEventListener("click", () => {
+  if (document.body.classList.contains("is-pluspay")) return;
   if (!cardOverlay) return;
   virtualCardToggle.setAttribute("aria-expanded", "true");
   cardOverlay.hidden = false;
@@ -93,3 +119,5 @@ window.addEventListener("keydown", (event) => {
     closeCardOverlay();
   }
 });
+
+applyMode(false);

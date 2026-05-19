@@ -138,13 +138,14 @@ svg {
   z-index: 0;
   height: 264px;
   background:
-    radial-gradient(circle at 20% 28%, rgba(208, 242, 85, 0.52), transparent 22%),
-    radial-gradient(circle at 84% 24%, rgba(54, 204, 139, 0.3), transparent 20%),
-    linear-gradient(138deg, rgba(0, 52, 52, 0.98) 0%, rgba(0, 86, 86, 0.95) 58%, rgba(208, 242, 85, 0.92) 100%);
-  background-size: 170% 170%;
+    radial-gradient(circle at 16% 26%, rgba(208, 242, 85, 0.48), transparent 20%),
+    radial-gradient(circle at 84% 18%, rgba(54, 204, 139, 0.34), transparent 24%),
+    radial-gradient(circle at 62% 74%, rgba(17, 141, 119, 0.32), transparent 26%),
+    linear-gradient(120deg, rgba(0, 52, 52, 0.98) 0%, rgba(0, 86, 86, 0.95) 32%, rgba(29, 143, 122, 0.94) 62%, rgba(208, 242, 85, 0.92) 100%);
+  background-size: 185% 185%;
   clip-path: polygon(0 0, 100% 0, 100% 84%, 0 100%);
   pointer-events: none;
-  animation: topbar-shift 8s linear infinite;
+  animation: hero-gradient-flow 16s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
 .phone-shell::after {
@@ -169,6 +170,7 @@ svg {
 
 .hero-panel,
 .upi-panel,
+.pluspay-actions-panel,
 .wallets-panel,
 .utility-panel,
 .transactions-section,
@@ -306,7 +308,7 @@ svg {
 }
 
 .pluspay-toggle-label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 900;
   white-space: nowrap;
 }
@@ -364,7 +366,7 @@ svg {
   justify-content: space-between;
   gap: var(--space-12);
   color: var(--muted);
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   font-weight: 900;
 }
 
@@ -375,7 +377,7 @@ svg {
   border-radius: 999px;
   background: var(--mint-soft);
   color: var(--success);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 900;
 }
 
@@ -389,8 +391,8 @@ svg {
 .balance-copy p {
   margin: 0 0 var(--space-4);
   color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 .balance-copy strong {
@@ -408,8 +410,8 @@ svg {
   display: block;
   margin-top: var(--space-8);
   color: var(--subtle);
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 400;
 }
 
 .mini-card {
@@ -474,7 +476,7 @@ svg {
   position: relative;
   z-index: 1;
   justify-self: end;
-  font-size: 0.64rem;
+  font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.04em;
 }
@@ -483,8 +485,8 @@ svg {
   position: relative;
   z-index: 1;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -505,8 +507,8 @@ svg {
 
 .balance-insights span {
   color: var(--subtle);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .balance-insights strong {
@@ -544,10 +546,43 @@ svg {
 }
 
 .upi-panel,
+.pluspay-actions-panel,
 .wallets-panel,
 .utility-panel,
 .transactions-section {
   margin-top: var(--space-24);
+}
+
+[data-pluspay-show] {
+  display: none;
+}
+
+body.is-pluspay [data-pluspay-hide] {
+  display: none !important;
+}
+
+body.is-pluspay [data-pluspay-show] {
+  display: block;
+}
+
+body.is-pluspay .balance-copy {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body.is-pluspay .balance-card {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.is-pluspay .balance-card::before {
+  background: linear-gradient(135deg, rgba(0, 86, 86, 0.22), rgba(54, 204, 139, 0.56));
+}
+
+body.is-pluspay .hero-panel {
+  margin-bottom: var(--space-8);
+}
+
+body.is-pluspay .transactions-section {
+  padding-bottom: 96px;
 }
 
 .upi-card {
@@ -593,8 +628,8 @@ svg {
 
 .upi-copy small {
   color: var(--subtle);
-  font-size: 0.74rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 400;
 }
 
 .upi-status {
@@ -602,8 +637,76 @@ svg {
   border-radius: 999px;
   background: #f4ffeb;
   color: var(--success);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 900;
+}
+
+.pluspay-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-12);
+}
+
+.pluspay-action-card {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: var(--space-8);
+  min-height: 154px;
+  padding: var(--space-16);
+  border: 1px solid #cce9d9;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fcfffd, #eaf8ef);
+  box-shadow: 0 16px 28px rgba(0, 86, 86, 0.08);
+  text-align: left;
+}
+
+.pluspay-action-card.is-highlight {
+  border-color: #d7ed93;
+  background: linear-gradient(180deg, #fffffb, #f1facd);
+  box-shadow: 0 16px 28px rgba(118, 146, 37, 0.1);
+}
+
+.pluspay-action-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #caefd9;
+  color: #1c8d59;
+}
+
+.pluspay-action-card.is-highlight .pluspay-action-icon {
+  background: #ecf7b7;
+  color: #718f15;
+}
+
+.pluspay-action-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pluspay-action-card small {
+  color: var(--subtle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pluspay-action-card strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.28;
+  font-weight: 900;
+}
+
+.pluspay-action-card.is-highlight small {
+  color: #7d958d;
+}
+
+.pluspay-action-card.is-highlight strong {
+  color: var(--ink);
 }
 
 .wallet-strip {
@@ -690,8 +793,8 @@ svg {
 
 .wallet-chip small {
   color: var(--subtle);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 400;
   line-height: 1.28;
 }
 
@@ -757,8 +860,8 @@ svg {
 
 .utility-card small {
   color: var(--subtle);
-  font-size: 0.64rem;
-  font-weight: 900;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -862,7 +965,8 @@ svg {
 .transaction-amount span {
   overflow: hidden;
   color: var(--subtle);
-  font-size: 0.74rem;
+  font-size: 0.75rem;
+  font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -924,7 +1028,7 @@ svg {
   gap: var(--space-4);
   min-height: 100%;
   color: var(--subtle);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 900;
   text-align: center;
 }
@@ -952,6 +1056,18 @@ svg {
   background: linear-gradient(180deg, #e8f6f0, #dceee7);
 }
 
+.nav-settings-icon {
+  display: none;
+}
+
+body.is-pluspay .nav-claims-icon {
+  display: none;
+}
+
+body.is-pluspay .nav-settings-icon {
+  display: grid;
+}
+
 .bottom-nav > button > svg,
 .nav-icon-shell svg {
   width: 20px;
@@ -961,7 +1077,8 @@ svg {
 .scan-button {
   position: relative;
   color: var(--brand-900) !important;
-  transform: translateY(-28px);
+  gap: 6px;
+  transform: translateY(-38px);
   z-index: 2;
 }
 
@@ -971,8 +1088,8 @@ svg {
   top: -2px;
   left: 50%;
   z-index: 0;
-  width: 90px;
-  height: 90px;
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(208, 242, 85, 0.32), transparent 66%);
   transform: translateX(-50%);
@@ -984,9 +1101,9 @@ svg {
   isolation: isolate;
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
-  border: 7px solid var(--bg);
+  width: 72px;
+  height: 72px;
+  border: 9px solid var(--bg);
   border-radius: 50%;
   background: linear-gradient(145deg, var(--brand-700), #1b8a75 66%, var(--brand-500));
   color: white;
@@ -1000,10 +1117,10 @@ svg {
   background: linear-gradient(120deg, transparent 22%, rgba(255, 255, 255, 0.42) 50%, transparent 78%);
   border: 0;
   inset: auto;
-  width: 28px;
-  height: 92px;
-  top: -14px;
-  left: -22px;
+  width: 35px;
+  height: 115px;
+  top: -18px;
+  left: -28px;
   border-radius: 12px;
   transform: rotate(18deg);
   animation: scan-sweep 2.15s linear infinite;
@@ -1014,7 +1131,7 @@ svg {
 .scan-button span::after {
   content: "";
   position: absolute;
-  inset: -7px;
+  inset: -9px;
   border: 1px solid rgba(208, 242, 85, 0.42);
   border-radius: 50%;
   background: none;
@@ -1029,8 +1146,8 @@ svg {
 }
 
 .scan-button svg {
-  width: 23px;
-  height: 23px;
+  width: 29px;
+  height: 29px;
 }
 
 .home-indicator {
@@ -1158,7 +1275,7 @@ svg {
   display: block;
   margin-bottom: var(--space-4);
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 800;
 }
 
@@ -1195,7 +1312,7 @@ svg {
 .card-details-row span,
 .card-details-meta span {
   color: var(--subtle);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -1244,20 +1361,20 @@ svg {
   transform: translateY(0);
 }
 
-@keyframes topbar-shift {
+@keyframes hero-gradient-flow {
   0% {
-    background-position: 0% 45%;
-    filter: saturate(1);
+    background-position: 8% 28%;
+    filter: hue-rotate(0deg) saturate(1);
   }
 
   50% {
-    background-position: 52% 50%;
-    filter: saturate(1.08);
+    background-position: 50% 46%;
+    filter: hue-rotate(-4deg) saturate(1.04);
   }
 
   100% {
-    background-position: 100% 56%;
-    filter: saturate(1);
+    background-position: 92% 70%;
+    filter: hue-rotate(4deg) saturate(1.01);
   }
 }
 
@@ -1356,7 +1473,8 @@ svg {
 @media (max-width: 360px) {
   .balance-copy,
   .wallet-strip,
-  .utility-grid {
+  .utility-grid,
+  .pluspay-actions-grid {
     grid-template-columns: 1fr;
   }
 

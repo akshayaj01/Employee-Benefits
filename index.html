@@ -113,7 +113,7 @@
           <div class="topbar-row">
             <button class="avatar-button" type="button" aria-label="Open profile">V</button>
             <a class="brand" href="#" aria-label="Lens home">
-              <span>Lens</span>
+              <span data-lens-text="Lens" data-pluspay-text="PlusPay">Lens</span>
             </a>
             <div class="header-actions">
               <button class="icon-button has-dot" type="button" aria-label="Open notifications">
@@ -133,14 +133,18 @@
 
         <section class="balance-card" aria-labelledby="balance-title">
           <div class="card-strip">
-            <span class="category-title">Pine Visa</span>
-            <span class="status-pill">Full KYC</span>
+            <span class="category-title" data-lens-text="Pine Visa" data-pluspay-text="Pluspay">Pine Visa</span>
+            <span class="status-pill" data-lens-text="Full KYC" data-pluspay-text="UPI Ready">Full KYC</span>
           </div>
           <div class="balance-copy">
             <div>
-              <p id="balance-title">Current balance</p>
+              <p id="balance-title" data-lens-text="Current balance" data-pluspay-text="Spend account">Current balance</p>
               <strong>₹24,850</strong>
-              <span class="balance-caption">Available balance across wallets</span>
+              <span
+                class="balance-caption"
+                data-lens-text="Available balance across wallets"
+                data-pluspay-text="Unified money movement for scan, send, and collect"
+              >Available balance across wallets</span>
             </div>
             <button
               class="mini-card"
@@ -148,19 +152,20 @@
               aria-label="Show virtual card details"
               aria-expanded="false"
               data-virtual-card-toggle
+              data-pluspay-hide
             >
               <span>•••• 7845</span>
               <small>Virtual card</small>
             </button>
           </div>
-          <div class="balance-insights" aria-label="Balance details">
+          <div class="balance-insights" aria-label="Balance details" data-pluspay-hide>
             <div>
-              <span>Monthly limit</span>
-              <strong>₹40,000</strong>
+              <span data-lens-text="Monthly limit" data-pluspay-text="UPI ID">Monthly limit</span>
+              <strong data-lens-text="₹40,000" data-pluspay-text="v.sharma@pluspay">₹40,000</strong>
             </div>
             <div>
-              <span>Last top up</span>
-              <strong>10 Dec</strong>
+              <span data-lens-text="Last top up" data-pluspay-text="Daily transfer cap">Last top up</span>
+              <strong data-lens-text="10 Dec" data-pluspay-text="₹1,00,000">10 Dec</strong>
             </div>
           </div>
         </section>
@@ -168,20 +173,35 @@
 
       <section class="upi-panel" aria-label="UPI payment">
         <div class="section-heading compact-heading">
-          <h2>UPI</h2>
-          <a href="#">Manage</a>
+          <h2 data-lens-text="UPI" data-pluspay-text="Pluspay UPI">UPI</h2>
+          <a href="#" data-lens-text="Manage" data-pluspay-text="View QR">Manage</a>
         </div>
         <button class="upi-card" type="button" data-toast="UPI settings opened">
           <span class="upi-icon"><i class="ri-qr-code-line" aria-hidden="true"></i></span>
           <span class="upi-copy">
-            <strong>Lens UPI</strong>
-            <small>akshay@lens</small>
+            <strong data-lens-text="Lens UPI" data-pluspay-text="Pluspay UPI">Lens UPI</strong>
+            <small data-lens-text="akshay@lens" data-pluspay-text="v.sharma@pluspay">akshay@lens</small>
           </span>
-          <span class="upi-status">Active</span>
+          <span class="upi-status" data-lens-text="Active" data-pluspay-text="Primary">Active</span>
         </button>
       </section>
 
-      <section class="wallets-panel" aria-labelledby="wallets-title">
+      <section class="pluspay-actions-panel" aria-label="PlusPay actions" data-pluspay-show>
+        <div class="pluspay-actions-grid">
+          <button class="pluspay-action-card" type="button" data-toast="Send money opened">
+            <span class="pluspay-action-icon" aria-hidden="true"><svg><use href="#icon-send" /></svg></span>
+            <small>Transfer</small>
+            <strong>Send Money</strong>
+          </button>
+          <button class="pluspay-action-card is-highlight" type="button" data-toast="Scan & pay opened">
+            <span class="pluspay-action-icon" aria-hidden="true"><svg><use href="#icon-scan" /></svg></span>
+            <small>Quick Pay</small>
+            <strong>Scan & Pay</strong>
+          </button>
+        </div>
+      </section>
+
+      <section class="wallets-panel" aria-labelledby="wallets-title" data-pluspay-hide>
         <div class="section-heading compact-heading">
           <h2 id="wallets-title">Wallets</h2>
         </div>
@@ -249,7 +269,7 @@
         </div>
       </section>
 
-      <section class="utility-panel" aria-label="Wallet tools">
+      <section class="utility-panel" aria-label="Wallet tools" data-pluspay-hide>
         <div class="section-heading compact-heading">
           <h2>Quick Actions</h2>
         </div>
@@ -274,10 +294,10 @@
 
       <section class="transactions-section" aria-labelledby="transactions-title">
         <div class="section-heading">
-          <h2 id="transactions-title">Recent Transactions</h2>
+          <h2 id="transactions-title" data-lens-text="Recent Transactions" data-pluspay-text="Recent Activity">Recent Transactions</h2>
           <a href="#">View all</a>
         </div>
-        <div class="filter-chips" role="tablist" aria-label="Transaction wallets">
+        <div class="filter-chips" role="tablist" aria-label="Transaction wallets" data-pluspay-hide>
           <button class="active" type="button" data-filter="all" role="tab" aria-selected="true">All</button>
           <button type="button" data-filter="meal" role="tab" aria-selected="false">Meal</button>
           <button type="button" data-filter="fuel" role="tab" aria-selected="false">Fuel</button>
@@ -342,11 +362,12 @@
           Scan & Pay
         </button>
         <button class="nav-item" type="button">
-          <span class="nav-icon-shell"><svg><use href="#icon-receipt" /></svg></span>
-          <span>Claims</span>
+          <span class="nav-icon-shell nav-claims-icon"><svg><use href="#icon-receipt" /></svg></span>
+          <span class="nav-icon-shell nav-settings-icon" aria-hidden="true"><svg><use href="#icon-settings" /></svg></span>
+          <span data-lens-text="Claims" data-pluspay-text="Settings">Claims</span>
         </button>
       </nav>
-      <button class="chatbot-fab" type="button" aria-label="Open support assistant" data-toast="Assistant opened">
+      <button class="chatbot-fab" type="button" aria-label="Open support assistant" data-toast="Assistant opened" data-pluspay-hide>
         <svg><use href="#icon-headset" /></svg>
       </button>
       <div class="home-indicator" aria-hidden="true"></div>
