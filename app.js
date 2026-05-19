@@ -7,6 +7,7 @@ const overlayCloseButtons = document.querySelectorAll("[data-card-overlay-close]
 const walletButtons = document.querySelectorAll("[data-wallet-card]");
 const toastButtons = document.querySelectorAll("[data-toast]");
 const pluspayToggle = document.querySelector("[data-pluspay-toggle]");
+const pluspayLabel = document.querySelector("[data-pluspay-label]");
 
 let toastTimer;
 
@@ -29,7 +30,10 @@ toastButtons.forEach((button) => {
 pluspayToggle?.addEventListener("click", () => {
   const nextState = pluspayToggle.getAttribute("aria-pressed") !== "true";
   pluspayToggle.setAttribute("aria-pressed", String(nextState));
-  showToast(nextState ? "Pluspay enabled" : "Pluspay disabled");
+  if (pluspayLabel) {
+    pluspayLabel.textContent = nextState ? "Lens" : "Pluspay";
+  }
+  showToast(nextState ? "Switched to Pluspay" : "Switched to Lens");
 });
 
 filterButtons.forEach((button) => {

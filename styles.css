@@ -147,6 +147,26 @@ svg {
   animation: topbar-shift 6.2s linear infinite alternate;
 }
 
+.phone-shell::after {
+  content: "";
+  position: absolute;
+  top: -74px;
+  right: -24px;
+  left: -24px;
+  z-index: 0;
+  height: 236px;
+  background:
+    linear-gradient(118deg, transparent 18%, rgba(255, 255, 255, 0.11) 18.8%, transparent 19.6%),
+    linear-gradient(146deg, transparent 40%, rgba(208, 242, 85, 0.1) 40.8%, transparent 41.6%),
+    linear-gradient(104deg, transparent 63%, rgba(255, 255, 255, 0.08) 63.8%, transparent 64.6%),
+    linear-gradient(132deg, transparent 74%, rgba(54, 204, 139, 0.1) 74.8%, transparent 75.6%);
+  background-size: 130% 130%;
+  clip-path: polygon(0 0, 100% 0, 100% 84%, 0 100%);
+  opacity: 0.7;
+  pointer-events: none;
+  animation: topbar-shift 6.2s linear infinite alternate, geo-lines 6.2s ease-in-out infinite alternate;
+}
+
 .hero-panel,
 .upi-panel,
 .wallets-panel,
@@ -166,11 +186,21 @@ svg {
 
 .topbar {
   display: grid;
+  gap: var(--space-12);
+  min-height: 86px;
+}
+
+.topbar-row {
+  display: grid;
   grid-template-columns: 42px 1fr auto;
   align-items: start;
   gap: var(--space-8);
-  min-height: 64px;
-  padding-top: 2px;
+  min-height: 36px;
+}
+
+.topbar-switch-row {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .avatar-button,
@@ -195,17 +225,14 @@ svg {
   display: inline-flex;
   align-items: center;
   justify-self: center;
+  align-self: start;
   color: white;
   font-family:
     "Lato", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   font-size: 1.28rem;
   font-weight: 900;
-}
-
-.brand-bottom {
-  align-self: end;
-  padding-bottom: 4px;
+  padding-top: 2px;
 }
 
 .header-actions {
@@ -213,7 +240,6 @@ svg {
   justify-content: flex-end;
   gap: var(--space-8);
   align-items: start;
-  padding-top: 2px;
 }
 
 .icon-button {
@@ -242,7 +268,7 @@ svg {
   align-items: center;
   gap: 6px;
   min-height: 36px;
-  padding: 4px 6px 4px 4px;
+  padding: 4px 10px 4px 4px;
   border: 1px solid rgba(255, 255, 255, 0.26);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.18);
@@ -415,11 +441,11 @@ svg {
   background:
     conic-gradient(
       from 0deg,
-      rgba(255, 255, 255, 0.14),
-      rgba(208, 242, 85, 0.95),
-      rgba(255, 255, 255, 0.18),
-      rgba(54, 204, 139, 0.92),
-      rgba(255, 255, 255, 0.14)
+      rgba(255, 255, 255, 0.105),
+      rgba(208, 242, 85, 0.7125),
+      rgba(255, 255, 255, 0.135),
+      rgba(54, 204, 139, 0.69),
+      rgba(255, 255, 255, 0.105)
     );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -435,7 +461,7 @@ svg {
   position: absolute;
   inset: 7px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.135);
   pointer-events: none;
 }
 
@@ -866,15 +892,29 @@ svg {
   grid-template-columns: repeat(3, 1fr);
   align-items: stretch;
   width: min(100%, 375px);
-  height: 96px;
-  padding: 10px 14px 8px;
-  border: 1px solid rgba(0, 86, 86, 0.06);
+  height: 98px;
+  padding: 16px 14px 8px;
+  border: 1px solid rgba(0, 86, 86, 0.05);
   border-bottom: 0;
-  border-radius: 28px 28px 0 0;
+  border-radius: 24px 24px 0 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 251, 247, 0.98));
   box-shadow: 0 -16px 40px rgba(0, 86, 86, 0.08);
   backdrop-filter: blur(22px);
+  overflow: visible;
+}
+
+.bottom-nav::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  width: 126px;
+  height: 42px;
+  background:
+    radial-gradient(circle at 50% -6px, transparent 41px, rgba(255, 255, 255, 0.98) 42px);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .bottom-nav button {
@@ -890,12 +930,11 @@ svg {
 }
 
 .nav-item {
-  padding: 10px 10px 12px;
+  padding: 8px 10px 12px;
   border-radius: 20px;
 }
 
 .nav-item.is-active {
-  background: linear-gradient(180deg, rgba(0, 86, 86, 0.08), rgba(0, 86, 86, 0.04));
   color: var(--brand-900);
 }
 
@@ -922,19 +961,20 @@ svg {
 .scan-button {
   position: relative;
   color: var(--brand-900) !important;
-  transform: translateY(-20px);
+  transform: translateY(-28px);
+  z-index: 2;
 }
 
 .scan-button::before {
   content: "";
   position: absolute;
-  top: 6px;
+  top: -2px;
   left: 50%;
   z-index: 0;
-  width: 78px;
-  height: 78px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(208, 242, 85, 0.24), transparent 66%);
+  background: radial-gradient(circle, rgba(208, 242, 85, 0.32), transparent 66%);
   transform: translateX(-50%);
   animation: scan-halo 2.6s ease-in-out infinite;
 }
@@ -954,27 +994,28 @@ svg {
   overflow: hidden;
 }
 
-.scan-button span::before,
-.scan-button span::after {
+.scan-button span::before {
   content: "";
   position: absolute;
-  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+  background: linear-gradient(120deg, transparent 22%, rgba(255, 255, 255, 0.42) 50%, transparent 78%);
   border: 0;
   inset: auto;
-  width: 22px;
-  height: 78px;
-  top: -10px;
-  left: -16px;
+  width: 28px;
+  height: 92px;
+  top: -14px;
+  left: -22px;
   border-radius: 12px;
   transform: rotate(18deg);
-  animation: scan-sweep 2.8s linear infinite;
+  animation: scan-sweep 2.15s linear infinite;
   pointer-events: none;
   z-index: 0;
 }
 
 .scan-button span::after {
+  content: "";
+  position: absolute;
   inset: -7px;
-  border: 1px solid rgba(208, 242, 85, 0.28);
+  border: 1px solid rgba(208, 242, 85, 0.42);
   border-radius: 50%;
   background: none;
   animation: scan-ring 2s ease-out infinite;
@@ -1251,33 +1292,45 @@ svg {
 @keyframes scan-halo {
   0%,
   100% {
-    opacity: 0.45;
+    opacity: 0.52;
     transform: translateX(-50%) scale(0.94);
   }
 
   50% {
-    opacity: 0.72;
-    transform: translateX(-50%) scale(1.08);
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.12);
   }
 }
 
 @keyframes scan-sweep {
   0% {
     opacity: 0;
-    left: -20px;
+    left: -28px;
   }
 
   20% {
-    opacity: 0.9;
+    opacity: 1;
   }
 
   60% {
-    opacity: 0.7;
+    opacity: 0.84;
   }
 
   100% {
     opacity: 0;
-    left: 54px;
+    left: 64px;
+  }
+}
+
+@keyframes geo-lines {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.48;
+  }
+
+  100% {
+    transform: translateY(6px) scale(1.02);
+    opacity: 0.78;
   }
 }
 
@@ -1304,6 +1357,10 @@ svg {
   }
 
   .topbar {
+    min-height: 84px;
+  }
+
+  .topbar-row {
     grid-template-columns: 36px 1fr auto;
   }
 

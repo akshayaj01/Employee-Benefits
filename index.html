@@ -110,19 +110,23 @@
     <main class="phone-shell" aria-label="Lens prepaid card app">
       <section class="hero-panel" aria-label="Account overview">
         <header class="topbar">
-          <button class="avatar-button" type="button" aria-label="Open profile">V</button>
-          <a class="brand brand-bottom" href="#" aria-label="Lens home">
-            <span>Lens</span>
-          </a>
-          <div class="header-actions">
+          <div class="topbar-row">
+            <button class="avatar-button" type="button" aria-label="Open profile">V</button>
+            <a class="brand" href="#" aria-label="Lens home">
+              <span>Lens</span>
+            </a>
+            <div class="header-actions">
+              <button class="icon-button has-dot" type="button" aria-label="Open notifications">
+                <svg><use href="#icon-bell" /></svg>
+              </button>
+            </div>
+          </div>
+          <div class="topbar-switch-row">
             <button class="pluspay-toggle" type="button" aria-pressed="false" data-pluspay-toggle>
               <span class="pluspay-toggle-track">
                 <span class="pluspay-toggle-thumb"></span>
               </span>
-              <span class="pluspay-toggle-label">Pluspay</span>
-            </button>
-            <button class="icon-button has-dot" type="button" aria-label="Open notifications">
-              <svg><use href="#icon-bell" /></svg>
+              <span class="pluspay-toggle-label" data-pluspay-label>Pluspay</span>
             </button>
           </div>
         </header>
