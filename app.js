@@ -1,13 +1,12 @@
-const root = document.documentElement;
-const themeToggle = document.querySelector("[data-theme-toggle]");
 const toastRegion = document.querySelector("[data-toast-region]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const transactions = document.querySelectorAll("[data-wallet]");
 const virtualCardToggle = document.querySelector("[data-virtual-card-toggle]");
 const cardOverlay = document.querySelector("[data-card-overlay]");
 const overlayCloseButtons = document.querySelectorAll("[data-card-overlay-close]");
-const walletButtons = document.querySelectorAll("[data-wallet-cta]");
+const walletButtons = document.querySelectorAll("[data-wallet-card]");
 const toastButtons = document.querySelectorAll("[data-toast]");
+const pluspayToggle = document.querySelector("[data-pluspay-toggle]");
 
 let toastTimer;
 
@@ -21,17 +20,16 @@ function showToast(message) {
   }, 2200);
 }
 
-themeToggle?.addEventListener("click", () => {
-  root.classList.toggle("dark");
-  const isDark = root.classList.contains("dark");
-  themeToggle.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-  showToast(isDark ? "Dark theme enabled" : "Light theme enabled");
-});
-
 toastButtons.forEach((button) => {
   button.addEventListener("click", () => {
     showToast(button.dataset.toast);
   });
+});
+
+pluspayToggle?.addEventListener("click", () => {
+  const nextState = pluspayToggle.getAttribute("aria-pressed") !== "true";
+  pluspayToggle.setAttribute("aria-pressed", String(nextState));
+  showToast(nextState ? "Pluspay enabled" : "Pluspay disabled");
 });
 
 filterButtons.forEach((button) => {
@@ -76,6 +74,18 @@ overlayCloseButtons.forEach((button) => {
 
 walletButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    walletButtons.forEach((wallet) => {
+      wallet.classList.remove("is-active");
+      wallet.setAttribute("aria-pressed", "false");
+    });
+    button.classList.add("is-active");
+    button.setAttribute("aria-pressed", "true");
     showToast(button.dataset.walletCta);
   });
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeCardOverlay();
+  }
 });
