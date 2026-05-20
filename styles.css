@@ -32,6 +32,7 @@
   --space-24: 24px;
   --space-28: 28px;
   --space-32: 32px;
+  --page-end-padding: 40px;
   --text-12: 12px;
   --text-14: 14px;
   --text-16: 16px;
@@ -128,7 +129,7 @@ svg {
   width: min(100%, 375px);
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 var(--space-16) 132px;
+  padding: 0 var(--space-16) calc(132px + var(--page-end-padding));
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0) 250px),
     transparent;
@@ -563,6 +564,7 @@ svg {
 .utility-panel,
 .transactions-section {
   margin-top: var(--space-24);
+  padding-bottom: var(--page-end-padding);
 }
 
 [data-pluspay-show] {
@@ -619,7 +621,7 @@ body.is-pluspay .transactions-section {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  font-size: var(--text-20);
+  font-size: 1.2rem;
 }
 
 .upi-icon {
@@ -701,14 +703,14 @@ body.is-pluspay .transactions-section {
 
 .pluspay-action-card small {
   color: var(--subtle);
-  font-size: var(--text-12);
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .pluspay-action-card strong {
   color: var(--ink);
-  font-size: var(--text-16);
+  font-size: 1rem;
   line-height: 1.28;
   font-weight: 900;
 }
@@ -740,7 +742,7 @@ body.is-pluspay .transactions-section {
   gap: var(--space-8);
   min-width: 0;
   padding: var(--space-16);
-  min-height: 152px;
+  min-height: 160px;
   border: 1px solid transparent;
   border-radius: 18px;
   box-shadow: 0 14px 28px rgba(0, 86, 86, 0.06);
@@ -924,9 +926,9 @@ body.is-pluspay .transactions-section {
 .wallet-detail-action-icon i,
 .wallet-overlay-action-icon svg,
 .wallet-overlay-action-icon i {
-  width: var(--text-20);
-  height: var(--text-20);
-  font-size: var(--text-20);
+  width: 20px;
+  height: 20px;
+  font-size: 1.1rem;
 }
 
 .wallet-detail-action-copy,
@@ -982,12 +984,21 @@ body.is-pluspay .transactions-section {
 
 .wallet-overlay-panel {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 50%;
+  bottom: 0;
+  width: 375px;
+  height: 100dvh;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 251, 247, 0.98));
-  transform: translateY(100%);
+  transform: translate(50%, 100%);
   transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -996,10 +1007,725 @@ body.is-pluspay .transactions-section {
 }
 
 .wallet-overlay.is-open .wallet-overlay-panel {
-  transform: translateY(0);
+  transform: translate(50%, 0);
+}
+
+.merchant-directory-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 14;
+}
+
+.merchant-directory-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 31, 29, 0.36);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.merchant-directory-panel {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  bottom: 0;
+  width: 375px;
+  height: 100dvh;
+  max-height: 100dvh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 251, 247, 0.98));
+  transform: translate(50%, 100%);
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.merchant-directory-overlay.is-open .merchant-directory-backdrop {
+  opacity: 1;
+}
+
+.merchant-directory-overlay.is-open .merchant-directory-panel {
+  transform: translate(50%, 0);
+}
+
+.merchant-directory-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-12);
+  padding: calc(env(safe-area-inset-top, 0px) + 18px) var(--space-16) var(--space-16);
+  border-bottom: 1px solid rgba(0, 86, 86, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.merchant-directory-back {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 86, 86, 0.06);
+  color: var(--brand-700);
+}
+
+.merchant-directory-back svg {
+  width: 18px;
+  height: 18px;
+  transform: rotate(180deg);
+}
+
+.merchant-directory-title-group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.merchant-directory-eyebrow {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.merchant-directory-title-group h2,
+.merchant-directory-section h3 {
+  margin: 0;
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  color: var(--brand-900);
+}
+
+.merchant-directory-title-group h2 {
+  font-size: var(--text-20);
+  font-weight: 600;
+}
+
+.merchant-directory-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + var(--page-end-padding));
+}
+
+.merchant-directory-summary,
+.merchant-directory-location {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-12);
+  width: 100%;
+  padding: var(--space-12);
+  border: 1px solid rgba(0, 86, 86, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+  overflow: hidden;
+}
+
+.merchant-directory-location {
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: var(--space-10);
+  padding: var(--space-4) var(--space-4) var(--space-8);
+  border: 0;
+  border-bottom: 1px solid rgba(0, 86, 86, 0.1);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.merchant-directory-summary {
+  margin-top: var(--space-12);
+  border-color: rgba(0, 86, 86, 0.14);
+  background:
+    radial-gradient(circle at 14% 20%, rgba(208, 242, 85, 0.24), transparent 30%),
+    linear-gradient(135deg, rgba(231, 244, 240, 0.98), rgba(255, 255, 255, 0.94));
+}
+
+.merchant-directory-summary::after {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  background:
+    radial-gradient(circle at 24% 28%, rgba(208, 242, 85, 0.18), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgba(54, 204, 139, 0.12), transparent 30%);
+  opacity: 0.34;
+  animation: merchant-count-glow 8600ms ease-in-out infinite;
+  pointer-events: none;
+}
+
+.merchant-directory-summary-icon,
+.merchant-directory-location-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(231, 244, 240, 0.92);
+  color: var(--brand-700);
+}
+
+.merchant-directory-location-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(231, 244, 240, 0.92);
+  color: #237a4f;
+}
+
+.merchant-directory-location-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--brand-700);
+  font-size: var(--text-12);
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.merchant-directory-summary-action {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 86, 86, 0.07);
+  color: var(--brand-700);
+}
+
+.merchant-directory-summary-action svg {
+  width: 16px;
+  height: 16px;
+}
+
+.merchant-directory-summary-icon svg,
+.merchant-directory-location-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.merchant-directory-location-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.merchant-directory-summary div,
+.merchant-directory-location div {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  justify-items: start;
+  text-align: left;
+}
+
+.merchant-directory-summary strong,
+.merchant-directory-location strong {
+  color: var(--brand-900);
+  font-size: var(--text-16);
+  font-weight: 900;
+}
+
+.merchant-directory-summary strong {
+  font-size: var(--text-18);
+}
+
+.merchant-directory-summary span:not(.merchant-directory-summary-icon):not(.merchant-directory-summary-action),
+.merchant-directory-location span:not(.merchant-directory-location-icon):not(.merchant-directory-location-action) {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  line-height: 1.35;
+}
+
+.merchant-directory-search {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  margin-top: var(--space-12);
+  min-height: 44px;
+  padding: 0 var(--space-12);
+  border: 1px solid rgba(0, 86, 86, 0.1);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(235, 250, 241, 0.86));
+  color: var(--subtle);
+  font-size: var(--text-12);
+  box-shadow: 0 10px 20px rgba(0, 86, 86, 0.05);
+  text-align: left;
+}
+
+.merchant-directory-search-icon {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--brand-700);
+}
+
+.merchant-directory-search-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.merchant-directory-search span:not(.merchant-directory-search-icon) {
+  justify-self: start;
+  min-width: 0;
+  text-align: left;
+}
+
+.merchant-directory-section {
+  display: grid;
+  gap: var(--space-12);
+  margin-top: var(--space-16);
+}
+
+.merchant-directory-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.merchant-directory-section-head button {
+  flex: 0 0 auto;
+  color: var(--brand-700);
+  font-size: var(--text-12);
+  font-weight: 900;
+}
+
+.merchant-directory-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.merchant-directory-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-12);
+  border-radius: 999px;
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted);
+  font-size: var(--text-12);
+  font-weight: 900;
+}
+
+.merchant-directory-chip.is-active {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--brand-700), #1b8a75);
+  color: white;
+}
+
+.merchant-directory-list {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.merchant-directory-item {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: 76px;
+  padding: var(--space-12);
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+}
+
+.merchant-directory-item:nth-child(4n + 1) {
+  border-color: #f4d6a1;
+  background: linear-gradient(180deg, rgba(255, 254, 249, 0.98), rgba(255, 244, 219, 0.62));
+}
+
+.merchant-directory-item:nth-child(4n + 2) {
+  border-color: #c6dff6;
+  background: linear-gradient(180deg, rgba(251, 254, 255, 0.98), rgba(229, 243, 255, 0.64));
+}
+
+.merchant-directory-item:nth-child(4n + 3) {
+  border-color: #d9d1ff;
+  background: linear-gradient(180deg, rgba(253, 252, 255, 0.98), rgba(236, 233, 255, 0.66));
+}
+
+.merchant-directory-item:nth-child(4n + 4) {
+  border-color: #bee4cd;
+  background: linear-gradient(180deg, rgba(252, 255, 253, 0.98), rgba(232, 248, 238, 0.7));
+}
+
+.merchant-directory-item-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(231, 244, 240, 0.92);
+  color: var(--brand-700);
+}
+
+.merchant-directory-item-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.merchant-directory-item-copy {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  justify-items: start;
+  text-align: left;
+}
+
+.merchant-directory-item-copy strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.merchant-directory-item-copy span {
+  overflow: hidden;
+  color: var(--subtle);
+  font-size: var(--text-12);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.merchant-directory-item-meta {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: end;
+  text-align: right;
+}
+
+.merchant-directory-item-meta strong {
+  color: var(--brand-900);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.merchant-directory-item-meta span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+}
+
+body.is-merchant-directory-open .bottom-nav {
+  display: none;
+}
+
+.manage-cards-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+}
+
+.manage-cards-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 31, 29, 0.36);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.manage-cards-panel {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  bottom: 0;
+  width: 375px;
+  height: 100dvh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(244, 250, 246, 0.98));
+  transform: translate(50%, 100%);
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.manage-cards-overlay.is-open .manage-cards-backdrop {
+  opacity: 1;
+}
+
+.manage-cards-overlay.is-open .manage-cards-panel {
+  transform: translate(50%, 0);
+}
+
+.manage-cards-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-12);
+  padding: calc(env(safe-area-inset-top, 0px) + 18px) var(--space-16) var(--space-16);
+  border-bottom: 1px solid rgba(0, 86, 86, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.manage-cards-back {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 86, 86, 0.06);
+  color: var(--brand-700);
+}
+
+.manage-cards-back svg {
+  width: 18px;
+  height: 18px;
+  transform: rotate(180deg);
+}
+
+.manage-cards-title-group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.manage-cards-eyebrow {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.manage-cards-title-group h2,
+.manage-cards-section h3 {
+  margin: 0;
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  color: var(--brand-900);
+}
+
+.manage-cards-title-group h2 {
+  font-size: var(--text-20);
+  font-weight: 600;
+}
+
+.manage-cards-scroll {
+  display: grid;
+  gap: var(--space-24);
+  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + var(--page-end-padding));
+}
+
+.manage-cards-hero {
+  display: grid;
+  gap: var(--space-16);
+  padding: var(--space-16);
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(231, 244, 240, 0.94), rgba(255, 255, 255, 0.96));
+  box-shadow: 0 16px 30px rgba(0, 86, 86, 0.08);
+}
+
+.manage-cards-hero-copy {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.manage-cards-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 0 var(--space-12);
+  border-radius: 999px;
+  background: rgba(0, 86, 86, 0.08);
+  color: var(--brand-700);
+  font-size: var(--text-12);
+  font-weight: 900;
+}
+
+.manage-cards-hero-copy strong {
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  font-size: var(--text-20);
+  font-weight: 600;
+}
+
+.manage-cards-hero-copy span:last-child {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  line-height: 1.45;
+}
+
+.manage-cards-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-12);
+}
+
+.manage-cards-status-card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-12);
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.manage-cards-status-card span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+}
+
+.manage-cards-status-card strong {
+  font-size: var(--text-16);
+  font-weight: 900;
+  color: var(--brand-900);
+}
+
+.manage-cards-section {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.manage-cards-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-cards-section h3 {
+  font-size: var(--text-16);
+  font-weight: 600;
+}
+
+.manage-cards-action-grid,
+.manage-cards-setting-list {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.manage-cards-action {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-12);
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 24px rgba(0, 86, 86, 0.05);
+  text-align: left;
+}
+
+.manage-cards-action.is-soft {
+  background: linear-gradient(180deg, rgba(249, 253, 251, 0.96), rgba(255, 255, 255, 0.92));
+}
+
+.manage-cards-action-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #e7f4f0, #d4f0e7);
+  color: var(--brand-700);
+}
+
+.manage-cards-action-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.manage-cards-action-copy {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.manage-cards-action-copy strong,
+.manage-cards-setting-copy strong {
+  font-size: var(--text-14);
+  font-weight: 900;
+  color: var(--brand-900);
+}
+
+.manage-cards-action-copy span,
+.manage-cards-setting-copy span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  line-height: 1.35;
+}
+
+.manage-cards-action-arrow {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(0, 86, 86, 0.06);
+  color: var(--brand-700);
+}
+
+.manage-cards-action-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.manage-cards-setting-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12);
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 24px rgba(0, 86, 86, 0.05);
+}
+
+.manage-cards-setting-copy {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.manage-cards-setting-value {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 var(--space-10);
+  border-radius: 999px;
+  background: rgba(231, 244, 240, 0.92);
+  color: var(--brand-700);
+  font-size: var(--text-12);
+  font-weight: 900;
 }
 
 .wallet-overlay-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr);
   align-items: center;
@@ -1055,7 +1781,7 @@ body.is-pluspay .transactions-section {
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + 28px);
+  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + var(--page-end-padding));
 }
 
 .wallet-overlay-summary {
@@ -1095,7 +1821,7 @@ body.is-pluspay .transactions-section {
 
 .wallet-overlay-balance-label {
   color: var(--muted);
-  font-size: var(--text-12);
+  font-size: 0.76rem;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -1113,6 +1839,48 @@ body.is-pluspay .transactions-section {
   line-height: 1.45;
 }
 
+.wallet-overlay-limit {
+  display: grid;
+  gap: var(--space-8);
+  padding-top: var(--space-4);
+}
+
+.wallet-overlay-limit-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.wallet-overlay-limit-head span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  font-weight: 700;
+}
+
+.wallet-overlay-limit-head strong {
+  color: var(--brand-900);
+  font-size: var(--text-14);
+  font-weight: 900;
+}
+
+.wallet-overlay-limit-bar {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(0, 86, 86, 0.1);
+  overflow: hidden;
+}
+
+.wallet-overlay-limit-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--brand-700), #36cc8b);
+  transition: width 220ms ease;
+}
+
 .wallet-overlay-pill-row {
   display: flex;
   flex-wrap: wrap;
@@ -1122,7 +1890,51 @@ body.is-pluspay .transactions-section {
 .wallet-overlay-section {
   display: grid;
   gap: var(--space-12);
-  margin-top: var(--space-20);
+  margin-top: var(--space-24);
+}
+
+.wallet-overlay-mode-switch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 16px;
+  background: rgba(231, 244, 240, 0.76);
+}
+
+.wallet-overlay-mode-switch[hidden] {
+  display: none;
+}
+
+.wallet-overlay-mode-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 36px;
+  padding: 0 var(--space-12);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: var(--text-12);
+  font-weight: 900;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.wallet-overlay-mode-button svg,
+.wallet-overlay-mode-button i {
+  width: 16px;
+  height: 16px;
+  font-size: var(--text-14);
+}
+
+.wallet-overlay-mode-button.is-active {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--brand-900);
+  box-shadow: 0 8px 18px rgba(0, 86, 86, 0.08);
 }
 
 .wallet-overlay-section-head {
@@ -1132,46 +1944,250 @@ body.is-pluspay .transactions-section {
 }
 
 .wallet-overlay-section h3 {
-  font-size: var(--text-16);
+  font-size: var(--text-20);
   font-weight: 600;
 }
 
-.wallet-overlay-action-grid {
+.wallet-overlay-section-head a {
+  flex: 0 0 auto;
+  color: var(--brand-700);
+  font-size: var(--text-12);
+  font-weight: 900;
+}
+
+.wallet-overlay-cta {
+  position: relative;
+  isolation: isolate;
   display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: var(--space-14);
+  width: 100%;
+  min-height: 72px;
+  padding: var(--space-12) var(--space-16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(208, 242, 85, 0.28), transparent 32%),
+    linear-gradient(145deg, rgba(0, 86, 86, 0.98), #1b8a75 66%, rgba(54, 204, 139, 0.96));
+  color: white;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 34px rgba(0, 86, 86, 0.2);
+  text-align: left;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+  overflow: hidden;
+}
+
+.wallet-overlay-cta::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: 19px;
+  background:
+    linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.16) 48%, transparent 78%);
+  opacity: 0.72;
+  transform: translateX(-100%);
+  animation: cta-sheen 3600ms ease-in-out infinite;
+  pointer-events: none;
+}
+
+.wallet-overlay-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 46%);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.wallet-overlay-cta-icon,
+.wallet-overlay-cta-copy,
+.wallet-overlay-cta-arrow {
+  position: relative;
+  z-index: 1;
+}
+
+.wallet-overlay-cta:active {
+  transform: translateY(1px) scale(0.985);
+  filter: saturate(1.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(208, 242, 85, 0.18),
+    0 12px 24px rgba(0, 86, 86, 0.18);
+}
+
+.wallet-overlay-cta-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.wallet-overlay-cta-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.wallet-overlay-cta-copy {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.wallet-overlay-cta-copy strong {
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  font-size: var(--text-18);
+  font-weight: 900;
+}
+
+.wallet-cta-text {
+  position: relative;
+  display: block;
+  min-height: 22px;
+  min-width: 96px;
+}
+
+.wallet-cta-text-layer {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: inline-flex;
+}
+
+.wallet-cta-letter {
+  display: inline-block;
+  color: white;
+  animation: wallet-cta-letter 3200ms ease-in-out infinite;
+}
+
+.wallet-cta-letter:nth-child(2) { animation-delay: 80ms; }
+.wallet-cta-letter:nth-child(3) { animation-delay: 160ms; }
+.wallet-cta-letter:nth-child(4) { animation-delay: 240ms; }
+.wallet-cta-letter:nth-child(5) { animation-delay: 320ms; }
+.wallet-cta-letter:nth-child(6) { animation-delay: 400ms; }
+.wallet-cta-letter:nth-child(7) { animation-delay: 480ms; }
+.wallet-cta-letter:nth-child(8) { animation-delay: 560ms; }
+.wallet-cta-letter:nth-child(9) { animation-delay: 640ms; }
+.wallet-cta-letter:nth-child(10) { animation-delay: 720ms; }
+.wallet-cta-letter:nth-child(11) { animation-delay: 800ms; }
+.wallet-cta-letter:nth-child(12) { animation-delay: 880ms; }
+
+.wallet-overlay-cta-copy span {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: var(--text-12);
+  line-height: 1.35;
+}
+
+.wallet-overlay-cta-arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.wallet-overlay-cta-arrow svg {
+  width: 17px;
+  height: 17px;
+}
+
+.wallet-overlay-cta:active .wallet-overlay-cta-arrow {
+  transform: translateX(2px);
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.wallet-merchant-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-12);
 }
 
-.wallet-overlay-meta {
+.wallet-merchant-card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-8);
+  min-height: 152px;
   padding: var(--space-16);
-  border: 1px solid var(--line);
+  border: 1px solid #d7d3ff;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(180deg, rgba(245, 243, 255, 0.95), rgba(239, 236, 255, 0.92));
+  text-align: left;
+  box-shadow: 0 14px 28px rgba(0, 86, 86, 0.06);
 }
 
-.wallet-overlay-meta-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-16);
-  min-height: 42px;
-  border-bottom: 1px solid rgba(0, 86, 86, 0.08);
+.wallet-merchant-card.is-accent {
+  border-color: #f3c7eb;
+  background: linear-gradient(180deg, rgba(255, 245, 252, 0.96), rgba(255, 235, 247, 0.94));
 }
 
-.wallet-overlay-meta-row:last-child {
-  min-height: 38px;
-  padding-top: var(--space-8);
-  border-bottom: 0;
+.wallet-merchant-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
 }
 
-.wallet-overlay-meta-row span {
+.wallet-merchant-icon svg,
+.wallet-merchant-icon i {
+  width: 20px;
+  height: 20px;
+}
+
+.merchant-directory-icon {
+  background: linear-gradient(180deg, #dedbff, #cdc7ff);
+  color: #4950d0;
+}
+
+.merchant-select-icon {
+  background: linear-gradient(180deg, #ffdff6, #ffc6ec);
+  color: #dc3c9c;
+}
+
+.wallet-merchant-card strong {
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  font-size: var(--text-16);
+  line-height: 1.24;
+  font-weight: 900;
+}
+
+.wallet-merchant-card span:not(.wallet-merchant-icon):not(.wallet-merchant-arrow) {
   color: var(--subtle);
   font-size: var(--text-12);
+  line-height: 1.4;
 }
 
-.wallet-overlay-meta-row strong {
-  color: var(--ink);
-  font-size: var(--text-14);
-  font-weight: 900;
+.wallet-merchant-arrow {
+  position: absolute;
+  top: var(--space-16);
+  right: var(--space-16);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--brand-700);
+}
+
+.wallet-merchant-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.wallet-history-list {
+  display: grid;
 }
 
 .utility-grid {
@@ -1212,14 +2228,14 @@ body.is-pluspay .transactions-section {
 
 .utility-card small {
   color: var(--subtle);
-  font-size: var(--text-12);
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .utility-card strong {
   color: var(--ink);
-  font-size: var(--text-14);
+  font-size: 0.9rem;
   line-height: 1.28;
   font-weight: 900;
 }
@@ -1245,7 +2261,7 @@ body.is-pluspay .transactions-section {
   border-radius: 999px;
   background: var(--surface-strong);
   color: var(--muted);
-  font-size: var(--text-12);
+  font-size: 0.78rem;
   font-weight: 900;
 }
 
@@ -1307,7 +2323,7 @@ body.is-pluspay .transactions-section {
 .transaction-meta strong {
   overflow: hidden;
   color: var(--ink);
-  font-size: var(--text-16);
+  font-size: 0.92rem;
   font-weight: 900;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1317,7 +2333,7 @@ body.is-pluspay .transactions-section {
 .transaction-amount span {
   overflow: hidden;
   color: var(--subtle);
-  font-size: var(--text-12);
+  font-size: 0.75rem;
   font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1330,7 +2346,7 @@ body.is-pluspay .transactions-section {
 
 .transaction-amount strong {
   color: var(--ink);
-  font-size: var(--text-16);
+  font-size: 0.94rem;
   font-weight: 900;
 }
 
@@ -1380,7 +2396,7 @@ body.is-pluspay .transactions-section {
   gap: var(--space-4);
   min-height: 100%;
   color: var(--subtle);
-  font-size: var(--text-12);
+  font-size: 0.75rem;
   font-weight: 900;
   text-align: center;
 }
@@ -1566,14 +2582,14 @@ body.is-pluspay .transactions-section {
 
 .overlay-card-brand,
 .overlay-card-name {
-  font-size: var(--text-14);
+  font-size: 0.86rem;
   font-weight: 900;
   letter-spacing: 0.04em;
 }
 
 .overlay-card-number {
   align-self: end;
-  font-size: var(--text-20);
+  font-size: 1.22rem;
   font-weight: 900;
   letter-spacing: 0.08em;
 }
@@ -1587,12 +2603,12 @@ body.is-pluspay .transactions-section {
   display: block;
   margin-bottom: var(--space-4);
   color: rgba(255, 255, 255, 0.72);
-  font-size: var(--text-12);
+  font-size: 0.75rem;
   font-weight: 800;
 }
 
 .overlay-card-meta strong {
-  font-size: var(--text-14);
+  font-size: 0.9rem;
   font-weight: 900;
 }
 
@@ -1624,14 +2640,14 @@ body.is-pluspay .transactions-section {
 .card-details-row span,
 .card-details-meta span {
   color: var(--subtle);
-  font-size: var(--text-12);
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
 .card-details-row strong,
 .card-details-meta strong {
   color: var(--ink);
-  font-size: var(--text-16);
+  font-size: 0.92rem;
   font-weight: 900;
 }
 
@@ -1658,7 +2674,7 @@ body.is-pluspay .transactions-section {
   background: var(--surface-strong);
   box-shadow: var(--shadow-card);
   color: var(--ink);
-  font-size: var(--text-14);
+  font-size: 0.84rem;
   font-weight: 900;
   opacity: 0;
   pointer-events: none;
@@ -1748,6 +2764,68 @@ body.is-pluspay .transactions-section {
   100% {
     opacity: 0;
     left: 64px;
+  }
+}
+
+@keyframes cta-sheen {
+  0%,
+  42% {
+    transform: translateX(-110%);
+  }
+
+  72%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+@keyframes wallet-cta-letter {
+  0%,
+  100% {
+    color: rgba(255, 255, 255, 0.72);
+    text-shadow: none;
+  }
+
+  50% {
+    color: #ffffff;
+    text-shadow:
+      0 0 3px rgba(255, 255, 255, 0.72),
+      0 0 10px rgba(208, 242, 85, 0.42);
+  }
+}
+
+@keyframes wallet-cta-text-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    filter: blur(4px);
+  }
+}
+
+@keyframes wallet-cta-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes merchant-count-glow {
+  0%,
+  100% {
+    opacity: 0.24;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 0.54;
+    transform: scale(1.03);
   }
 }
 

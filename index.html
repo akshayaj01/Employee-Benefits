@@ -97,6 +97,14 @@
       <symbol id="icon-gift" viewBox="0 0 24 24">
         <path d="M12 6v16m0-16H8.464c-.52 0-1.02-.21-1.389-.586A2.019 2.019 0 0 1 6.5 4c0-.53.207-1.04.575-1.414A1.947 1.947 0 0 1 8.465 2C11.214 2 12 6 12 6Zm0 0h3.536c.52 0 1.02-.21 1.389-.586A2.02 2.02 0 0 0 17.5 4c0-.53-.207-1.04-.575-1.414A1.947 1.947 0 0 0 15.535 2C12.786 2 12 6 12 6Zm8 5v7.8c0 1.12 0 1.68-.218 2.108a2 2 0 0 1-.874.874C18.48 22 17.92 22 16.8 22H7.2c-1.12 0-1.68 0-2.108-.218a2 2 0 0 1-.874-.874C4 20.48 4 19.92 4 18.8V11M2 7.6v1.8c0 .56 0 .84.109 1.054a1 1 0 0 0 .437.437C2.76 11 3.04 11 3.6 11h16.8c.56 0 .84 0 1.054-.109a1 1 0 0 0 .437-.437C22 10.24 22 9.96 22 9.4V7.6c0-.56 0-.84-.109-1.054a1 1 0 0 0-.437-.437C21.24 6 20.96 6 20.4 6H3.6c-.56 0-.84 0-1.054.109a1 1 0 0 0-.437.437C2 6.76 2 7.04 2 7.6Z" />
       </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="m21 21-4.35-4.35" />
+        <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+      </symbol>
+      <symbol id="icon-location" viewBox="0 0 24 24">
+        <path d="M12 21s7-5.06 7-11a7 7 0 1 0-14 0c0 5.94 7 11 7 11Z" />
+        <path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+      </symbol>
     </svg>
 
     <main class="phone-shell" aria-label="Lens prepaid card app">
@@ -307,7 +315,7 @@
             <small>Wallet</small>
             <strong>My Wallets</strong>
           </button>
-          <button class="utility-card" type="button" data-toast="Manage Cards opened">
+          <button class="utility-card" type="button" data-manage-cards-open>
             <span class="utility-icon" aria-hidden="true"><svg><use href="#icon-settings" /></svg></span>
             <small>Control</small>
             <strong>Manage Cards</strong>
@@ -375,6 +383,39 @@
             <div class="transaction-amount positive">
               <strong>+ ₹5,000</strong>
               <span>10 Dec 2025</span>
+            </div>
+          </article>
+          <article class="transaction-item" data-wallet="fuel">
+            <span class="transaction-icon"><svg><use href="#icon-fuel" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Shell Select</strong>
+              <span>Ref ID: 1234566791</span>
+            </div>
+            <div class="transaction-amount">
+              <strong>- ₹2,200</strong>
+              <span>08 Dec 2025</span>
+            </div>
+          </article>
+          <article class="transaction-item" data-wallet="meal">
+            <span class="transaction-icon"><svg><use href="#icon-bag" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Star Bazaar</strong>
+              <span>Ref ID: 1234566792</span>
+            </div>
+            <div class="transaction-amount">
+              <strong>- ₹1,180</strong>
+              <span>06 Dec 2025</span>
+            </div>
+          </article>
+          <article class="transaction-item" data-wallet="gift">
+            <span class="transaction-icon"><svg><use href="#icon-gift" /></svg></span>
+            <div class="transaction-meta">
+              <strong>Lifestyle Store</strong>
+              <span>Ref ID: 1234566793</span>
+            </div>
+            <div class="transaction-amount">
+              <strong>- ₹2,400</strong>
+              <span>04 Dec 2025</span>
             </div>
           </article>
         </div>
@@ -461,30 +502,223 @@
             <h2 data-wallet-overlay-name>Meal Wallet</h2>
           </div>
         </header>
-        <div class="wallet-overlay-scroll">
+        <div class="wallet-overlay-scroll" data-wallet-overlay-scroll>
           <section class="wallet-overlay-summary meal" data-wallet-overlay-tone="meal">
             <div class="wallet-overlay-summary-top">
               <span class="wallet-icon meal-icon" aria-hidden="true" data-wallet-overlay-icon><svg><use href="#icon-food" /></svg></span>
               <span class="wallet-overlay-balance-label">Available balance</span>
             </div>
             <strong data-wallet-overlay-balance>₹6,400</strong>
-            <p data-wallet-overlay-description>RuPay-enabled meal spends with contactless checkout for cafeterias and food merchants.</p>
             <div class="wallet-overlay-pill-row" data-wallet-overlay-pills></div>
+            <div class="wallet-overlay-limit">
+              <div class="wallet-overlay-limit-head">
+                <span>Monthly limit</span>
+                <strong data-wallet-overlay-limit-value>₹40,000</strong>
+              </div>
+              <div class="wallet-overlay-limit-bar" aria-hidden="true">
+                <span data-wallet-overlay-limit-fill></span>
+              </div>
+            </div>
+          </section>
+          <section class="wallet-overlay-section">
+            <div class="wallet-overlay-mode-switch" data-wallet-overlay-mode-switch hidden></div>
+            <button class="wallet-overlay-cta" type="button" data-wallet-overlay-primary-action>
+              <span class="wallet-overlay-cta-copy">
+                <strong>Tap &amp; Pay</strong>
+              </span>
+              <span class="wallet-overlay-cta-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+            </button>
           </section>
           <section class="wallet-overlay-section">
             <div class="wallet-overlay-section-head">
-              <h3>Available actions</h3>
+              <h3>Merchant Tools</h3>
             </div>
-            <div class="wallet-overlay-action-grid" data-wallet-overlay-actions></div>
+            <div class="wallet-merchant-grid">
+              <button class="wallet-merchant-card" type="button" data-wallet-directory-open>
+                <span class="wallet-merchant-icon merchant-directory-icon" aria-hidden="true"><svg><use href="#icon-grid" /></svg></span>
+                <strong>Merchant Directory</strong>
+                <span data-wallet-overlay-directory-copy>250+ merchants</span>
+                <span class="wallet-merchant-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
+              <button class="wallet-merchant-card is-accent" type="button" data-toast="Suggest Merchant opened">
+                <span class="wallet-merchant-icon merchant-select-icon" aria-hidden="true"><svg><use href="#icon-send" /></svg></span>
+                <strong>Suggest Merchant</strong>
+                <span data-wallet-overlay-select-copy>Choose a nearby outlet</span>
+                <span class="wallet-merchant-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
+            </div>
           </section>
           <section class="wallet-overlay-section wallet-overlay-meta">
-            <div class="wallet-overlay-meta-row">
-              <span>Eligibility</span>
-              <strong data-wallet-overlay-eligibility>Merchant enabled</strong>
+            <div class="wallet-overlay-section-head">
+              <h3>Transaction History</h3>
+              <a href="#" data-wallet-overlay-view-all-history>View all</a>
             </div>
-            <div class="wallet-overlay-meta-row">
-              <span>Payment route</span>
-              <strong data-wallet-overlay-route>RuPay</strong>
+            <div class="wallet-history-list transaction-list" data-wallet-overlay-history></div>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <div class="merchant-directory-overlay" data-merchant-directory-overlay hidden>
+      <button class="merchant-directory-backdrop" type="button" aria-label="Close merchant directory" data-merchant-directory-close></button>
+      <section class="merchant-directory-panel" aria-label="Merchant directory">
+        <header class="merchant-directory-header">
+          <button class="merchant-directory-back" type="button" aria-label="Back to wallet details" data-merchant-directory-close>
+            <svg aria-hidden="true"><use href="#icon-arrow-right" /></svg>
+          </button>
+          <div class="merchant-directory-title-group">
+            <span class="merchant-directory-eyebrow">Merchant Directory</span>
+            <h2 data-merchant-directory-title>Meal Wallet</h2>
+          </div>
+        </header>
+        <div class="merchant-directory-scroll" data-merchant-directory-scroll>
+          <button class="merchant-directory-location" type="button" data-toast="Change location opened">
+            <span class="merchant-directory-location-icon" aria-hidden="true"><svg><use href="#icon-location" /></svg></span>
+            <div>
+              <strong>Current Location</strong>
+              <span>Indiranagar, Bengaluru · within 5 km</span>
+            </div>
+            <span class="merchant-directory-location-action" aria-hidden="true">Change</span>
+          </button>
+          <button class="merchant-directory-summary" type="button" data-toast="Merchant insights opened">
+            <span class="merchant-directory-summary-icon" aria-hidden="true"><svg><use href="#icon-grid" /></svg></span>
+            <div>
+              <strong data-merchant-directory-count>250+ merchants</strong>
+              <span data-merchant-directory-summary-copy>Eligible outlets and partners for this wallet</span>
+            </div>
+            <span class="merchant-directory-summary-action" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+          </button>
+          <section class="merchant-directory-search">
+            <span class="merchant-directory-search-icon" aria-hidden="true"><svg><use href="#icon-search" /></svg></span>
+            <span data-merchant-directory-search-copy>Search merchants near you</span>
+          </section>
+          <section class="merchant-directory-section">
+            <div class="merchant-directory-chip-row" data-merchant-directory-chips></div>
+          </section>
+          <section class="merchant-directory-section">
+            <div class="merchant-directory-section-head">
+              <h3>Available Merchants</h3>
+              <button type="button" data-toast="All merchants opened">View all</button>
+            </div>
+            <div class="merchant-directory-list" data-merchant-directory-list></div>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <div class="manage-cards-overlay" data-manage-cards-overlay hidden>
+      <button class="manage-cards-backdrop" type="button" aria-label="Close manage cards" data-manage-cards-close></button>
+      <section class="manage-cards-panel" aria-label="Manage cards">
+        <header class="manage-cards-header">
+          <button class="manage-cards-back" type="button" aria-label="Close manage cards" data-manage-cards-close>
+            <svg aria-hidden="true"><use href="#icon-arrow-right" /></svg>
+          </button>
+          <div class="manage-cards-title-group">
+            <span class="manage-cards-eyebrow">Control Center</span>
+            <h2>Manage Cards</h2>
+          </div>
+        </header>
+        <div class="manage-cards-scroll">
+          <section class="manage-cards-hero">
+            <div class="manage-cards-hero-copy">
+              <span class="manage-cards-badge">Primary card active</span>
+              <strong>Pine Visa ending 7845</strong>
+              <span>Physical and virtual access are both enabled for employee benefit spends.</span>
+            </div>
+            <div class="manage-cards-status-grid">
+              <article class="manage-cards-status-card">
+                <span>Status</span>
+                <strong>Active</strong>
+              </article>
+              <article class="manage-cards-status-card">
+                <span>Physical card</span>
+                <strong>Delivered</strong>
+              </article>
+            </div>
+          </section>
+
+          <section class="manage-cards-section">
+            <div class="manage-cards-section-head">
+              <h3>Card Controls</h3>
+            </div>
+            <div class="manage-cards-action-grid">
+              <button class="manage-cards-action" type="button" data-toast="Card freeze controls opened">
+                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-settings" /></svg></span>
+                <span class="manage-cards-action-copy">
+                  <strong>Freeze Card</strong>
+                  <span>Pause card usage instantly across channels</span>
+                </span>
+                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
+              <button class="manage-cards-action" type="button" data-toast="PIN management opened">
+                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-card" /></svg></span>
+                <span class="manage-cards-action-copy">
+                  <strong>Change PIN</strong>
+                  <span>Update the physical card PIN securely</span>
+                </span>
+                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
+              <button class="manage-cards-action" type="button" data-toast="Replace card flow opened">
+                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-refresh" /></svg></span>
+                <span class="manage-cards-action-copy">
+                  <strong>Replace Card</strong>
+                  <span>Request a reissue for damage or loss</span>
+                </span>
+                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="manage-cards-section">
+            <div class="manage-cards-section-head">
+              <h3>Wallet Settings</h3>
+            </div>
+            <div class="manage-cards-setting-list">
+              <article class="manage-cards-setting-item">
+                <span class="manage-cards-setting-copy">
+                  <strong>Default Wallet</strong>
+                  <span>Meal Wallet</span>
+                </span>
+                <span class="manage-cards-setting-value">Auto Select</span>
+              </article>
+              <article class="manage-cards-setting-item">
+                <span class="manage-cards-setting-copy">
+                  <strong>Fuel Wallet Limit</strong>
+                  <span>Tap, scan and merchant acceptance</span>
+                </span>
+                <span class="manage-cards-setting-value">₹8,000</span>
+              </article>
+              <article class="manage-cards-setting-item">
+                <span class="manage-cards-setting-copy">
+                  <strong>Reimbursement Rail</strong>
+                  <span>PPI on UPI merchant usage</span>
+                </span>
+                <span class="manage-cards-setting-value">Enabled</span>
+              </article>
+            </div>
+          </section>
+
+          <section class="manage-cards-section">
+            <div class="manage-cards-section-head">
+              <h3>Security &amp; Support</h3>
+            </div>
+            <div class="manage-cards-action-grid">
+              <button class="manage-cards-action is-soft" type="button" data-toast="Notification preferences opened">
+                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-bell" /></svg></span>
+                <span class="manage-cards-action-copy">
+                  <strong>Alerts</strong>
+                  <span>Control payment and card notifications</span>
+                </span>
+                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
+              <button class="manage-cards-action is-soft" type="button" data-toast="Support flow opened">
+                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-headset" /></svg></span>
+                <span class="manage-cards-action-copy">
+                  <strong>Report an Issue</strong>
+                  <span>Get help for declines, blocks or limits</span>
+                </span>
+                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+              </button>
             </div>
           </section>
         </div>
