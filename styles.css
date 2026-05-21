@@ -1963,14 +1963,15 @@ body.is-merchant-directory-open .bottom-nav {
 .wallet-overlay-cta {
   position: relative;
   isolation: isolate;
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 36px;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, auto);
   align-items: center;
-  gap: var(--space-14);
+  justify-content: center;
+  gap: var(--space-10);
   width: 100%;
-  min-height: 72px;
-  padding: var(--space-12) var(--space-16);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  min-height: 64px;
+  padding: var(--space-14) var(--space-20);
+  border: 1px solid rgba(208, 242, 85, 0.26);
   border-radius: 20px;
   background:
     radial-gradient(circle at 18% 0%, rgba(208, 242, 85, 0.28), transparent 32%),
@@ -1978,8 +1979,9 @@ body.is-merchant-directory-open .bottom-nav {
   color: white;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 18px 34px rgba(0, 86, 86, 0.2);
-  text-align: left;
+    0 18px 34px rgba(0, 86, 86, 0.22),
+    0 10px 16px rgba(0, 52, 52, 0.14);
+  text-align: center;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
@@ -2013,8 +2015,7 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .wallet-overlay-cta-icon,
-.wallet-overlay-cta-copy,
-.wallet-overlay-cta-arrow {
+.wallet-overlay-cta-copy {
   position: relative;
   z-index: 1;
 }
@@ -2024,7 +2025,8 @@ body.is-merchant-directory-open .bottom-nav {
   filter: saturate(1.08);
   box-shadow:
     inset 0 0 0 1px rgba(208, 242, 85, 0.18),
-    0 12px 24px rgba(0, 86, 86, 0.18);
+    0 12px 22px rgba(0, 86, 86, 0.2),
+    0 6px 10px rgba(0, 52, 52, 0.12);
 }
 
 .wallet-overlay-cta-icon {
@@ -2043,9 +2045,11 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .wallet-overlay-cta-copy {
-  display: grid;
-  gap: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
+  text-align: center;
 }
 
 .wallet-overlay-cta-copy strong {
@@ -2056,15 +2060,17 @@ body.is-merchant-directory-open .bottom-nav {
 
 .wallet-cta-text {
   position: relative;
-  display: block;
+  display: inline-flex;
+  justify-content: center;
   min-height: 22px;
   min-width: 96px;
 }
 
 .wallet-cta-text-layer {
   position: absolute;
-  inset: 0 auto auto 0;
+  inset: 0 auto auto 50%;
   display: inline-flex;
+  transform: translateX(-50%);
 }
 
 .wallet-cta-letter {
@@ -2084,32 +2090,6 @@ body.is-merchant-directory-open .bottom-nav {
 .wallet-cta-letter:nth-child(10) { animation-delay: 720ms; }
 .wallet-cta-letter:nth-child(11) { animation-delay: 800ms; }
 .wallet-cta-letter:nth-child(12) { animation-delay: 880ms; }
-
-.wallet-overlay-cta-copy span {
-  color: rgba(255, 255, 255, 0.78);
-  font-size: var(--text-12);
-  line-height: 1.35;
-}
-
-.wallet-overlay-cta-arrow {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.18);
-  transition: transform 160ms ease, background 160ms ease;
-}
-
-.wallet-overlay-cta-arrow svg {
-  width: 17px;
-  height: 17px;
-}
-
-.wallet-overlay-cta:active .wallet-overlay-cta-arrow {
-  transform: translateX(2px);
-  background: rgba(255, 255, 255, 0.24);
-}
 
 .wallet-merchant-grid {
   display: grid;
@@ -2694,6 +2674,1090 @@ body.is-merchant-directory-open .bottom-nav {
   transform: translateY(0);
 }
 
+.claims-assistant {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  overflow-x: hidden;
+  background: rgba(11, 31, 29, 0.22);
+}
+
+.claims-assistant,
+.claims-assistant * {
+  box-sizing: border-box;
+}
+
+.claims-assistant[hidden] {
+  display: none;
+}
+
+.claims-assistant-panel.wallet-overlay-panel {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 375px);
+  max-width: 100%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(0, 86, 86, 0.05), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #fbfffb 45%, #f1fbf3 100%);
+  transform: translate(50%, 100%);
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: visible;
+}
+
+.claims-assistant.is-open .claims-assistant-panel {
+  transform: translate(50%, 0);
+}
+
+.claims-device-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) 28px 6px;
+  color: #050505;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.claims-device-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.claims-signal {
+  display: block;
+  width: 17px;
+  height: 12px;
+  background:
+    linear-gradient(to top, #050505 0 34%, transparent 34%) 0 100% / 3px 100% no-repeat,
+    linear-gradient(to top, #050505 0 52%, transparent 52%) 5px 100% / 3px 100% no-repeat,
+    linear-gradient(to top, #050505 0 72%, transparent 72%) 10px 100% / 3px 100% no-repeat,
+    linear-gradient(to top, #050505 0 100%, transparent 100%) 15px 100% / 3px 100% no-repeat;
+}
+
+.claims-wifi {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 13px;
+  border-top: 4px solid #050505;
+  border-radius: 18px 18px 0 0;
+}
+
+.claims-wifi::before,
+.claims-wifi::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+  border-top: 3px solid #050505;
+  border-radius: 999px 999px 0 0;
+}
+
+.claims-wifi::before {
+  top: 3px;
+  width: 12px;
+  height: 7px;
+}
+
+.claims-wifi::after {
+  top: 8px;
+  width: 5px;
+  height: 4px;
+}
+
+.claims-battery {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 12px;
+  border: 1.5px solid #050505;
+  border-radius: 3px;
+}
+
+.claims-battery::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: 16px;
+  border-radius: 2px;
+  background: #050505;
+}
+
+.claims-battery::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: -4px;
+  width: 2px;
+  height: 5px;
+  border-radius: 0 2px 2px 0;
+  background: #050505;
+}
+
+.claims-header.wallet-overlay-header {
+  position: relative;
+  top: auto;
+  z-index: 3;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 92px;
+  padding: 12px 16px 18px;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.claims-back.wallet-overlay-back {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #dbe3e0;
+  background: rgba(255, 255, 255, 0.88);
+  color: #082b2a;
+  box-shadow: 0 10px 22px rgba(0, 52, 52, 0.04);
+}
+
+.claims-back.wallet-overlay-back svg {
+  transform: rotate(180deg);
+}
+
+.claims-title-group.wallet-overlay-title-group {
+  min-width: 0;
+  gap: 4px;
+}
+
+.claims-title-group .wallet-overlay-eyebrow {
+  overflow: hidden;
+  color: #737d82;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.claims-title-group h2 {
+  overflow: hidden;
+  margin: 0;
+  color: var(--brand-900);
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.08;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.claims-balance.wallet-rail-pill {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  min-width: 68px;
+  min-height: 54px;
+  padding: 8px 12px;
+  border: 1px solid #dbe3e0;
+  border-radius: 16px;
+  background: var(--surface-strong);
+  box-shadow: 0 8px 18px rgba(0, 52, 52, 0.04);
+}
+
+.claims-balance.wallet-rail-pill span,
+.claims-balance.wallet-rail-pill strong {
+  text-align: center;
+}
+
+.claims-balance.wallet-rail-pill span {
+  color: #737d82;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.claims-balance.wallet-rail-pill strong {
+  color: var(--brand-900);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.claims-scroll.wallet-overlay-scroll {
+  flex: 1 1 auto;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 16px calc(env(safe-area-inset-bottom, 0px) + 166px);
+  scroll-padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 166px);
+}
+
+.claims-status-card.transaction-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #dbe3e0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 16px 32px rgba(0, 52, 52, 0.05);
+  overflow: hidden;
+}
+
+.claims-status-card.transaction-list[hidden] {
+  display: none;
+}
+
+.claims-status-card.transaction-list .transaction-item {
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  min-height: 64px;
+  padding: 14px 8px;
+  border-right: 1px solid #e3e9e6;
+  border-bottom: 0;
+}
+
+.claims-status-card.transaction-list .transaction-item:last-child {
+  border-right: 0;
+}
+
+.claims-status-card .transaction-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(231, 244, 240, 0.88);
+}
+
+.claims-status-card .transaction-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.claims-status-card .transaction-meta strong,
+.claims-status-card .transaction-meta span {
+  white-space: normal;
+}
+
+.claims-status-card .transaction-meta strong {
+  color: #737d82;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.claims-status-card .transaction-meta span {
+  display: -webkit-box;
+  color: #617b74;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.claims-thread,
+.claims-workspace,
+.claims-error-stack {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  margin: 0;
+}
+
+.claims-message-row {
+  display: grid;
+  width: 100%;
+  animation: claim-message-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.claims-message-row.bot {
+  grid-template-columns: 28px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  justify-items: start;
+}
+
+.claims-message-row.user {
+  justify-items: end;
+}
+
+.claims-avatar {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #005656;
+  color: white;
+  box-shadow: 0 10px 20px rgba(0, 86, 86, 0.16);
+}
+
+.claims-avatar svg {
+  width: 15px;
+  height: 15px;
+}
+
+.claims-message {
+  display: grid;
+  gap: 8px;
+  width: fit-content;
+  margin: 0;
+  padding: 12px 14px 10px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.claims-message-row.bot .claims-message {
+  max-width: min(250px, calc(100% - 4px));
+  border: 1px solid #e1e7e4;
+  border-top-left-radius: 16px;
+  background: var(--surface-strong);
+  color: #101a1a;
+  box-shadow: 0 12px 26px rgba(0, 52, 52, 0.05);
+}
+
+.claims-message-row.user .claims-message {
+  max-width: min(236px, 70%);
+  border-top-right-radius: 16px;
+  background: linear-gradient(145deg, #006460, #1d806e 70%, #268f78);
+  color: white;
+  box-shadow: 0 14px 24px rgba(0, 86, 86, 0.16);
+}
+
+.claims-message-text {
+  display: block;
+}
+
+.claims-message-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  color: #7e8c90;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.claims-message.user .claims-message-meta {
+  justify-content: flex-end;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.claims-message-meta svg {
+  width: 14px;
+  height: 14px;
+}
+
+.claims-message.is-typing {
+  min-width: 54px;
+}
+
+.claims-mini-typing,
+.claims-typing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.claims-typing {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(231, 244, 240, 0.9);
+}
+
+.claims-mini-typing i,
+.claims-typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-700);
+  animation: typing-bounce 1s ease-in-out infinite;
+}
+
+.claims-mini-typing i:nth-child(2),
+.claims-typing i:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.claims-mini-typing i:nth-child(3),
+.claims-typing i:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.claims-category-shell.wallet-overlay-summary,
+.claims-empty-card.wallet-overlay-summary,
+.claims-upload-card.wallet-overlay-summary,
+.claims-draft-card.wallet-overlay-summary,
+.claims-review-card.wallet-overlay-summary,
+.claims-success-card.wallet-overlay-summary,
+.claims-loading-card.merchant-directory-summary {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #e1e7e4;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 28px rgba(0, 52, 52, 0.05);
+}
+
+.claims-empty-card h3,
+.claims-upload-card h3,
+.claims-draft-card h3,
+.claims-review-card h3,
+.claims-success-card h3 {
+  margin: 0;
+  color: var(--brand-900);
+  font-family: "PP Telegraf", "Times New Roman", serif;
+  font-size: var(--text-20);
+  font-weight: 600;
+  line-height: 1.16;
+}
+
+.claims-empty-card p,
+.claims-upload-card p,
+.claims-loading-card p,
+.claims-success-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-14);
+  line-height: 1.45;
+}
+
+.claims-category-grid.wallet-merchant-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.claims-category-card.wallet-merchant-card {
+  justify-items: center;
+  align-content: start;
+  gap: 10px;
+  min-height: 96px;
+  padding: 10px 8px;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 14px;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+
+.claims-category-card.wallet-merchant-card strong {
+  overflow: visible;
+  color: var(--ink);
+  font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+  line-height: 1.24;
+  white-space: normal;
+}
+
+.claims-category-card.wallet-merchant-card .wallet-merchant-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #eaf7f1;
+  color: #005656;
+}
+
+.claims-category-card.wallet-merchant-card.is-selected {
+  border-color: var(--brand-700);
+  background: rgba(231, 244, 240, 0.42);
+  box-shadow: none;
+  transform: none;
+}
+
+.claims-upload-card {
+  justify-items: start;
+  text-align: left;
+}
+
+.claims-upload-card > span,
+.claims-success-card > span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(231, 244, 240, 0.9);
+  color: var(--brand-700);
+}
+
+.claims-upload-card > span svg,
+.claims-success-card > span svg {
+  width: 22px;
+  height: 22px;
+}
+
+.claims-required-docs.wallet-overlay-pill-row {
+  justify-content: flex-start;
+  gap: var(--space-8);
+}
+
+.claims-required-docs .wallet-rail-pill {
+  min-height: 30px;
+  padding: 0 var(--space-10);
+}
+
+.claims-loading-card.merchant-directory-summary {
+  position: relative;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  overflow: hidden;
+}
+
+.claims-loading-card.merchant-directory-summary div {
+  display: grid;
+  gap: 2px;
+}
+
+.claims-loading-card.merchant-directory-summary strong {
+  color: #102b29;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.claims-loading-card.merchant-directory-summary::after {
+  content: "";
+  position: absolute;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--brand-700), var(--brand-300), transparent);
+  animation: claim-scan-progress 900ms ease-in-out infinite;
+}
+
+.claims-card-head.wallet-overlay-section-head {
+  align-items: start;
+  gap: var(--space-12);
+  margin: 0;
+}
+
+.claims-card-head h3 {
+  font-size: 18px;
+  line-height: 1.16;
+  overflow-wrap: anywhere;
+}
+
+.claims-card-head span,
+.claims-review-card > span,
+.claims-draft-hero span,
+.claims-review-amount span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.claims-card-head .wallet-rail-pill {
+  flex: 0 0 auto;
+  max-width: 132px;
+  min-height: 28px;
+  padding: var(--space-4) var(--space-8);
+  color: var(--brand-900);
+  background: var(--surface-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.claims-draft-hero,
+.claims-review-amount {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.claims-draft-hero strong,
+.claims-review-amount strong {
+  color: var(--brand-900);
+  font-size: var(--text-20);
+  line-height: 1.08;
+  font-weight: 900;
+}
+
+.claims-document-card.merchant-directory-item,
+.claims-error-card.merchant-directory-item {
+  width: 100%;
+  min-height: 72px;
+  padding: var(--space-12);
+  border-radius: 16px;
+}
+
+.claims-document-card.merchant-directory-item {
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+}
+
+.claims-document-card .merchant-directory-item-icon,
+.claims-error-card .merchant-directory-item-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+}
+
+.claims-document-card .merchant-directory-item-copy,
+.claims-error-card .merchant-directory-item-copy {
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.claims-document-card .merchant-directory-item-copy {
+  overflow: hidden;
+}
+
+.claims-document-card .merchant-directory-item-copy strong,
+.claims-document-card .merchant-directory-item-copy small {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.claims-document-card .merchant-directory-chip,
+.claims-error-card .merchant-directory-chip {
+  justify-self: start;
+  min-height: 30px;
+  margin-top: var(--space-8);
+  padding: 0 var(--space-12);
+  white-space: nowrap;
+}
+
+.claims-field-grid.transaction-list {
+  display: grid;
+  gap: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.claims-field-row.transaction-item {
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: var(--space-12);
+  min-height: 48px;
+  padding: var(--space-10) var(--space-12);
+  cursor: text;
+}
+
+.claims-field-row.transaction-item.needs-attention {
+  background: #fff8ea;
+}
+
+.claims-field-row .transaction-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+}
+
+.claims-field-row .transaction-meta {
+  gap: 2px;
+}
+
+.claims-field-row .transaction-meta strong {
+  font-size: var(--text-12);
+}
+
+.claims-field-row .transaction-meta input {
+  width: 100%;
+  min-height: 20px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--brand-900);
+  font: inherit;
+  font-size: var(--text-14);
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.claims-error-card.merchant-directory-item {
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--space-12);
+  align-items: start;
+  border-color: rgba(240, 207, 145, 0.78);
+  background: linear-gradient(180deg, rgba(255, 250, 239, 0.98), rgba(255, 248, 234, 0.92));
+  box-shadow: 0 12px 22px rgba(129, 87, 18, 0.08);
+  animation: claim-error-in 220ms ease both;
+}
+
+.claims-error-card .merchant-directory-item-copy span {
+  color: var(--muted);
+  font-size: var(--text-12);
+  line-height: 1.38;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.claims-review-card {
+  gap: var(--space-12);
+}
+
+.claims-review-list.transaction-list .transaction-item {
+  grid-template-columns: 38px minmax(0, 1fr);
+  min-height: 56px;
+  padding: var(--space-10) var(--space-12);
+}
+
+.claims-success-card.wallet-overlay-summary.gift {
+  background: linear-gradient(180deg, #fcfffd, var(--gift));
+  color: var(--ink);
+  overflow: hidden;
+  animation: claim-success-pop 260ms ease both;
+}
+
+.claims-success-card.wallet-overlay-summary.gift h3,
+.claims-success-card.wallet-overlay-summary.gift p,
+.claims-success-card.wallet-overlay-summary.gift strong {
+  color: var(--brand-900);
+}
+
+.claims-success-card.wallet-overlay-summary.gift > strong,
+.claims-success-meta p,
+.claims-tracking-card {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.claims-success-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-12);
+  margin: 0;
+}
+
+.claims-success-meta p,
+.claims-tracking-card {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-12);
+  border-radius: 16px;
+}
+
+.claims-success-meta span {
+  color: var(--subtle);
+  font-size: var(--text-12);
+  font-weight: 900;
+}
+
+.claims-success-meta strong {
+  overflow: hidden;
+  color: var(--brand-900);
+  font-size: var(--text-14);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.claims-tracking-card p {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-14);
+}
+
+.claims-tracking-card i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brand-300);
+}
+
+.claims-success-card.wallet-overlay-summary.gift .wallet-overlay-cta strong {
+  color: white;
+}
+
+.claims-action-grid.wallet-overlay-mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8);
+  width: 100%;
+  padding: var(--space-4);
+}
+
+.claims-action-grid.wallet-overlay-mode-switch .wallet-overlay-mode-button {
+  min-width: 0;
+  min-height: 40px;
+  padding: 0 var(--space-8);
+  font-size: var(--text-12);
+}
+
+.claims-upload-card .wallet-overlay-cta,
+.claims-success-card .wallet-overlay-cta {
+  width: 100%;
+  min-height: 56px;
+  margin-top: var(--space-4);
+}
+
+.claims-composer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  padding: 12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px);
+  border-top: 1px solid #e1e7e4;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 -14px 28px rgba(0, 52, 52, 0.06);
+}
+
+.claims-quick-actions.filter-chips {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.claims-quick-actions.filter-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.claims-quick-actions.filter-chips button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid #d8e1dd;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: #102b29;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.claims-quick-actions.filter-chips button svg {
+  width: 14px;
+  height: 14px;
+  color: #005656;
+}
+
+.claims-input-row.merchant-directory-search {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  width: 100%;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid #dce5e1;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(0, 52, 52, 0.08);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.claims-input-row.merchant-directory-search:focus-within {
+  border-color: rgba(0, 86, 86, 0.22);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(54, 204, 139, 0.14), 0 16px 30px rgba(0, 86, 86, 0.1);
+  transform: translateY(-2px);
+}
+
+.claims-input-row input {
+  min-width: 0;
+  min-height: 24px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #102b29;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.claims-input-row input::placeholder {
+  color: #8c979a;
+}
+
+.claims-upload-button.wallet-overlay-back,
+.claims-send-button.wallet-overlay-back {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  box-shadow: none;
+}
+
+.claims-upload-button.wallet-overlay-back {
+  width: 36px;
+  height: 36px;
+  background: rgba(231, 244, 240, 0.82);
+  color: #102b29;
+}
+
+.claims-upload-button.wallet-overlay-back svg,
+.claims-send-button.wallet-overlay-back svg {
+  width: 18px;
+  height: 18px;
+  transform: none;
+}
+
+.claims-send-button.wallet-overlay-back {
+  background: #005656;
+  color: white;
+  box-shadow: 0 10px 22px rgba(0, 86, 86, 0.2);
+  transition: transform 160ms ease, opacity 160ms ease, box-shadow 160ms ease;
+}
+
+.claims-send-button.wallet-overlay-back:disabled {
+  background: rgba(0, 86, 86, 0.08);
+  color: rgba(0, 86, 86, 0.2);
+  box-shadow: none;
+}
+
+.claims-back:focus-visible,
+.claims-action-grid button:focus-visible,
+.claims-upload-card button:focus-visible,
+.claims-success-card button:focus-visible,
+.claims-category-card:focus-visible,
+.claims-error-card button:focus-visible,
+.claims-quick-actions button:focus-visible,
+.claims-upload-button:focus-visible,
+.claims-send-button:focus-visible,
+.claims-field-grid input:focus-visible {
+  outline: 3px solid rgba(54, 204, 139, 0.22);
+  outline-offset: 2px;
+}
+
+.claims-action-grid button:active,
+.claims-upload-card button:active,
+.claims-success-card button:active,
+.claims-category-card:active,
+.claims-quick-actions button:active,
+.claims-upload-button:active,
+.claims-send-button:active,
+.claims-error-card button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 360px) {
+  .claims-status-card.transaction-list,
+  .claims-category-grid.wallet-merchant-grid,
+  .claims-success-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .claims-status-card.transaction-list .transaction-item {
+    min-height: 56px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .claims-status-card.transaction-list .transaction-item:last-child {
+    border-bottom: 0;
+  }
+
+  .claims-message-row.bot .claims-message,
+  .claims-message-row.user .claims-message {
+    max-width: 100%;
+  }
+}
+
+@keyframes claim-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes claim-error-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes claim-success-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes claim-scan-progress {
+  0% {
+    transform: translateX(-115%);
+  }
+
+  100% {
+    transform: translateX(275%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .claims-assistant-panel,
+  .claims-message-row,
+  .claims-loading-card::after,
+  .claims-error-card,
+  .claims-success-card,
+  .claims-typing i,
+  .claims-mini-typing i {
+    animation: none;
+    transition: none;
+  }
+
+  .claims-scroll {
+    scroll-behavior: auto;
+  }
+}
+
 @keyframes hero-gradient-flow {
   0% {
     background-position: 8% 28%;
@@ -2781,6 +3845,19 @@ body.is-merchant-directory-open .bottom-nav {
   72%,
   100% {
     transform: translateX(110%);
+  }
+}
+
+@keyframes typing-bounce {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
   }
 }
 

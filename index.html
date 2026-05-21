@@ -88,6 +88,10 @@
       <symbol id="icon-arrow-right" viewBox="0 0 24 24">
         <path d="M5 12h14m0 0-7-7m7 7-7 7" />
       </symbol>
+      <symbol id="icon-checks" viewBox="0 0 24 24">
+        <path d="m2 13 4 4L16 7" />
+        <path d="m11 17 2 2 9-10" />
+      </symbol>
       <symbol id="icon-nfc" viewBox="0 0 24 24">
         <path d="M12 19.5h.01M22.806 8.7A15.942 15.942 0 0 0 12 4.5c-4.166 0-7.96 1.592-10.807 4.2m3.539 3.543A10.958 10.958 0 0 1 12 9.5a10.96 10.96 0 0 1 7.268 2.743m-3.57 3.532A5.974 5.974 0 0 0 12 14.5c-1.416 0-2.718.49-3.745 1.312" />
       </symbol>
@@ -422,7 +426,7 @@
           <span class="nav-icon-shell"><svg><use href="#icon-trophy" /></svg></span>
           <span>Home</span>
         </button>
-        <button class="claims-button" type="button" aria-label="Claims">
+        <button class="claims-button" type="button" aria-label="Claims" data-claims-open>
           <span><svg><use href="#icon-receipt" /></svg></span>
           <span>Claims</span>
         </button>
@@ -519,10 +523,10 @@
           <section class="wallet-overlay-section">
             <div class="wallet-overlay-mode-switch" data-wallet-overlay-mode-switch hidden></div>
             <button class="wallet-overlay-cta" type="button" data-wallet-overlay-primary-action>
+              <span class="wallet-overlay-cta-icon" aria-hidden="true"><svg><use href="#icon-nfc" /></svg></span>
               <span class="wallet-overlay-cta-copy">
                 <strong>Tap &amp; Pay</strong>
               </span>
-              <span class="wallet-overlay-cta-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </button>
           </section>
           <section class="wallet-overlay-section">
@@ -718,6 +722,53 @@
             </div>
           </section>
         </div>
+      </section>
+    </div>
+
+    <div class="claims-assistant" data-claims-assistant hidden>
+      <section class="claims-assistant-panel wallet-overlay-panel" aria-label="Claims Assistant chatbot">
+        <div class="claims-device-status" aria-hidden="true">
+          <span>9:41</span>
+          <span class="claims-device-icons">
+            <i class="claims-signal"></i>
+            <i class="claims-wifi"></i>
+            <i class="claims-battery"></i>
+          </span>
+        </div>
+        <header class="claims-header wallet-overlay-header">
+          <button class="claims-back wallet-overlay-back" type="button" aria-label="Close Claims Assistant" data-claims-close>
+            <svg aria-hidden="true"><use href="#icon-arrow-right" /></svg>
+          </button>
+          <div class="claims-title-group wallet-overlay-title-group">
+            <span class="wallet-overlay-eyebrow">Reimbursement Wallet</span>
+            <h2>Claims Assistant</h2>
+          </div>
+          <div class="claims-balance wallet-rail-pill is-active">
+            <span>Balance</span>
+            <strong>₹9,100</strong>
+          </div>
+        </header>
+        <div class="claims-scroll wallet-overlay-scroll" data-claims-scroll>
+          <section class="claims-status-card transaction-list" data-claims-status></section>
+          <div class="claims-thread" data-claims-thread></div>
+          <div class="claims-workspace" data-claims-workspace></div>
+        </div>
+        <footer class="claims-composer">
+          <div class="claims-quick-actions filter-chips" data-claims-quick-actions>
+            <button type="button" data-claims-action="upload"><svg aria-hidden="true"><use href="#icon-scan" /></svg>Upload bill</button>
+            <button type="button" data-claims-action="category"><svg aria-hidden="true"><use href="#icon-wallet" /></svg>Choose category</button>
+            <button type="button" data-claims-action="drafts"><svg aria-hidden="true"><use href="#icon-receipt" /></svg>View drafts</button>
+          </div>
+          <div class="claims-input-row merchant-directory-search">
+            <button class="claims-upload-button wallet-overlay-back" type="button" aria-label="Upload bill" data-claims-action="upload">
+              <svg aria-hidden="true"><use href="#icon-plus" /></svg>
+            </button>
+            <input data-claims-input type="text" placeholder="Ask or upload a bill..." />
+            <button class="claims-send-button wallet-overlay-back" type="button" aria-label="Send message" data-claims-send>
+              <svg aria-hidden="true"><use href="#icon-send" /></svg>
+            </button>
+          </div>
+        </footer>
       </section>
     </div>
 
