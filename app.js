@@ -44,6 +44,13 @@ const manageCardsPanel = document.querySelector(".manage-cards-panel");
 let toastTimer;
 let activeWalletTone = "meal";
 
+function syncPageScrollLock() {
+  const hasOpenOverlay = [cardOverlay, walletOverlay, merchantDirectoryOverlay, manageCardsOverlay].some((overlay) =>
+    overlay?.classList.contains("is-open")
+  );
+  document.body.classList.toggle("is-overlay-open", hasOpenOverlay);
+}
+
 const walletActionCatalog = {
   tap: {
     label: "Tap & Pay",
@@ -348,6 +355,7 @@ function closeCardOverlay() {
   if (!cardOverlay || !virtualCardToggle) return;
   virtualCardToggle.setAttribute("aria-expanded", "false");
   cardOverlay.classList.remove("is-open");
+  syncPageScrollLock();
   window.setTimeout(() => {
     cardOverlay.hidden = true;
   }, 320);
@@ -356,6 +364,7 @@ function closeCardOverlay() {
 function closeWalletOverlay() {
   if (!walletOverlay) return;
   walletOverlay.classList.remove("is-open");
+  syncPageScrollLock();
   window.setTimeout(() => {
     walletOverlay.hidden = true;
   }, 280);
@@ -365,6 +374,7 @@ function closeMerchantDirectory() {
   if (!merchantDirectoryOverlay) return;
   merchantDirectoryOverlay.classList.remove("is-open");
   document.body.classList.remove("is-merchant-directory-open");
+  syncPageScrollLock();
   window.setTimeout(() => {
     merchantDirectoryOverlay.hidden = true;
   }, 280);
@@ -373,6 +383,7 @@ function closeMerchantDirectory() {
 function closeManageCardsOverlay() {
   if (!manageCardsOverlay) return;
   manageCardsOverlay.classList.remove("is-open");
+  syncPageScrollLock();
   window.setTimeout(() => {
     manageCardsOverlay.hidden = true;
   }, 280);
@@ -404,6 +415,7 @@ function openMerchantDirectory() {
   window.requestAnimationFrame(() => {
     if (merchantDirectoryScroll) merchantDirectoryScroll.scrollTop = 0;
     merchantDirectoryOverlay.classList.add("is-open");
+    syncPageScrollLock();
   });
 }
 
@@ -413,6 +425,7 @@ function openManageCardsOverlay() {
   window.requestAnimationFrame(() => {
     if (manageCardsPanel) manageCardsPanel.scrollTop = 0;
     manageCardsOverlay.classList.add("is-open");
+    syncPageScrollLock();
   });
   showToast("Manage Cards opened");
 }
@@ -486,6 +499,7 @@ function openWalletOverlay(button) {
   window.requestAnimationFrame(() => {
     if (walletOverlayScroll) walletOverlayScroll.scrollTop = 0;
     walletOverlay.classList.add("is-open");
+    syncPageScrollLock();
   });
   showToast(button.dataset.walletCta || `${walletName} opened`);
 }
@@ -497,6 +511,7 @@ virtualCardToggle?.addEventListener("click", () => {
   cardOverlay.hidden = false;
   window.requestAnimationFrame(() => {
     cardOverlay.classList.add("is-open");
+    syncPageScrollLock();
   });
   showToast("Virtual card details revealed");
 });
