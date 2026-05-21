@@ -452,6 +452,12 @@ function renderClaimsAssistant() {
   bindClaimsWorkspaceActions();
   syncClaimsComposer();
   window.requestAnimationFrame(() => {
+    const draftCard = claimsWorkspace.querySelector(".claims-draft-card");
+    if (draftCard) {
+      const targetTop = draftCard.offsetTop - claimsScroll.offsetTop;
+      claimsScroll?.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      return;
+    }
     claimsScroll?.scrollTo({ top: claimsScroll.scrollHeight, behavior: "smooth" });
   });
 }
@@ -552,6 +558,7 @@ function renderClaimDraftCard() {
   const draft = claimState.draft;
   const categoryKey = claimState.selectedCategory;
   const tone = claimCategories[categoryKey].tone;
+  const title = draft.category.replace(" & ", " &<br>");
   const fields = [
     ["category", "Category"],
     ["vendor", "Vendor"],
@@ -568,7 +575,7 @@ function renderClaimDraftCard() {
       <div class="claims-card-head wallet-overlay-section-head">
         <div>
           <span>Extracted draft</span>
-          <h3>${draft.category}</h3>
+          <h3>${title}</h3>
         </div>
         <small class="wallet-rail-pill is-active">${draft.status}</small>
       </div>
@@ -586,15 +593,18 @@ function renderClaimDraftCard() {
       </div>
       <div class="claims-field-grid transaction-list">
         ${fields
-          .map(([field, label]) => `
-            <label class="claims-field-row transaction-item ${isClaimFieldMissing(field) ? "needs-attention" : ""}">
+          .map(([field, label]) => {
+            const value = draft[field] || "";
+            const needsAttention = isClaimFieldMissing(field);
+            return `
+            <label class="claims-field-row transaction-item ${needsAttention ? "needs-attention" : ""} ${value && !needsAttention ? "is-filled" : "is-empty"}">
               <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
               <span class="transaction-meta">
                 <strong>${label}</strong>
-                <input value="${draft[field] || ""}" placeholder="Add ${label.toLowerCase()}" data-claims-field="${field}" />
+                <input value="${value}" placeholder="Add ${label.toLowerCase()}" data-claims-field="${field}" />
               </span>
             </label>
-          `)
+          `;})
           .join("")}
       </div>
     </section>
