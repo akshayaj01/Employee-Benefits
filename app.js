@@ -40,6 +40,24 @@ const manageCardsOpenButtons = document.querySelectorAll("[data-manage-cards-ope
 const manageCardsOverlay = document.querySelector("[data-manage-cards-overlay]");
 const manageCardsCloseButtons = document.querySelectorAll("[data-manage-cards-close]");
 const manageCardsPanel = document.querySelector(".manage-cards-panel");
+const manageWalletCarousel = document.querySelector(".manage-cards-wallet-carousel");
+const manageWalletButtons = document.querySelectorAll("[data-manage-wallet]");
+const manageOnlineButton = document.querySelector("[data-manage-online-toggle]");
+const manageWalletCount = document.querySelector("[data-manage-wallet-count]");
+const manageWalletDots = document.querySelectorAll(".manage-cards-wallet-dots i");
+const manageSelectedCopy = document.querySelector("[data-manage-selected-copy]");
+const manageSelectedBalance = document.querySelector("[data-manage-selected-balance]");
+const manageAccessCopy = document.querySelector("[data-manage-access-copy]");
+const manageAccessValue = document.querySelector("[data-manage-access-value]");
+const manageLimitCopy = document.querySelector("[data-manage-limit-copy]");
+const manageLimitValue = document.querySelector("[data-manage-limit-value]");
+const manageLimitProgress = document.querySelector("[data-manage-limit-progress]");
+const manageLimitUsed = document.querySelector("[data-manage-limit-used]");
+const manageLimitTotal = document.querySelector("[data-manage-limit-total]");
+const manageOnlineCopy = document.querySelector("[data-manage-online-copy]");
+const manageStatusCopy = document.querySelector("[data-manage-status-copy]");
+const manageSensitiveFields = document.querySelectorAll("[data-card-sensitive]");
+const manageRevealButtons = document.querySelectorAll("[data-card-reveal]");
 const claimsOpenButton = document.querySelector("[data-claims-open]");
 const claimsAssistant = document.querySelector("[data-claims-assistant]");
 const claimsCloseButtons = document.querySelectorAll("[data-claims-close]");
@@ -53,6 +71,58 @@ const claimsActionButtons = document.querySelectorAll("[data-claims-action]");
 
 let toastTimer;
 let activeWalletTone = "meal";
+let activeManageWalletKey = "meal";
+
+const manageWalletState = {
+  meal: {
+    label: "Meal Wallet",
+    balance: "₹6,400",
+    summary: "Available balance for daily essentials",
+    accessCopy: "Food, grocery and dining merchants",
+    accessValue: "Enabled",
+    limitUsed: 4200,
+    limitTotal: 10000,
+    online: false,
+    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    reveal: { number: false, cvv: false },
+  },
+  fuel: {
+    label: "Fuel Wallet",
+    balance: "₹3,150",
+    summary: "Available balance for commute spends",
+    accessCopy: "Fuel pumps, service stations and mobility merchants",
+    accessValue: "Enabled",
+    limitUsed: 4200,
+    limitTotal: 10000,
+    online: true,
+    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    reveal: { number: false, cvv: false },
+  },
+  misc: {
+    label: "Reimbursement Wallet",
+    balance: "₹9,100",
+    summary: "Available balance for claim-based spends",
+    accessCopy: "Eligible reimbursement merchants and QR spends",
+    accessValue: "Enabled",
+    limitUsed: 4200,
+    limitTotal: 10000,
+    online: false,
+    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    reveal: { number: false, cvv: false },
+  },
+  gift: {
+    label: "Gift Wallet",
+    balance: "₹6,200",
+    summary: "Available balance for gifting spends",
+    accessCopy: "Card-led online and brand redemption usage",
+    accessValue: "Enabled",
+    limitUsed: 4200,
+    limitTotal: 10000,
+    online: true,
+    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    reveal: { number: false, cvv: false },
+  },
+};
 
 function syncPageScrollLock() {
   const hasOpenOverlay = [cardOverlay, walletOverlay, merchantDirectoryOverlay, manageCardsOverlay, claimsAssistant].some((overlay) =>
@@ -529,14 +599,13 @@ function renderClaimsUploadState() {
   const category = claimCategories[claimState.selectedCategory];
   return `
     <section class="claims-upload-card wallet-overlay-summary ${category.tone}">
-      <span><svg><use href="#icon-plus" /></svg></span>
       <h3>Upload ${category.label} bill</h3>
       <p>PDF, PNG or JPG accepted. This prototype simulates upload and OCR.</p>
       <div class="claims-required-docs wallet-overlay-pill-row">
         ${category.required.map((item) => `<small class="wallet-rail-pill is-active">${item}</small>`).join("")}
       </div>
       <button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="upload">
-        <span class="wallet-overlay-cta-copy"><strong>Simulate upload</strong></span>
+        <span class="wallet-overlay-cta-copy"><strong>Upload bill</strong></span>
       </button>
     </section>
   `;
@@ -680,10 +749,10 @@ function renderClaimsSuccess() {
         <p><span>Category</span><strong>${claimState.draft.category}</strong></p>
       </div>
       <div class="claims-tracking-card">
-        <p><i></i>Submitted</p>
-        <p><i></i>Manager review</p>
-        <p><i></i>Finance check</p>
-        <p><i></i>Payout</p>
+        <p class="is-complete"><i><svg aria-hidden="true"><use href="#icon-checks" /></svg></i>Submitted</p>
+        <p class="is-pending"><i></i>Manager review</p>
+        <p class="is-pending"><i></i>Finance check</p>
+        <p class="is-pending"><i></i>Payout</p>
       </div>
       <button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="reset">
         <span class="wallet-overlay-cta-copy"><strong>Start another claim</strong></span>
@@ -719,6 +788,11 @@ function handleClaimsAction(action) {
     claimState.stage = "draft";
     addClaimMessage("user", "View drafts");
     addClaimMessage("bot", "Here is your latest reimbursement draft.");
+    renderClaimsAssistant();
+  }
+  if (action === "history") {
+    addClaimMessage("user", "View history");
+    addClaimMessage("bot", "Claim history will show submitted, approved and paid reimbursements.");
     renderClaimsAssistant();
   }
   if (action === "validate") validateClaimPolicy();
@@ -872,6 +946,104 @@ toastButtons.forEach((button) => {
     showToast(button.dataset.toast);
   });
 });
+
+function renderManageWalletState() {
+  const state = manageWalletState[activeManageWalletKey];
+  if (!state) return;
+
+  const progress = Math.round((state.limitUsed / state.limitTotal) * 100);
+  const onlineEnabled = Boolean(state.online);
+
+  if (manageSelectedCopy) manageSelectedCopy.textContent = state.summary;
+  if (manageSelectedBalance) manageSelectedBalance.textContent = state.balance;
+  if (manageAccessCopy) manageAccessCopy.textContent = state.accessCopy;
+  if (manageAccessValue) manageAccessValue.textContent = state.accessValue;
+  if (manageOnlineCopy) manageOnlineCopy.textContent = `Online merchant transactions ${onlineEnabled ? "enabled" : "disabled"}`;
+  manageOnlineButton?.classList.toggle("is-enabled", onlineEnabled);
+  manageOnlineButton?.setAttribute("aria-pressed", String(onlineEnabled));
+  manageOnlineButton?.querySelector(".manage-cards-toggle")?.setAttribute("aria-checked", String(onlineEnabled));
+  if (manageLimitCopy) manageLimitCopy.textContent = `${formatCurrency(state.limitUsed)} of ${formatCurrency(state.limitTotal)}`;
+  if (manageLimitValue) manageLimitValue.textContent = `${progress}% used`;
+  if (manageLimitUsed) manageLimitUsed.textContent = `${formatCurrency(state.limitUsed)} used`;
+  if (manageLimitTotal) manageLimitTotal.textContent = `${formatCurrency(state.limitTotal)} limit`;
+  if (manageLimitProgress) manageLimitProgress.style.width = `${progress}%`;
+  if (manageStatusCopy) manageStatusCopy.textContent = "Card ready for selected wallet";
+  manageSensitiveFields.forEach((field) => {
+    const key = field.dataset.cardSensitive;
+    if (key === "number") field.textContent = state.reveal.number ? state.card.number : "•••• •••• •••• 7845";
+    if (key === "holder") field.textContent = state.card.holder;
+    if (key === "expiry") field.textContent = state.card.expiry;
+    if (key === "cvv") field.textContent = state.reveal.cvv ? state.card.cvv : "•••";
+  });
+  manageRevealButtons.forEach((button) => {
+    const key = button.dataset.cardReveal;
+    if (!Object.prototype.hasOwnProperty.call(state.reveal, key)) return;
+    button.setAttribute("aria-label", `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`);
+  });
+}
+
+function selectManageWallet(button, announce = true) {
+  activeManageWalletKey = button.dataset.walletKey || "meal";
+  const state = manageWalletState[activeManageWalletKey] || manageWalletState.meal;
+  const selectedIndex = Math.max(0, Array.from(manageWalletButtons).indexOf(button));
+
+  manageWalletButtons.forEach((walletButton, index) => {
+    const isSelected = walletButton === button;
+    walletButton.classList.toggle("is-selected", isSelected);
+    walletButton.setAttribute("aria-pressed", String(isSelected));
+    manageWalletDots[index]?.classList.toggle("is-active", isSelected);
+  });
+  if (manageWalletCount) manageWalletCount.textContent = `${selectedIndex + 1}/${manageWalletButtons.length}`;
+
+  renderManageWalletState();
+  if (announce) showToast(`${state.label} selected`);
+}
+
+manageWalletButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    selectManageWallet(button);
+    button.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  });
+});
+
+manageWalletCarousel?.addEventListener("scroll", () => {
+  window.clearTimeout(manageWalletCarousel.scrollTimer);
+  manageWalletCarousel.scrollTimer = window.setTimeout(() => {
+    const carouselCenter = manageWalletCarousel.getBoundingClientRect().left + manageWalletCarousel.clientWidth / 2;
+    const nearestButton = Array.from(manageWalletButtons).reduce((nearest, button) => {
+      const currentRect = button.getBoundingClientRect();
+      const nearestRect = nearest.getBoundingClientRect();
+      const currentDistance = Math.abs(currentRect.left + currentRect.width / 2 - carouselCenter);
+      const nearestDistance = Math.abs(nearestRect.left + nearestRect.width / 2 - carouselCenter);
+      return currentDistance < nearestDistance ? button : nearest;
+    }, manageWalletButtons[0]);
+    if (nearestButton && !nearestButton.classList.contains("is-selected")) selectManageWallet(nearestButton, false);
+  }, 90);
+});
+
+manageOnlineButton?.addEventListener("click", () => {
+  const state = manageWalletState[activeManageWalletKey];
+  if (!state) return;
+  state.online = !state.online;
+  renderManageWalletState();
+  showToast(`${state.label} online transactions ${state.online ? "enabled" : "disabled"}`);
+});
+
+function formatCurrency(value) {
+  return `₹${Number(value).toLocaleString("en-IN")}`;
+}
+
+manageRevealButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const state = manageWalletState[activeManageWalletKey];
+    const key = button.dataset.cardReveal;
+    if (!state || !Object.prototype.hasOwnProperty.call(state.reveal, key)) return;
+    state.reveal[key] = !state.reveal[key];
+    button.setAttribute("aria-label", `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`);
+    renderManageWalletState();
+  });
+});
+renderManageWalletState();
 
 claimsOpenButton?.addEventListener("click", () => {
   openClaimsAssistant();

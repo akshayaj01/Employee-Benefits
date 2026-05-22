@@ -54,6 +54,10 @@
       <symbol id="icon-receipt" viewBox="0 0 24 24">
         <path d="M4 7.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C6.28 3 7.12 3 8.8 3h6.4c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311C20 5.28 20 6.12 20 7.8V21l-2.75-2-2.5 2L12 19l-2.75 2-2.5-2L4 21V7.8Z" />
       </symbol>
+      <symbol id="icon-claim" viewBox="0 0 24 24">
+        <path d="M7 3h7l4 4v12.2c0 1.12 0 1.68-.218 2.108a2 2 0 0 1-.874.874C16.48 22 15.92 22 14.8 22H7.2c-1.12 0-1.68 0-2.108-.218a2 2 0 0 1-.874-.874C4 20.48 4 19.92 4 18.8V6.2c0-1.12 0-1.68.218-2.108a2 2 0 0 1 .874-.874C5.52 3 6.08 3 7 3Z" />
+        <path d="M14 3v4h4M8 13l2.25 2.25L15.5 10" />
+      </symbol>
       <symbol id="icon-bag" viewBox="0 0 24 24">
         <path d="M5.52 2.64 3.96 4.72c-.309.412-.463.618-.46.79a.5.5 0 0 0 .192.384C3.828 6 4.085 6 4.6 6h14.8c.515 0 .773 0 .908-.106a.5.5 0 0 0 .192-.384c.003-.172-.151-.378-.46-.79l-1.56-2.08m-12.96 0c.176-.235.264-.352.376-.437a1 1 0 0 1 .33-.165C6.36 2 6.505 2 6.8 2h10.4c.293 0 .44 0 .575.038a1 1 0 0 1 .33.165c.111.085.199.202.375.437m-12.96 0L3.64 5.147c-.237.316-.356.475-.44.649a2 2 0 0 0-.163.487C3 6.473 3 6.671 3 7.067V18.8c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C4.52 22 5.08 22 6.2 22h11.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874C21 20.48 21 19.92 21 18.8V7.067c0-.396 0-.594-.037-.784a1.998 1.998 0 0 0-.163-.487c-.084-.174-.203-.333-.44-.65L18.48 2.64M16 10a4 4 0 1 1-8 0" />
       </symbol>
@@ -104,6 +108,10 @@
       <symbol id="icon-search" viewBox="0 0 24 24">
         <path d="m21 21-4.35-4.35" />
         <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+      </symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24">
+        <path d="M2.42 12.713c-.15-.238-.225-.357-.267-.54a1.17 1.17 0 0 1 0-.346c.042-.183.117-.302.267-.54C3.66 9.32 7.3 4.5 12 4.5s8.34 4.82 9.58 6.787c.15.238.225.357.267.54.03.13.03.216 0 .346-.042.183-.117.302-.267.54C20.34 14.68 16.7 19.5 12 19.5s-8.34-4.82-9.58-6.787Z" />
+        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
       </symbol>
       <symbol id="icon-location" viewBox="0 0 24 24">
         <path d="M12 21s7-5.06 7-11a7 7 0 1 0-14 0c0 5.94 7 11 7 11Z" />
@@ -427,7 +435,7 @@
           <span>Home</span>
         </button>
         <button class="claims-button" type="button" aria-label="Claims" data-claims-open>
-          <span><svg><use href="#icon-receipt" /></svg></span>
+          <span><svg><use href="#icon-claim" /></svg></span>
           <span>Claims</span>
         </button>
         <button class="nav-item" type="button">
@@ -635,72 +643,154 @@
                 <strong>Delivered</strong>
               </article>
             </div>
+            <div class="manage-cards-wallet-carousel" aria-label="Card wallets">
+              <button class="manage-cards-wallet-card meal is-selected" type="button" data-manage-wallet data-wallet-key="meal" data-wallet-label="Meal Wallet" data-wallet-limit="₹3,000" aria-pressed="true">
+                <span class="wallet-icon meal-icon" aria-hidden="true"><svg><use href="#icon-food" /></svg></span>
+                <span>Meal Wallet</span>
+                <strong>₹6,400</strong>
+                <small>Tap &amp; Pay</small>
+              </button>
+              <button class="manage-cards-wallet-card fuel" type="button" data-manage-wallet data-wallet-key="fuel" data-wallet-label="Fuel Wallet" data-wallet-limit="₹8,000" aria-pressed="false">
+                <span class="wallet-icon fuel-icon" aria-hidden="true"><svg><use href="#icon-fuel" /></svg></span>
+                <span>Fuel Wallet</span>
+                <strong>₹3,150</strong>
+                <small>Tap + Scan</small>
+              </button>
+              <button class="manage-cards-wallet-card misc" type="button" data-manage-wallet data-wallet-key="misc" data-wallet-label="Reimbursement Wallet" data-wallet-limit="₹9,100" aria-pressed="false">
+                <span class="wallet-icon misc-icon" aria-hidden="true"><svg><use href="#icon-scan" /></svg></span>
+                <span>Reimbursement</span>
+                <strong>₹9,100</strong>
+                <small>Scan &amp; Pay</small>
+              </button>
+              <button class="manage-cards-wallet-card gift" type="button" data-manage-wallet data-wallet-key="gift" data-wallet-label="Gift Wallet" data-wallet-limit="₹6,200" aria-pressed="false">
+                <span class="wallet-icon gift-icon" aria-hidden="true"><svg><use href="#icon-gift" /></svg></span>
+                <span>Gift Wallet</span>
+                <strong>₹6,200</strong>
+                <small>Card Access</small>
+              </button>
+            </div>
+            <div class="manage-cards-carousel-meta" aria-hidden="true">
+              <span data-manage-wallet-count>1/4</span>
+              <span class="manage-cards-wallet-dots">
+                <i class="is-active"></i>
+                <i></i>
+                <i></i>
+                <i></i>
+              </span>
+            </div>
           </section>
 
           <section class="manage-cards-section">
             <div class="manage-cards-section-head">
-              <h3>Card Controls</h3>
+              <h3>Selected Wallet</h3>
             </div>
-            <div class="manage-cards-action-grid">
-              <button class="manage-cards-action" type="button" data-toast="Card freeze controls opened">
-                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-settings" /></svg></span>
-                <span class="manage-cards-action-copy">
-                  <strong>Freeze Card</strong>
-                  <span>Pause card usage instantly across channels</span>
+            <div class="manage-cards-setting-list manage-cards-summary-list">
+              <article class="manage-cards-setting-item">
+                <span class="manage-cards-setting-copy">
+                  <small class="manage-cards-selected-pill">Selected Wallet</small>
+                  <strong>Pine Visa ending 7845</strong>
+                  <span data-manage-selected-copy>Available balance and controls update with the selected wallet.</span>
                 </span>
-                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
-              </button>
-              <button class="manage-cards-action" type="button" data-toast="PIN management opened">
-                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-card" /></svg></span>
-                <span class="manage-cards-action-copy">
-                  <strong>Change PIN</strong>
-                  <span>Update the physical card PIN securely</span>
+                <span class="manage-cards-balance-card">
+                  <small>Available Balance</small>
+                  <strong data-manage-selected-balance>₹6,400</strong>
                 </span>
-                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
-              </button>
-              <button class="manage-cards-action" type="button" data-toast="Replace card flow opened">
-                <span class="manage-cards-action-icon" aria-hidden="true"><svg><use href="#icon-refresh" /></svg></span>
-                <span class="manage-cards-action-copy">
-                  <strong>Replace Card</strong>
-                  <span>Request a reissue for damage or loss</span>
-                </span>
-                <span class="manage-cards-action-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
-              </button>
+              </article>
             </div>
           </section>
 
           <section class="manage-cards-section">
             <div class="manage-cards-section-head">
-              <h3>Wallet Settings</h3>
+              <h3>Card Details</h3>
+            </div>
+            <div class="manage-cards-card-details">
+              <div class="manage-cards-preview" aria-hidden="true">
+                <span>Pine Benefits</span>
+                <strong data-manage-preview-number>••••  ••••  ••••  7845</strong>
+                <small data-manage-preview-holder>AKSHAY JAIN</small>
+              </div>
+              <div class="manage-cards-detail-list">
+                <article>
+                  <span>Card Number</span>
+                  <strong data-card-sensitive="number">•••• •••• •••• 7845</strong>
+                  <button type="button" aria-label="Reveal card number" data-card-reveal="number"><svg aria-hidden="true"><use href="#icon-eye" /></svg></button>
+                </article>
+                <article>
+                  <span>Card Holder</span>
+                  <strong data-card-sensitive="holder">Akshay Jain</strong>
+                </article>
+                <article>
+                  <span>Expiry Date</span>
+                  <strong data-card-sensitive="expiry">08/29</strong>
+                </article>
+                <article>
+                  <span>CVV</span>
+                  <strong data-card-sensitive="cvv">•••</strong>
+                  <button type="button" aria-label="Reveal CVV" data-card-reveal="cvv"><svg aria-hidden="true"><use href="#icon-eye" /></svg></button>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="manage-cards-section">
+            <div class="manage-cards-section-head">
+              <h3>Usage Controls</h3>
             </div>
             <div class="manage-cards-setting-list">
               <article class="manage-cards-setting-item">
                 <span class="manage-cards-setting-copy">
-                  <strong>Default Wallet</strong>
-                  <span>Meal Wallet</span>
+                  <strong>Merchant Category Access</strong>
+                  <span data-manage-access-copy>Food, grocery and dining merchants</span>
                 </span>
-                <span class="manage-cards-setting-value">Auto Select</span>
+                <span class="manage-cards-setting-value" data-manage-access-value>Enabled</span>
               </article>
-              <article class="manage-cards-setting-item">
+              <button class="manage-cards-setting-item manage-cards-setting-button" type="button" data-manage-online-toggle>
                 <span class="manage-cards-setting-copy">
-                  <strong>Fuel Wallet Limit</strong>
-                  <span>Tap, scan and merchant acceptance</span>
+                  <strong>Online Transactions</strong>
+                  <span data-manage-online-copy>Online merchant transactions disabled</span>
                 </span>
-                <span class="manage-cards-setting-value">₹8,000</span>
-              </article>
-              <article class="manage-cards-setting-item">
+                <span class="manage-cards-toggle" role="switch" aria-checked="false" aria-label="Online Transactions"></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="manage-cards-section">
+            <div class="manage-cards-section-head">
+              <h3>Limits</h3>
+            </div>
+            <div class="manage-cards-setting-list">
+              <article class="manage-cards-setting-item manage-cards-setting-item-limit">
                 <span class="manage-cards-setting-copy">
-                  <strong>Reimbursement Rail</strong>
-                  <span>PPI on UPI merchant usage</span>
+                  <strong>Daily Spend Limit</strong>
+                  <span data-manage-limit-copy>₹4,200 of ₹10,000</span>
                 </span>
-                <span class="manage-cards-setting-value">Enabled</span>
+                <span class="manage-cards-setting-value" data-manage-limit-value>42% used</span>
+                <span class="manage-cards-limit-control">
+                  <span class="manage-cards-limit-track" aria-hidden="true"><i data-manage-limit-progress></i></span>
+                  <span class="manage-cards-limit-labels"><small data-manage-limit-used>₹4,200 used</small><small data-manage-limit-total>₹10,000 limit</small></span>
+                </span>
               </article>
             </div>
           </section>
 
           <section class="manage-cards-section">
             <div class="manage-cards-section-head">
-              <h3>Security &amp; Support</h3>
+              <h3>Card Status</h3>
+            </div>
+            <div class="manage-cards-setting-list">
+              <article class="manage-cards-setting-item">
+                <span class="manage-cards-setting-copy">
+                  <strong>Status</strong>
+                  <span data-manage-status-copy>Card ready for selected wallet</span>
+                </span>
+                <span class="manage-cards-status-pill">Active</span>
+              </article>
+            </div>
+          </section>
+
+          <section class="manage-cards-section">
+            <div class="manage-cards-section-head">
+              <h3>Support</h3>
             </div>
             <div class="manage-cards-action-grid">
               <button class="manage-cards-action is-soft" type="button" data-toast="Notification preferences opened">
@@ -758,6 +848,7 @@
             <button type="button" data-claims-action="upload"><svg aria-hidden="true"><use href="#icon-scan" /></svg>Upload bill</button>
             <button type="button" data-claims-action="category"><svg aria-hidden="true"><use href="#icon-wallet" /></svg>Choose category</button>
             <button type="button" data-claims-action="drafts"><svg aria-hidden="true"><use href="#icon-receipt" /></svg>View drafts</button>
+            <button type="button" data-claims-action="history"><svg aria-hidden="true"><use href="#icon-claim" /></svg>View history</button>
           </div>
           <div class="claims-input-row merchant-directory-search">
             <button class="claims-upload-button wallet-overlay-back" type="button" aria-label="Upload bill" data-claims-action="upload">
