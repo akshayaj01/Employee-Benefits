@@ -45,8 +45,6 @@ const manageWalletButtons = document.querySelectorAll("[data-manage-wallet]");
 const manageOnlineButton = document.querySelector("[data-manage-online-toggle]");
 const manageWalletCount = document.querySelector("[data-manage-wallet-count]");
 const manageWalletDots = document.querySelectorAll(".manage-cards-wallet-dots i");
-const manageSelectedCopy = document.querySelector("[data-manage-selected-copy]");
-const manageSelectedBalance = document.querySelector("[data-manage-selected-balance]");
 const manageAccessCopy = document.querySelector("[data-manage-access-copy]");
 const manageAccessValue = document.querySelector("[data-manage-access-value]");
 const manageLimitCopy = document.querySelector("[data-manage-limit-copy]");
@@ -58,6 +56,13 @@ const manageOnlineCopy = document.querySelector("[data-manage-online-copy]");
 const manageStatusCopy = document.querySelector("[data-manage-status-copy]");
 const manageSensitiveFields = document.querySelectorAll("[data-card-sensitive]");
 const manageRevealButtons = document.querySelectorAll("[data-card-reveal]");
+const managePreviewNumber = document.querySelector("[data-manage-preview-number]");
+const managePreviewHolder = document.querySelector("[data-manage-preview-holder]");
+const managePreviewExpiry = document.querySelector("[data-manage-preview-expiry]");
+const manageWalletType = document.querySelector("[data-manage-wallet-type]");
+const manageFreezeButton = document.querySelector("[data-manage-freeze-toggle]");
+const manageFreezeTitle = document.querySelector("[data-manage-freeze-title]");
+const manageFreezeCopy = document.querySelector("[data-manage-freeze-copy]");
 const claimsOpenButton = document.querySelector("[data-claims-open]");
 const claimsAssistant = document.querySelector("[data-claims-assistant]");
 const claimsCloseButtons = document.querySelectorAll("[data-claims-close]");
@@ -78,48 +83,52 @@ const manageWalletState = {
     label: "Meal Wallet",
     balance: "₹6,400",
     summary: "Available balance for daily essentials",
-    accessCopy: "Food, grocery and dining merchants",
-    accessValue: "Enabled",
+    accessCopy: "Groceries, Restaurants, Food Delivery",
+    accessValue: "Allowed",
     limitUsed: 4200,
     limitTotal: 10000,
-    online: false,
-    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    online: true,
+    frozen: false,
+    card: { number: "4521 8890 4432 7845", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7845" },
     reveal: { number: false, cvv: false },
   },
   fuel: {
     label: "Fuel Wallet",
     balance: "₹3,150",
     summary: "Available balance for commute spends",
-    accessCopy: "Fuel pumps, service stations and mobility merchants",
-    accessValue: "Enabled",
+    accessCopy: "Fuel Stations, Mobility, Auto Care",
+    accessValue: "Allowed",
     limitUsed: 4200,
     limitTotal: 10000,
     online: true,
-    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    frozen: false,
+    card: { number: "4521 8890 4432 7846", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7846" },
     reveal: { number: false, cvv: false },
   },
   misc: {
     label: "Reimbursement Wallet",
     balance: "₹9,100",
     summary: "Available balance for claim-based spends",
-    accessCopy: "Eligible reimbursement merchants and QR spends",
-    accessValue: "Enabled",
+    accessCopy: "Claims, QR Payments, Approved Vendors",
+    accessValue: "Allowed",
     limitUsed: 4200,
     limitTotal: 10000,
-    online: false,
-    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    online: true,
+    frozen: false,
+    card: { number: "4521 8890 4432 7847", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7847" },
     reveal: { number: false, cvv: false },
   },
   gift: {
     label: "Gift Wallet",
     balance: "₹6,200",
     summary: "Available balance for gifting spends",
-    accessCopy: "Card-led online and brand redemption usage",
-    accessValue: "Enabled",
+    accessCopy: "Gift Cards, Online Stores, Brand Partners",
+    accessValue: "Allowed",
     limitUsed: 4200,
     limitTotal: 10000,
     online: true,
-    card: { number: "4521 8890 4432 7845", holder: "Akshay Jain", expiry: "08/29", cvv: "731" },
+    frozen: false,
+    card: { number: "4521 8890 4432 7848", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7848" },
     reveal: { number: false, cvv: false },
   },
 };
@@ -953,9 +962,14 @@ function renderManageWalletState() {
 
   const progress = Math.round((state.limitUsed / state.limitTotal) * 100);
   const onlineEnabled = Boolean(state.online);
+  const frozen = Boolean(state.frozen);
 
-  if (manageSelectedCopy) manageSelectedCopy.textContent = state.summary;
-  if (manageSelectedBalance) manageSelectedBalance.textContent = state.balance;
+  if (manageWalletType) manageWalletType.textContent = state.label;
+  if (manageFreezeTitle) manageFreezeTitle.textContent = `Freeze ${state.label}`;
+  if (manageFreezeCopy) manageFreezeCopy.textContent = frozen ? `${state.label} is frozen` : `Pause ${state.label} instantly`;
+  manageFreezeButton?.classList.toggle("is-enabled", frozen);
+  manageFreezeButton?.setAttribute("aria-pressed", String(frozen));
+  manageFreezeButton?.querySelector(".manage-cards-toggle")?.setAttribute("aria-checked", String(frozen));
   if (manageAccessCopy) manageAccessCopy.textContent = state.accessCopy;
   if (manageAccessValue) manageAccessValue.textContent = state.accessValue;
   if (manageOnlineCopy) manageOnlineCopy.textContent = `Online merchant transactions ${onlineEnabled ? "enabled" : "disabled"}`;
@@ -967,10 +981,13 @@ function renderManageWalletState() {
   if (manageLimitUsed) manageLimitUsed.textContent = `${formatCurrency(state.limitUsed)} used`;
   if (manageLimitTotal) manageLimitTotal.textContent = `${formatCurrency(state.limitTotal)} limit`;
   if (manageLimitProgress) manageLimitProgress.style.width = `${progress}%`;
-  if (manageStatusCopy) manageStatusCopy.textContent = "Card ready for selected wallet";
+  if (manageStatusCopy) manageStatusCopy.textContent = "Your card is active and ready to use";
+  if (managePreviewNumber) managePreviewNumber.textContent = state.reveal.number ? state.card.number : "**** **** **** 7845";
+  if (managePreviewHolder) managePreviewHolder.textContent = state.card.holder;
+  if (managePreviewExpiry) managePreviewExpiry.textContent = state.card.expiry;
   manageSensitiveFields.forEach((field) => {
     const key = field.dataset.cardSensitive;
-    if (key === "number") field.textContent = state.reveal.number ? state.card.number : "•••• •••• •••• 7845";
+    if (key === "number") field.textContent = state.reveal.number ? state.card.number : `**** **** **** ${state.card.last4}`;
     if (key === "holder") field.textContent = state.card.holder;
     if (key === "expiry") field.textContent = state.card.expiry;
     if (key === "cvv") field.textContent = state.reveal.cvv ? state.card.cvv : "•••";
@@ -979,6 +996,12 @@ function renderManageWalletState() {
     const key = button.dataset.cardReveal;
     if (!Object.prototype.hasOwnProperty.call(state.reveal, key)) return;
     button.setAttribute("aria-label", `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`);
+  });
+  manageWalletButtons.forEach((button) => {
+    const walletState = manageWalletState[button.dataset.walletKey];
+    const statusBadge = button.querySelector(".manage-cards-status-badge");
+    button.classList.toggle("is-frozen", Boolean(walletState?.frozen));
+    if (statusBadge) statusBadge.textContent = walletState?.frozen ? "Frozen" : "Active";
   });
 }
 
@@ -1006,6 +1029,15 @@ manageWalletButtons.forEach((button) => {
   });
 });
 
+manageWalletDots.forEach((dot, index) => {
+  dot.addEventListener("click", () => {
+    const targetWallet = manageWalletButtons[index];
+    if (!targetWallet) return;
+    selectManageWallet(targetWallet);
+    targetWallet.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  });
+});
+
 manageWalletCarousel?.addEventListener("scroll", () => {
   window.clearTimeout(manageWalletCarousel.scrollTimer);
   manageWalletCarousel.scrollTimer = window.setTimeout(() => {
@@ -1027,6 +1059,14 @@ manageOnlineButton?.addEventListener("click", () => {
   state.online = !state.online;
   renderManageWalletState();
   showToast(`${state.label} online transactions ${state.online ? "enabled" : "disabled"}`);
+});
+
+manageFreezeButton?.addEventListener("click", () => {
+  const state = manageWalletState[activeManageWalletKey];
+  if (!state) return;
+  state.frozen = !state.frozen;
+  renderManageWalletState();
+  showToast(`${state.label} ${state.frozen ? "frozen" : "unfrozen"}`);
 });
 
 function formatCurrency(value) {
