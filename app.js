@@ -120,7 +120,7 @@ const manageWalletState = {
   },
   gift: {
     label: "Gift Wallet",
-    balance: "₹6,200",
+    balance: "6,200 pts",
     summary: "Available balance for gifting spends",
     accessCopy: "Gift Cards, Online Stores, Brand Partners",
     accessValue: "Allowed",
@@ -276,7 +276,6 @@ const claimCategories = {
       completionCertificate: "",
     },
     errors: [
-      ["period", "Missing bill period", "I could not find the month covered by this bill.", "Add Apr 2026"],
       ["duplicate", "Duplicate month", "There is already a Telephone & Internet claim for Apr 2026.", "Mark as alternate bill"],
       ["name", "Name mismatch", "Bill shows V Sharma, while profile shows Virat Sharma.", "Confirm employee name"],
       ["amount", "Amount mismatch", "OCR total and line-item total differ by ₹51.", "Use invoice total"],
@@ -377,7 +376,6 @@ function getClaimErrors() {
   return errors
     .filter(([id]) => {
       const draft = claimState.draft;
-      if (id === "period") return !draft.billPeriod;
       if (id === "duplicate") return !draft.invoiceNumber.includes("ALT");
       if (id === "name") return draft.employeeName !== "Virat Sharma";
       if (id === "amount") return draft.amount === "₹2,149";
@@ -414,6 +412,75 @@ function resolveClaimError(id) {
   addClaimMessage("user", "Fix applied");
   addClaimMessage("bot", "Updated the draft. You can validate again when ready.");
   renderClaimsAssistant();
+}
+
+function formatClaimBillPeriod(value) {
+  if (!value) return "";
+  const [year, month, day] = value.split("-");
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function formatClaimBillPeriodRange(startValue, endValue) {
+  const start = formatClaimBillPeriod(startValue);
+  const end = formatClaimBillPeriod(endValue);
+  if (start && end) return start === end ? start : `${start} - ${end}`;
+  return start || end;
+}
+
+function changeClaimCategory(categoryKey) {
+  if (!claimCategories[categoryKey] || categoryKey === claimState.selectedCategory) return;
+  claimState.selectedCategory = categoryKey;
+  claimState.draft = cloneClaimDraft(categoryKey);
+  claimState.errors = getClaimErrors();
+  claimState.stage = "draft";
+  addClaimMessage("user", `Change category to ${claimCategories[categoryKey].label}`);
+  addLiveClaimBotMessage(`Changed this draft to ${claimCategories[categoryKey].label}. I refreshed the extracted fields and policy checks for that category.`, 620);
+}
+
+function getClaimAssistantReply(text) {
+  const message = text.toLowerCase();
+  const draft = claimState.draft;
+  const errors = getClaimErrors();
+  if (/(why|reason|rejected|reject|declined|decline|failed|fail|blocked)/.test(message)) {
+    if (errors.length) {
+      const reason = errors[0];
+      return `The likely reason is: ${reason.title}. ${reason.detail} Other common rejection reasons are merchant not allowed by policy, expired KYC, duplicate bill period, unclear receipt, missing approval, or amount mismatch.`;
+    }
+    return "This draft is not currently rejected in the prototype. Common rejection reasons are merchant not covered by policy, expired KYC, duplicate bill period, missing bill details, unclear receipt, missing approval, or a mismatch between OCR amount and invoice total.";
+  }
+  if (/(kyc|know your customer)/.test(message)) {
+    return "If KYC is expired, claims can be blocked until identity verification is renewed. In this mock flow, I would show it as a policy rejection and ask you to update KYC before resubmitting.";
+  }
+  if (/(merchant|vendor|policy|allowed|eligible)/.test(message)) {
+    return `${draft.vendor || "This merchant"} is checked against the selected category policy. If the merchant is not in the approved list, the claim should be rejected or routed for manual review.`;
+  }
+  if (/(bill period|period|date|calendar)/.test(message)) {
+    return `Use the Bill period row to choose the start and end dates from the calendar. The current value is ${draft.billPeriod || "not added yet"}.`;
+  }
+  if (/(amount|total|money|claim amount)/.test(message)) {
+    return `The extracted claim amount is ${draft.amount || "not available"}. If OCR and invoice totals do not match, use the invoice total before submitting.`;
+  }
+  if (/(category|change category)/.test(message)) {
+    return `The current category is ${draft.category}. You can change it from the Category field inside the extracted draft section after upload.`;
+  }
+  if (/(status|where|approval|approved|submitted|payout)/.test(message)) {
+    return `Current claim status is ${draft.status}. After submission, it moves through manager review, finance check, and payout.`;
+  }
+  if (/(hello|hi|hey|help)/.test(message)) {
+    return "I can help explain rejection reasons, policy eligibility, KYC blocks, bill period, amount mismatches, category changes, and submission status.";
+  }
+  return `I checked this against the current draft. Category: ${draft.category}. Vendor: ${draft.vendor}. Amount: ${draft.amount}. Status: ${draft.status}. Ask me about rejection reason, merchant policy, KYC, amount, bill period, or submission status and I will narrow it down.`;
+}
+
+function addLiveClaimBotMessage(text, delay = 650) {
+  claimState.isThinking = true;
+  renderClaimsAssistant();
+  window.setTimeout(() => {
+    claimState.isThinking = false;
+    addClaimMessage("bot", text);
+    renderClaimsAssistant();
+  }, delay);
 }
 
 function openClaimsAssistant() {
@@ -674,12 +741,34 @@ function renderClaimDraftCard() {
           .map(([field, label]) => {
             const value = draft[field] || "";
             const needsAttention = isClaimFieldMissing(field);
+            const isBillPeriod = field === "billPeriod";
+            const isCategory = field === "category";
             return `
             <label class="claims-field-row transaction-item ${needsAttention ? "needs-attention" : ""} ${value && !needsAttention ? "is-filled" : "is-empty"}">
               <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
               <span class="transaction-meta">
                 <strong>${label}</strong>
-                <input value="${value}" placeholder="Add ${label.toLowerCase()}" data-claims-field="${field}" />
+                ${isCategory ? `
+                  <select class="claims-category-select" data-claims-category-select aria-label="Change claim category">
+                    ${Object.entries(claimCategories)
+                      .map(([key, category]) => `<option value="${key}" ${key === categoryKey ? "selected" : ""}>${category.label}</option>`)
+                      .join("")}
+                  </select>
+                ` : isBillPeriod ? `
+                  <span class="claims-period-entry">
+                    <input value="${value}" placeholder="Add bill period" data-claims-field="${field}" />
+                    <button type="button" class="claims-period-calendar" aria-label="Choose bill period start date" data-claims-period-open="start">
+                      <svg aria-hidden="true"><use href="#icon-calendar" /></svg>
+                      <small>From</small>
+                    </button>
+                    <button type="button" class="claims-period-calendar" aria-label="Choose bill period end date" data-claims-period-open="end">
+                      <svg aria-hidden="true"><use href="#icon-calendar" /></svg>
+                      <small>To</small>
+                    </button>
+                    <input class="claims-period-picker" type="date" value="${draft.billPeriodStart || ""}" data-claims-period-picker="start" aria-label="Bill period start date" />
+                    <input class="claims-period-picker" type="date" value="${draft.billPeriodEnd || ""}" data-claims-period-picker="end" aria-label="Bill period end date" />
+                  </span>
+                ` : `<input value="${value}" placeholder="Add ${label.toLowerCase()}" data-claims-field="${field}" />`}
               </span>
             </label>
           `;})
@@ -691,8 +780,7 @@ function renderClaimDraftCard() {
 
 function isClaimFieldMissing(field) {
   const draft = claimState.draft;
-  return (field === "billPeriod" && claimState.selectedCategory === "telephone" && !draft.billPeriod)
-    || (field === "vehicleNumber" && claimState.selectedCategory === "fuel" && !draft.vehicleNumber)
+  return (field === "vehicleNumber" && claimState.selectedCategory === "fuel" && !draft.vehicleNumber)
     || (field === "courseName" && claimState.selectedCategory === "development" && !draft.courseName)
     || (field === "managerApproval" && draft.managerApproval === "Missing")
     || (field === "completionCertificate" && draft.completionCertificate === "Missing");
@@ -782,6 +870,25 @@ function bindClaimsWorkspaceActions() {
   });
   claimsWorkspace?.querySelectorAll("[data-claims-field]").forEach((input) => {
     input.addEventListener("input", () => updateClaimField(input.dataset.claimsField, input.value));
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-category-select]").forEach((select) => {
+    select.addEventListener("change", () => changeClaimCategory(select.value));
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-period-open]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const picker = button.parentElement?.querySelector(`[data-claims-period-picker="${button.dataset.claimsPeriodOpen}"]`);
+      if (!picker) return;
+      if (picker.showPicker) picker.showPicker();
+      else picker.click();
+    });
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-period-picker]").forEach((picker) => {
+    picker.addEventListener("change", () => {
+      const key = picker.dataset.claimsPeriodPicker === "start" ? "billPeriodStart" : "billPeriodEnd";
+      claimState.draft[key] = picker.value;
+      updateClaimField("billPeriod", formatClaimBillPeriodRange(claimState.draft.billPeriodStart, claimState.draft.billPeriodEnd));
+      renderClaimsAssistant();
+    });
   });
 }
 
@@ -1102,14 +1209,8 @@ claimsSendButton?.addEventListener("click", () => {
   if (!text) return;
   addClaimMessage("user", text);
   claimsInput.value = "";
-  claimState.isThinking = true;
   syncClaimsComposer();
-  renderClaimsAssistant();
-  window.setTimeout(() => {
-    claimState.isThinking = false;
-    addClaimMessage("bot", "I can help with upload, category selection, validation, corrections, review or submission.");
-    renderClaimsAssistant();
-  }, 240);
+  addLiveClaimBotMessage(getClaimAssistantReply(text), 720);
 });
 
 claimsInput?.addEventListener("keydown", (event) => {

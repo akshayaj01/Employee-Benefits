@@ -5048,6 +5048,75 @@ body.is-merchant-directory-open .bottom-nav {
   opacity: 1;
 }
 
+.claims-category-select {
+  width: 100%;
+  min-height: 28px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #003434;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.08;
+}
+
+.claims-period-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px 42px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.claims-period-calendar {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 42px;
+  height: 34px;
+  border: 1px solid rgba(0, 86, 86, 0.16);
+  border-radius: 12px;
+  background: #eef8f2;
+  color: #005656;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.claims-period-calendar svg {
+  width: 15px;
+  height: 15px;
+}
+
+.claims-period-calendar small {
+  display: block;
+  margin-top: 1px;
+  color: #5e7e76;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.claims-period-calendar:active {
+  transform: scale(0.96);
+}
+
+.claims-period-calendar:focus-visible {
+  outline: 2px solid rgba(0, 86, 86, 0.28);
+  outline-offset: 2px;
+}
+
+.claims-period-picker {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 42px;
+  height: 34px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .claims-error-card.merchant-directory-item {
   grid-template-columns: 40px minmax(0, 1fr);
   gap: var(--space-12);
