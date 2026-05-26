@@ -645,10 +645,9 @@ function renderClaimsEmptyState() {
   return `
     <section class="claims-empty-card wallet-overlay-summary gift">
       <h3>Start a reimbursement claim</h3>
-      <p>Upload a bill for OCR extraction or choose a category first. Everything here is mocked locally for product review.</p>
+      <p>Upload a bill for OCR extraction. Everything here is mocked locally for product review.</p>
       <div class="claims-action-grid wallet-overlay-mode-switch">
         <button type="button" class="wallet-overlay-mode-button is-active" data-claims-workspace-action="upload">Upload bill</button>
-        <button type="button" class="wallet-overlay-mode-button" data-claims-workspace-action="category">Choose category</button>
       </div>
     </section>
   `;
@@ -894,23 +893,6 @@ function bindClaimsWorkspaceActions() {
 
 function handleClaimsAction(action) {
   if (action === "upload") simulateClaimUpload();
-  if (action === "category") {
-    claimState.stage = "category";
-    addClaimMessage("user", "Choose category");
-    addClaimMessage("bot", "Choose the reimbursement category that best matches your bill.");
-    renderClaimsAssistant();
-  }
-  if (action === "drafts") {
-    claimState.stage = "draft";
-    addClaimMessage("user", "View drafts");
-    addClaimMessage("bot", "Here is your latest reimbursement draft.");
-    renderClaimsAssistant();
-  }
-  if (action === "history") {
-    addClaimMessage("user", "View history");
-    addClaimMessage("bot", "Claim history will show submitted, approved and paid reimbursements.");
-    renderClaimsAssistant();
-  }
   if (action === "validate") validateClaimPolicy();
   if (action === "review") {
     claimState.errors = getClaimErrors();
@@ -927,7 +909,7 @@ function handleClaimsAction(action) {
     claimState.errors = [];
     claimState.isThinking = false;
     claimState.claimId = "";
-    claimState.messages = [{ role: "bot", text: "Ready for another claim. Upload a bill or choose a category to begin." }];
+    claimState.messages = [{ role: "bot", text: "Ready for another claim. Upload a bill to begin." }];
     renderClaimsAssistant();
   }
 }
