@@ -199,21 +199,15 @@ svg {
 
 .topbar {
   display: grid;
-  gap: var(--space-12);
-  min-height: 88px;
+  min-height: 48px;
 }
 
 .topbar-row {
   display: grid;
-  grid-template-columns: 42px 1fr auto;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: start;
   gap: var(--space-8);
   min-height: 36px;
-}
-
-.topbar-switch-row {
-  display: flex;
-  justify-content: flex-end;
 }
 
 .avatar-button,
@@ -277,6 +271,7 @@ svg {
 }
 
 .pluspay-toggle {
+  justify-self: end;
   display: inline-flex;
   align-items: center;
   gap: var(--space-8);
@@ -3942,6 +3937,7 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .nav-icon-shell {
+  position: relative;
   display: grid;
   place-items: center;
   width: 36px;
@@ -3953,6 +3949,19 @@ body.is-merchant-directory-open .bottom-nav {
 
 .nav-item.is-active .nav-icon-shell {
   background: linear-gradient(180deg, #e8f6f0, #dceee7);
+}
+
+.nav-icon-shell.has-dot::after {
+  top: 8px;
+  right: 8px;
+  border-color: rgba(255, 255, 255, 0.94);
+  background: #d0f255;
+}
+
+.notification-nav-item span:last-child {
+  max-width: 82px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bottom-nav > button > svg,
@@ -5263,11 +5272,17 @@ body.is-merchant-directory-open .bottom-nav {
   font-size: var(--text-12);
 }
 
+.claims-empty-card .wallet-overlay-cta,
 .claims-upload-card .wallet-overlay-cta,
 .claims-success-card .wallet-overlay-cta {
   width: 100%;
   min-height: 56px;
   margin-top: var(--space-4);
+}
+
+.claims-empty-upload {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .claims-upload-card .wallet-overlay-cta {
@@ -5770,10 +5785,6 @@ body.is-merchant-directory-open .bottom-nav {
   .utility-grid,
   .pluspay-actions-grid {
     grid-template-columns: 1fr;
-  }
-
-  .topbar {
-    min-height: 84px;
   }
 
   .topbar-row {

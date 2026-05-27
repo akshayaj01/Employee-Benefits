@@ -144,13 +144,6 @@
             <a class="brand" href="#" aria-label="Lens home">
               <span data-lens-text="Lens" data-pluspay-text="PlusPay">Lens</span>
             </a>
-            <div class="header-actions">
-              <button class="icon-button has-dot" type="button" aria-label="Open notifications">
-                <svg><use href="#icon-bell" /></svg>
-              </button>
-            </div>
-          </div>
-          <div class="topbar-switch-row">
             <button class="pluspay-toggle" type="button" aria-pressed="false" data-pluspay-toggle>
               <span class="pluspay-toggle-track">
                 <span class="pluspay-toggle-thumb"></span>
@@ -451,9 +444,9 @@
           <span><svg><use href="#icon-claim" /></svg></span>
           <span>Claims</span>
         </button>
-        <button class="nav-item" type="button">
-          <span class="nav-icon-shell"><svg><use href="#icon-settings" /></svg></span>
-          <span>Settings</span>
+        <button class="nav-item notification-nav-item" type="button" aria-label="Notifications">
+          <span class="nav-icon-shell has-dot"><svg><use href="#icon-bell" /></svg></span>
+          <span>Notifications</span>
         </button>
       </nav>
       <button class="chatbot-fab" type="button" aria-label="Open support assistant" data-toast="Assistant opened" data-pluspay-hide>
@@ -808,9 +801,6 @@
           <div class="claims-workspace" data-claims-workspace></div>
         </div>
         <footer class="claims-composer">
-          <div class="claims-quick-actions filter-chips" data-claims-quick-actions>
-            <button type="button" data-claims-action="upload"><svg aria-hidden="true"><use href="#icon-scan" /></svg>Upload bill</button>
-          </div>
           <div class="claims-input-row merchant-directory-search">
             <button class="claims-upload-button wallet-overlay-back" type="button" aria-label="Upload bill" data-claims-action="upload">
               <svg aria-hidden="true"><use href="#icon-plus" /></svg>

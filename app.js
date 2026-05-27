@@ -646,9 +646,9 @@ function renderClaimsEmptyState() {
     <section class="claims-empty-card wallet-overlay-summary gift">
       <h3>Start a reimbursement claim</h3>
       <p>Upload a bill for OCR extraction. Everything here is mocked locally for product review.</p>
-      <div class="claims-action-grid wallet-overlay-mode-switch">
-        <button type="button" class="wallet-overlay-mode-button is-active" data-claims-workspace-action="upload">Upload bill</button>
-      </div>
+      <button type="button" class="wallet-overlay-cta claims-primary-action claims-empty-upload" data-claims-workspace-action="upload">
+        <span class="wallet-overlay-cta-copy"><strong>Upload bill</strong></span>
+      </button>
     </section>
   `;
 }
