@@ -1332,7 +1332,7 @@ function openManageCardsOverlay() {
     manageCardsOverlay.classList.add("is-open");
     syncPageScrollLock();
   });
-  showToast("Manage Cards opened");
+  showToast("Manage Wallets opened");
 }
 
 function openWalletOverlay(button) {

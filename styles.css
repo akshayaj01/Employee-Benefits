@@ -901,6 +901,10 @@ body.is-pluspay .transactions-section {
   gap: var(--space-8);
 }
 
+.wallet-experience-panel .compact-heading {
+  margin-bottom: var(--space-8);
+}
+
 .wallet-detail-action,
 .wallet-overlay-action {
   display: grid;
@@ -3728,7 +3732,7 @@ body.is-merchant-directory-open .bottom-nav {
   justify-items: start;
   align-content: start;
   gap: var(--space-8);
-  min-height: 148px;
+  min-height: 132px;
   padding: var(--space-16) var(--space-12);
   border: 1px solid rgba(0, 86, 86, 0.08);
   border-radius: 18px;
