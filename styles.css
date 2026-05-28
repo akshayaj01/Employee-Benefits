@@ -183,6 +183,7 @@ svg {
 .hero-panel,
 .upi-panel,
 .pluspay-actions-panel,
+.tap-pay-discovery,
 .utility-panel,
 .transactions-section,
 .bottom-nav,
@@ -653,6 +654,180 @@ body.is-pluspay .transactions-section {
   color: var(--success);
   font-size: var(--text-12);
   font-weight: 900;
+}
+
+.tap-pay-discovery {
+  position: relative;
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-10, 10px);
+  width: 100%;
+  min-height: 76px;
+  margin-top: var(--space-16);
+  padding: 7px 14px 7px 7px;
+  border: 1px solid rgba(54, 204, 139, 0.48);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(208, 242, 85, 0.34), transparent 33%),
+    radial-gradient(circle at 88% 18%, rgba(54, 204, 139, 0.1), transparent 24%),
+    linear-gradient(135deg, #fffffb 0%, #f5fff2 100%);
+  box-shadow: 0 14px 30px rgba(0, 86, 86, 0.07);
+  color: var(--brand-900);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(6px);
+  overflow: hidden;
+  transition:
+    box-shadow 260ms ease,
+    opacity 400ms ease,
+    transform 400ms ease;
+}
+
+.tap-pay-discovery.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tap-pay-discovery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 14%, rgba(255, 255, 255, 0.44) 42%, transparent 68%);
+  transform: translateX(-115%);
+  animation: tap-discovery-sheen 4800ms ease-in-out 900ms infinite;
+  pointer-events: none;
+}
+
+.tap-pay-discovery:active {
+  transform: translateY(1px) scale(0.995);
+}
+
+.tap-pay-discovery-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 62px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle, rgba(208, 242, 85, 0.5) 0 19%, rgba(208, 242, 85, 0.22) 20% 37%, transparent 38%),
+    radial-gradient(circle, rgba(54, 204, 139, 0.12) 0 55%, transparent 56%);
+}
+
+.tap-pay-discovery-art::before,
+.tap-pay-discovery-art::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(208, 242, 85, 0.44);
+  opacity: 0.58;
+  animation: tap-discovery-orbit 3600ms ease-in-out infinite;
+}
+
+.tap-pay-discovery-art::before {
+  width: 48px;
+  height: 48px;
+}
+
+.tap-pay-discovery-art::after {
+  width: 66px;
+  height: 66px;
+  border-color: rgba(208, 242, 85, 0.28);
+  animation-delay: 520ms;
+}
+
+.tap-pay-discovery-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.66), transparent 29%),
+    linear-gradient(180deg, #e8fac5, #cfef7c);
+  color: var(--brand-700);
+  box-shadow: 0 12px 22px rgba(0, 86, 86, 0.13);
+}
+
+.tap-pay-discovery-icon::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border: 1px solid rgba(208, 242, 85, 0.54);
+  border-radius: 50%;
+  opacity: 0;
+  animation: tap-discovery-pulse 2100ms ease-out infinite;
+}
+
+.tap-pay-discovery-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.4;
+}
+
+.tap-pay-discovery-copy {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tap-pay-discovery-copy strong {
+  color: var(--brand-900);
+  font-size: var(--text-14);
+  line-height: 1.16;
+  font-weight: 900;
+}
+
+.tap-pay-discovery-copy small {
+  color: var(--muted);
+  font-size: var(--text-12);
+  line-height: 1.45;
+  font-weight: 800;
+}
+
+.tap-pay-spark {
+  position: absolute;
+  z-index: 2;
+  width: 6px;
+  height: 6px;
+  color: #f1bd27;
+  transform: rotate(45deg);
+  animation: tap-spark-twinkle 2600ms ease-in-out infinite;
+}
+
+.tap-pay-spark::before,
+.tap-pay-spark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: currentColor;
+  border-radius: 999px;
+}
+
+.tap-pay-spark::before {
+  width: 2px;
+  height: 6px;
+}
+
+.tap-pay-spark::after {
+  width: 6px;
+  height: 2px;
+}
+
+.tap-pay-spark.one {
+  top: 13px;
+  left: 13px;
+}
+
+.tap-pay-spark.two {
+  right: 14px;
+  bottom: 14px;
+  animation-delay: 520ms;
 }
 
 .pluspay-actions-grid {
@@ -1140,7 +1315,7 @@ body.is-pluspay .transactions-section {
 
 .merchant-directory-location {
   grid-template-columns: 32px minmax(0, 1fr) auto;
-  gap: var(--space-10);
+  column-gap: var(--space-16);
   padding: var(--space-4) var(--space-4) var(--space-8);
   border: 0;
   border-bottom: 1px solid rgba(0, 86, 86, 0.1);
@@ -1208,7 +1383,7 @@ body.is-pluspay .transactions-section {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(0, 86, 86, 0.07);
+  background: transparent;
   color: var(--brand-700);
 }
 
@@ -1375,6 +1550,10 @@ body.is-pluspay .transactions-section {
 .merchant-directory-item:nth-child(4n + 4) {
   border-color: #bee4cd;
   background: linear-gradient(180deg, rgba(252, 255, 253, 0.98), rgba(232, 248, 238, 0.7));
+}
+
+.merchant-directory-item.has-extra-bottom-space {
+  margin-bottom: 40px;
 }
 
 .merchant-directory-item-icon {
@@ -3326,7 +3505,7 @@ body.is-merchant-directory-open .bottom-nav {
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + 132px);
+  padding: var(--space-16) var(--space-16) calc(env(safe-area-inset-bottom, 0px) + 172px);
 }
 
 .wallet-overlay-summary {
@@ -3634,22 +3813,27 @@ body.is-merchant-directory-open .bottom-nav {
 
 .wallet-merchant-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--space-12);
 }
 
 .wallet-merchant-card {
   position: relative;
   display: grid;
-  align-content: start;
-  gap: var(--space-8);
-  min-height: 152px;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: var(--space-12);
+  row-gap: var(--space-4);
+  min-height: 96px;
   padding: var(--space-16);
-  border: 1px solid #d7d3ff;
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(245, 243, 255, 0.95), rgba(239, 236, 255, 0.92));
+  border: 1px solid rgba(0, 86, 86, 0.08);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 10% 22%, rgba(208, 242, 85, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 255, 251, 0.92));
   text-align: left;
-  box-shadow: 0 14px 28px rgba(0, 86, 86, 0.06);
+  box-shadow: 0 14px 28px rgba(0, 86, 86, 0.07);
 }
 
 .wallet-merchant-card.is-accent {
@@ -3658,10 +3842,11 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .wallet-merchant-icon {
+  grid-row: 1 / span 2;
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 16px;
 }
 
@@ -3672,8 +3857,8 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .merchant-directory-icon {
-  background: linear-gradient(180deg, #dedbff, #cdc7ff);
-  color: #4950d0;
+  background: linear-gradient(180deg, #fff3e8, #ffe3cb);
+  color: #d96b00;
 }
 
 .merchant-select-icon {
@@ -3682,34 +3867,40 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .wallet-merchant-card strong {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: var(--text-16);
   line-height: 1.24;
   font-weight: 900;
+  color: var(--brand-900);
 }
 
 .wallet-merchant-card span:not(.wallet-merchant-icon):not(.wallet-merchant-arrow) {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
   color: var(--subtle);
   font-size: var(--text-12);
   line-height: 1.4;
 }
 
 .wallet-merchant-arrow {
-  position: absolute;
-  top: var(--space-16);
-  right: var(--space-16);
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  align-self: center;
   display: grid;
   place-items: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--brand-700);
+  color: #5b616f;
 }
 
 .wallet-merchant-arrow svg {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
+  stroke-width: 3;
 }
 
 .wallet-history-list {
@@ -3863,6 +4054,36 @@ body.is-merchant-directory-open .bottom-nav {
   font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.transaction-status {
+  justify-self: end;
+  max-width: 100%;
+  padding: 3px 8px;
+  border: 1px solid rgba(0, 86, 86, 0.1);
+  border-radius: 999px;
+  background: var(--mint-soft);
+  color: var(--brand-700);
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.transaction-status.processed {
+  border-color: rgba(29, 143, 99, 0.2);
+  background: #ebfaf1;
+  color: #1d8f63;
+}
+
+.transaction-status.under-review {
+  border-color: rgba(216, 142, 24, 0.22);
+  background: #fff6e5;
+  color: #b66b00;
+}
+
+.transaction-status.denied {
+  border-color: rgba(198, 63, 63, 0.2);
+  background: #fff0f0;
+  color: #b83535;
 }
 
 .transaction-amount {
@@ -4730,6 +4951,8 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .claims-category-card.wallet-merchant-card {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
   justify-items: center;
   align-content: start;
   gap: 10px;
@@ -5576,7 +5799,67 @@ body.is-merchant-directory-open .bottom-nav {
   }
 }
 
+@keyframes tap-discovery-sheen {
+  0%,
+  48% {
+    transform: translateX(-115%);
+  }
+
+  76%,
+  100% {
+    transform: translateX(115%);
+  }
+}
+
+@keyframes tap-discovery-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  34% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.32);
+  }
+}
+
+@keyframes tap-discovery-orbit {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.72;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes tap-spark-twinkle {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: rotate(45deg) scale(0.84);
+  }
+
+  50% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1.08);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .tap-pay-discovery,
+  .tap-pay-discovery::before,
+  .tap-pay-discovery-art::before,
+  .tap-pay-discovery-art::after,
+  .tap-pay-discovery-icon::before,
+  .tap-pay-spark,
   .claims-assistant-panel,
   .claims-message-row,
   .claims-loading-card::after,

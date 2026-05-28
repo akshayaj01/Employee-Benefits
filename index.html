@@ -95,6 +95,9 @@
       <symbol id="icon-arrow-right" viewBox="0 0 24 24">
         <path d="M5 12h14m0 0-7-7m7 7-7 7" />
       </symbol>
+      <symbol id="icon-chevron-right" viewBox="0 0 24 24">
+        <path d="m9 5 7 7-7 7" />
+      </symbol>
       <symbol id="icon-checks" viewBox="0 0 24 24">
         <path d="m2 13 4 4L16 7" />
         <path d="m11 17 2 2 9-10" />
@@ -223,6 +226,24 @@
         </div>
       </section>
 
+      <button
+        class="tap-pay-discovery"
+        type="button"
+        aria-label="Tap and Pay is now available. Pay instantly with your phone."
+        data-tap-pay-discovery
+        data-pluspay-hide
+      >
+        <span class="tap-pay-discovery-art" aria-hidden="true">
+          <span class="tap-pay-spark one"></span>
+          <span class="tap-pay-spark two"></span>
+          <span class="tap-pay-discovery-icon"><svg><use href="#icon-nfc" /></svg></span>
+        </span>
+        <span class="tap-pay-discovery-copy">
+          <strong>Tap &amp; Pay is now available</strong>
+          <small>Pay instantly with your phone anywhere NFC works</small>
+        </span>
+      </button>
+
       <section class="wallet-experience-panel" aria-label="Wallets" data-pluspay-hide>
         <div class="section-heading compact-heading">
           <div>
@@ -238,7 +259,7 @@
             data-wallet-balance="₹6,400"
             data-wallet-description="Daily essentials"
             data-wallet-detail="RuPay-enabled meal spends with contactless checkout for cafeterias and food merchants."
-            data-wallet-actions="tap"
+            data-wallet-actions=""
             data-wallet-cta="Meal Wallet ready for Tap & Pay"
             aria-pressed="false"
           >
@@ -437,7 +458,7 @@
 
       <nav class="bottom-nav" aria-label="Primary navigation">
         <button class="nav-item is-active" type="button">
-          <span class="nav-icon-shell"><svg><use href="#icon-trophy" /></svg></span>
+          <span class="nav-icon-shell"><svg><use href="#icon-home" /></svg></span>
           <span>Home</span>
         </button>
         <button class="claims-button" type="button" aria-label="Claims" data-claims-open>
@@ -535,15 +556,6 @@
             </div>
           </section>
           <section class="wallet-overlay-section">
-            <div class="wallet-overlay-mode-switch" data-wallet-overlay-mode-switch hidden></div>
-            <button class="wallet-overlay-cta" type="button" data-wallet-overlay-primary-action>
-              <span class="wallet-overlay-cta-icon" aria-hidden="true"><svg><use href="#icon-nfc" /></svg></span>
-              <span class="wallet-overlay-cta-copy">
-                <strong>Tap &amp; Pay</strong>
-              </span>
-            </button>
-          </section>
-          <section class="wallet-overlay-section">
             <div class="wallet-overlay-section-head">
               <h3>Merchant Tools</h3>
             </div>
@@ -552,13 +564,7 @@
                 <span class="wallet-merchant-icon merchant-directory-icon" aria-hidden="true"><svg><use href="#icon-grid" /></svg></span>
                 <strong>Merchant Directory</strong>
                 <span data-wallet-overlay-directory-copy>250+ merchants</span>
-                <span class="wallet-merchant-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
-              </button>
-              <button class="wallet-merchant-card is-accent" type="button" data-toast="Suggest Merchant opened">
-                <span class="wallet-merchant-icon merchant-select-icon" aria-hidden="true"><svg><use href="#icon-send" /></svg></span>
-                <strong>Suggest Merchant</strong>
-                <span data-wallet-overlay-select-copy>Choose a nearby outlet</span>
-                <span class="wallet-merchant-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+                <span class="wallet-merchant-arrow" aria-hidden="true"><svg><use href="#icon-chevron-right" /></svg></span>
               </button>
             </div>
           </section>
@@ -600,7 +606,7 @@
               <strong data-merchant-directory-count>250+ merchants</strong>
               <span data-merchant-directory-summary-copy>Eligible outlets and partners for this wallet</span>
             </div>
-            <span class="merchant-directory-summary-action" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
+            <span class="merchant-directory-summary-action" aria-hidden="true"><svg><use href="#icon-chevron-right" /></svg></span>
           </button>
           <section class="merchant-directory-search">
             <span class="merchant-directory-search-icon" aria-hidden="true"><svg><use href="#icon-search" /></svg></span>

@@ -73,11 +73,11 @@ const claimsScroll = document.querySelector("[data-claims-scroll]");
 const claimsInput = document.querySelector("[data-claims-input]");
 const claimsSendButton = document.querySelector("[data-claims-send]");
 const claimsActionButtons = document.querySelectorAll("[data-claims-action]");
+const tapPayDiscovery = document.querySelector("[data-tap-pay-discovery]");
 
 let toastTimer;
 let activeWalletTone = "meal";
 let activeManageWalletKey = "meal";
-
 const manageWalletState = {
   meal: {
     label: "Meal Wallet",
@@ -182,6 +182,9 @@ const walletOverlayContent = {
     history: [
       { merchant: "WeWork counter", reference: "Ref ID: 1277834681", date: "15 Mar 2026", amount: "- ₹1,000", icon: "icon-food" },
       { merchant: "Star Bazaar", reference: "Ref ID: 1277834604", date: "12 Mar 2026", amount: "- ₹2,000", icon: "icon-bag" },
+      { merchant: "Subway", reference: "Ref ID: 1277834591", date: "09 Mar 2026", amount: "- ₹480", icon: "icon-food" },
+      { merchant: "FreshMenu", reference: "Ref ID: 1277834528", date: "06 Mar 2026", amount: "- ₹725", icon: "icon-food" },
+      { merchant: "Nature's Basket", reference: "Ref ID: 1277834495", date: "03 Mar 2026", amount: "- ₹1,240", icon: "icon-bag" },
     ],
   },
   fuel: {
@@ -204,6 +207,9 @@ const walletOverlayContent = {
     history: [
       { merchant: "Shell Select", reference: "Ref ID: 2277834607", date: "16 Mar 2026", amount: "- ₹2,200", icon: "icon-car" },
       { merchant: "HP Petrol Pump", reference: "Ref ID: 2277834588", date: "11 Mar 2026", amount: "- ₹1,450", icon: "icon-car" },
+      { merchant: "Park+ Fastag Hub", reference: "Ref ID: 2277834562", date: "08 Mar 2026", amount: "- ₹650", icon: "icon-car" },
+      { merchant: "IndianOil COCO", reference: "Ref ID: 2277834517", date: "05 Mar 2026", amount: "- ₹2,000", icon: "icon-fuel" },
+      { merchant: "Bharat Petroleum", reference: "Ref ID: 2277834490", date: "02 Mar 2026", amount: "- ₹1,800", icon: "icon-fuel" },
     ],
   },
   misc: {
@@ -224,8 +230,11 @@ const walletOverlayContent = {
       { name: "Cult Fit Center", subtitle: "Wellness · 1.9 km", meta: "UPI QR", reward: "Reimbursement", icon: "icon-settings" },
     ],
     history: [
-      { merchant: "Apollo Pharmacy", reference: "Ref ID: 3277834582", date: "14 Mar 2026", amount: "- ₹850", icon: "icon-money" },
-      { merchant: "Urban Company", reference: "Ref ID: 3277834539", date: "10 Mar 2026", amount: "- ₹1,600", icon: "icon-money" },
+      { merchant: "Apollo Pharmacy", reference: "Ref ID: 3277834582", date: "14 Mar 2026", amount: "- ₹850", icon: "icon-money", status: "Processed" },
+      { merchant: "Urban Company", reference: "Ref ID: 3277834539", date: "10 Mar 2026", amount: "- ₹1,600", icon: "icon-money", status: "Under review" },
+      { merchant: "Tata 1mg", reference: "Ref ID: 3277834506", date: "07 Mar 2026", amount: "- ₹940", icon: "icon-receipt", status: "Processed" },
+      { merchant: "Cleartrip Counter", reference: "Ref ID: 3277834481", date: "04 Mar 2026", amount: "- ₹2,300", icon: "icon-send", status: "Denied" },
+      { merchant: "Cult Fit Center", reference: "Ref ID: 3277834455", date: "01 Mar 2026", amount: "- ₹1,200", icon: "icon-settings", status: "Under review" },
     ],
   },
   gift: {
@@ -248,6 +257,9 @@ const walletOverlayContent = {
     history: [
       { merchant: "Amazon Pay", reference: "Ref ID: 4277834561", date: "13 Mar 2026", amount: "- ₹1,500", icon: "icon-bag" },
       { merchant: "Lifestyle Store", reference: "Ref ID: 4277834518", date: "08 Mar 2026", amount: "- ₹2,400", icon: "icon-card" },
+      { merchant: "Myntra", reference: "Ref ID: 4277834492", date: "05 Mar 2026", amount: "- ₹1,100", icon: "icon-bag" },
+      { merchant: "BookMyShow", reference: "Ref ID: 4277834468", date: "02 Mar 2026", amount: "- ₹800", icon: "icon-gift" },
+      { merchant: "Croma", reference: "Ref ID: 4277834437", date: "28 Feb 2026", amount: "- ₹2,000", icon: "icon-grid" },
     ],
   },
 };
@@ -924,6 +936,28 @@ function showToast(message) {
   }, 2200);
 }
 
+function initializeTapPayDiscovery() {
+  if (!tapPayDiscovery) return;
+
+  window.requestAnimationFrame(() => {
+    tapPayDiscovery.classList.add("is-visible");
+  });
+
+  tapPayDiscovery.addEventListener("click", () => {
+    const tapWallet = Array.from(walletButtons).find((button) =>
+      (button.dataset.walletActions || "")
+        .split(",")
+        .map((value) => value.trim())
+        .includes("tap")
+    );
+    if (tapWallet) {
+      openWalletOverlay(tapWallet);
+      return;
+    }
+    showToast("Tap & Pay settings opened");
+  });
+}
+
 function createOverlayPill(actionKey) {
   const action = walletActionCatalog[actionKey];
   if (!action) return null;
@@ -997,6 +1031,8 @@ function renderModeSwitch(actionKeys, selectedKey) {
 function createHistoryItem(item) {
   const article = document.createElement("article");
   article.className = `transaction-item${item.positive ? " positive" : ""}`;
+  const statusKey = item.status ? item.status.toLowerCase().replace(/\s+/g, "-") : "";
+  const status = item.status ? `<span class="transaction-status ${statusKey}">${item.status}</span>` : "";
   article.innerHTML = `
     <span class="transaction-icon" aria-hidden="true"><svg><use href="#${item.icon || "icon-arrow-right"}" /></svg></span>
     <span class="transaction-meta">
@@ -1006,6 +1042,7 @@ function createHistoryItem(item) {
     <span class="transaction-amount${item.positive ? " positive" : ""}">
       <strong>${item.amount}</strong>
       <span>${item.date}</span>
+      ${status}
     </span>
   `;
   return article;
@@ -1020,10 +1057,11 @@ function createMerchantChip(label, isActive) {
   return chip;
 }
 
-function createMerchantItem(item) {
+function createMerchantItem(item, hasExtraBottomSpace = false) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "merchant-directory-item";
+  if (hasExtraBottomSpace) button.classList.add("has-extra-bottom-space");
   button.innerHTML = `
     <span class="merchant-directory-item-icon" aria-hidden="true"><svg><use href="#${item.icon}" /></svg></span>
     <span class="merchant-directory-item-copy">
@@ -1311,8 +1349,8 @@ function openMerchantDirectory() {
   });
 
   merchantDirectoryList.replaceChildren();
-  content.merchants.forEach((item) => {
-    merchantDirectoryList.append(createMerchantItem(item));
+  content.merchants.forEach((item, index) => {
+    merchantDirectoryList.append(createMerchantItem(item, index === content.merchants.length - 1));
   });
 
   merchantDirectoryOverlay.hidden = false;
@@ -1384,6 +1422,7 @@ function openWalletOverlay(button) {
 
   walletOverlayPills.replaceChildren();
   actionKeys.forEach((actionKey) => {
+    if (walletTone === "meal" && actionKey === "tap") return;
     const pill = createOverlayPill(actionKey);
     if (pill) walletOverlayPills.append(pill);
   });
@@ -1430,6 +1469,8 @@ walletButtons.forEach((button) => {
     openWalletOverlay(button);
   });
 });
+
+initializeTapPayDiscovery();
 
 walletOverlayCloseButtons.forEach((button) => {
   button.addEventListener("click", closeWalletOverlay);
