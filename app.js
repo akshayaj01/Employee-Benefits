@@ -264,116 +264,188 @@ const walletOverlayContent = {
   },
 };
 
-const claimCategories = {
-  telephone: {
-    label: "Telephone & Internet",
-    helper: "Mobile, broadband and home internet bills",
-    icon: "icon-card",
-    tone: "meal",
-    required: ["Bill period", "Invoice number", "Employee name"],
-    draft: {
-      category: "Telephone & Internet",
+const claimsMockData = {
+  canonicalClaim: {
+    id: "CLM-2026-0428",
+    category: "Telephone & Internet",
+    title: "Telephone claim",
+    vendor: "Airtel Broadband",
+    amount: "₹2,149",
+    billDate: "30 Apr 2026",
+    submittedDate: "30 Apr 2026",
+    approvedDate: "1 May 2026",
+    reimbursedDate: "5 May 2026, 2:45 PM",
+    balanceAvailable: "₹9,100",
+    uploadedDocument: {
+      name: "airtel-broadband.pdf",
+      size: "248 KB",
+      uploadedOn: "30 Apr 2026",
+      type: "PDF",
+    },
+    extractedDetails: {
       vendor: "Airtel Broadband",
       amount: "₹2,149",
       billDate: "30 Apr 2026",
-      billPeriod: "",
-      invoiceNumber: "AIR-APR-7781",
-      employeeName: "V Sharma",
-      uploadedDocument: "airtel-broadband-apr.pdf",
-      walletBalance: "₹9,100",
-      status: "Draft needs attention",
-      vehicleNumber: "",
-      courseName: "",
-      managerApproval: "",
-      completionCertificate: "",
+      category: "Telephone & Internet",
+      accountNumber: "XXXX XXXX 1234",
+      confidenceByField: {
+        vendor: "High",
+        amount: "High",
+        billDate: "High",
+        category: "Medium",
+        accountNumber: "Medium",
+      },
     },
-    errors: [
-      ["duplicate", "Duplicate month", "There is already a Telephone & Internet claim for Apr 2026.", "Mark as alternate bill"],
-      ["name", "Name mismatch", "Bill shows V Sharma, while profile shows Virat Sharma.", "Confirm employee name"],
-      ["amount", "Amount mismatch", "OCR total and line-item total differ by ₹51.", "Use invoice total"],
+    anomalies: [
+      {
+        id: "duplicate",
+        type: "duplicate",
+        severity: "warning",
+        title: "Possible duplicate detected",
+        description: "We found a similar claim for Airtel Broadband on 28 Apr 2026 for ₹2,149.",
+        requiredAction: "Confirm this is not a duplicate and submit a declaration.",
+        similarClaim: { id: "CLM-2026-0487", date: "28 Apr 2026", amount: "₹2,149" },
+        resolved: false,
+      },
+      {
+        id: "dateWindow",
+        type: "dateWindow",
+        severity: "warning",
+        title: "Bill date outside policy window",
+        description: "This bill date appears to be older than the allowed reimbursement period.",
+        requiredAction: "Attach prior approval or explain why the expense is being claimed now.",
+        resolved: false,
+      },
+      {
+        id: "lowConfidenceOCR",
+        type: "lowConfidenceOCR",
+        severity: "error",
+        title: "Low-confidence OCR",
+        description: "The scan is blurry or missing key information. Details may be incomplete.",
+        requiredAction: "Re-upload bill or enter missing details manually.",
+        resolved: false,
+      },
+      {
+        id: "personalUsage",
+        type: "personalUsage",
+        severity: "error",
+        title: "Possible personal usage",
+        description: "This amount is higher than typical plans. It may include personal usage or mixed usage.",
+        requiredAction: "Confirm this is a work expense and submit a compliance declaration.",
+        resolved: false,
+      },
+      {
+        id: "limitExceeded",
+        type: "limitExceeded",
+        severity: "warning",
+        title: "Amount exceeds available limit",
+        description: "This claim amount is higher than the remaining eligible balance for this category.",
+        requiredAction: "Submit eligible amount, edit amount, or ask a policy question.",
+        resolved: false,
+      },
     ],
-  },
-  fuel: {
-    label: "Fuel and Maintenance",
-    helper: "Fuel bills, servicing, repair and maintenance",
-    icon: "icon-fuel",
-    tone: "fuel",
-    required: ["Vehicle number", "Invoice number", "Clear receipt"],
-    draft: {
-      category: "Fuel and Maintenance",
-      vendor: "Shell Select",
-      amount: "₹3,280",
-      billDate: "11 May 2026",
-      billPeriod: "",
-      invoiceNumber: "SHL-8831",
-      employeeName: "Virat Sharma",
-      uploadedDocument: "shell-fuel-receipt.jpg",
-      walletBalance: "₹9,100",
-      status: "Draft needs attention",
-      vehicleNumber: "",
-      courseName: "",
-      managerApproval: "",
-      completionCertificate: "",
-    },
-    errors: [
-      ["vehicle", "Missing vehicle number", "Fuel claims need the vehicle number for policy validation.", "Add KA 03 MX 9911"],
-      ["blur", "Blurry receipt", "Some tax and invoice fields may be unreliable.", "Replace with clear receipt"],
-      ["future", "Future bill date", "One OCR pass detected a future bill date.", "Use detected date"],
-      ["lines", "Multiple line items", "Fuel and store purchases appear together.", "Claim fuel amount only"],
+    declarations: [
+      "I confirm this claim is accurate, work-related, not claimed before, and complies with the company’s reimbursement policy.",
     ],
+    decisionSummary: "All policy checks passed. Amount within limits and required document attached.",
   },
-  development: {
-    label: "Professional Development Expenses",
-    helper: "Courses, certifications, events and learning invoices",
-    icon: "icon-trophy",
-    tone: "misc",
-    required: ["Manager approval", "Completion certificate", "Course invoice"],
-    draft: {
-      category: "Professional Development Expenses",
-      vendor: "Coursera",
-      amount: "₹14,999",
-      billDate: "02 May 2026",
-      billPeriod: "",
-      invoiceNumber: "CRS-2026-771",
-      employeeName: "Virat Sharma",
-      uploadedDocument: "coursera-payment-screenshot.png",
-      walletBalance: "₹9,100",
-      status: "Draft needs attention",
-      vehicleNumber: "",
-      courseName: "",
-      managerApproval: "Missing",
-      completionCertificate: "Missing",
-    },
-    errors: [
-      ["approval", "Missing manager approval", "Professional development claims need approval before submission.", "Attach approval"],
-      ["certificate", "Missing completion certificate", "Please attach completion proof or certificate.", "Attach certificate"],
-      ["course", "Course name missing", "I found the platform name but not the eligible course name.", "Add course name"],
-      ["screenshot", "Payment screenshot instead of invoice", "Policy needs an invoice, not only a payment screenshot.", "Replace with invoice"],
+  promptCards: [
+    { id: "telephone", title: "Telephone claim", subtitle: "Submit a telephone or internet bill", icon: "icon-card" },
+    { id: "meal", title: "Meal claim", subtitle: "Submit meal expenses", icon: "icon-food" },
+    { id: "fuel", title: "Fuel claim", subtitle: "Submit fuel expenses", icon: "icon-fuel" },
+    { id: "upload", title: "Upload a bill", subtitle: "Scan and extract details", icon: "icon-receipt" },
+  ],
+  history: [
+    { id: "CLM-2026-0428", title: "Telephone & Internet", vendor: "Airtel Broadband", amount: "₹2,149", date: "30 Apr 2026", status: "Pending", icon: "icon-card" },
+    { id: "CLM-2026-0417", title: "Meal claim", vendor: "Team lunch with client", amount: "₹1,250", date: "29 Apr 2026", status: "Approved", icon: "icon-food" },
+    { id: "CLM-2026-0398", title: "Fuel claim", vendor: "Drive to client site", amount: "₹1,980", date: "27 Apr 2026", status: "Approved", icon: "icon-fuel" },
+    { id: "CLM-2026-0384", title: "Travel claim", vendor: "Bengaluru to Mumbai", amount: "₹4,850", date: "24 Apr 2026", status: "Rejected", icon: "icon-send" },
+    { id: "CLM-2026-0372", title: "Cab/Taxi", vendor: "Airport pickup", amount: "₹720", date: "22 Apr 2026", status: "Approved", icon: "icon-car" },
+    { id: "CLM-2026-0366", title: "Software subscription", vendor: "Notion Labs, Inc.", amount: "₹1,299", date: "25 Apr 2026", status: "Pending", icon: "icon-receipt" },
+    { id: "CLM-2026-0341", title: "Travel claim", vendor: "Delhi to Bengaluru", amount: "₹6,320", date: "29 Apr 2026", status: "Pending", icon: "icon-send" },
+  ],
+  dashboard: {
+    totalBalance: "₹9,100",
+    availableBalance: "₹6,951",
+    pendingPayouts: "₹2,149",
+    monthlyTotalClaims: 12,
+    monthlyClaimedAmount: "₹18,450",
+    monthlyReimbursedAmount: "₹8,320",
+    statusCounts: [
+      { label: "Under review", count: 3, amount: "₹2,840", status: "pending" },
+      { label: "Approved", count: 5, amount: "₹8,320", status: "approved" },
+      { label: "Rejected", count: 1, amount: "₹1,240", status: "rejected" },
+      { label: "Reimbursed", count: 4, amount: "₹6,180", status: "reimbursed" },
+    ],
+    recentActivity: [
+      { vendor: "Airtel Broadband", amount: "₹2,149", status: "Approved", meta: "Bill date: 30 Apr 2026" },
+      { vendor: "Telephone & Internet", amount: "₹1,299", status: "Under review", meta: "Bill date: 25 Apr 2026" },
+      { vendor: "Mobile Recharge", amount: "₹799", status: "Rejected", meta: "Bill date: 20 Apr 2026" },
+      { vendor: "Electricity Bill", amount: "₹1,880", status: "Reimbursed", meta: "Bill date: 15 Apr 2026" },
     ],
   },
 };
 
 const claimState = {
-  stage: "empty",
-  selectedCategory: "telephone",
-  draft: { ...claimCategories.telephone.draft },
-  errors: [],
+  view: "home",
+  messages: [],
+  scanningProgress: 0,
+  uploaded: false,
+  selectedClaim: null,
+  anomalyResolved: false,
+  supportingDocumentAttached: false,
+  declarationAccepted: [false],
+  claimSubmitted: false,
+  trackStatus: "submitted",
+  historyFilter: "All",
+  historySearch: "",
+  selectedHistoryId: "CLM-2026-0428",
+  manualDetails: {
+    vendor: "Airtel Broadband",
+    amount: "₹2,149",
+    billDate: "30 Apr 2026",
+  },
   isThinking: false,
-  messages: [
-    {
-      role: "bot",
-      text: "Hi, I’m your Claims Assistant. Upload a bill and I’ll extract details, check policy rules, and help you submit a reimbursement claim.",
-    },
-  ],
-  claimId: "",
 };
 
-function cloneClaimDraft(categoryKey) {
-  return { ...claimCategories[categoryKey].draft };
+function createBaseClaimMessages() {
+  return [
+    {
+      id: "intro",
+      role: "assistant",
+      text: "Hi, I’m your Claims Assistant. Upload a bill, ask questions, and I’ll extract details, check policy rules, detect anomalies, and help with compliance declarations before submission.",
+      time: "9:41 AM",
+    },
+  ];
 }
 
-function addClaimMessage(role, text) {
-  claimState.messages.push({ role, text, time: claimState.messages.length > 2 ? "9:41 AM" : "9:40 AM" });
+function resetClaimJourney() {
+  claimState.view = "home";
+  claimState.messages = createBaseClaimMessages();
+  claimState.scanningProgress = 0;
+  claimState.uploaded = false;
+  claimState.selectedClaim = null;
+  claimState.anomalyResolved = false;
+  claimState.supportingDocumentAttached = false;
+  claimState.declarationAccepted = [false];
+  claimState.claimSubmitted = false;
+  claimState.trackStatus = "submitted";
+  claimState.historyFilter = "All";
+  claimState.historySearch = "";
+  claimState.selectedHistoryId = "CLM-2026-0428";
+  claimState.isThinking = false;
+}
+
+resetClaimJourney();
+
+function addClaimMessage(role, text, type = "normal") {
+  claimState.messages.push({
+    id: `msg-${Date.now()}-${claimState.messages.length}`,
+    role,
+    text,
+    type,
+    time: claimState.messages.length > 1 ? "9:42 AM" : "9:41 AM",
+  });
 }
 
 function syncClaimsComposer() {
@@ -381,116 +453,33 @@ function syncClaimsComposer() {
   const hasText = Boolean(claimsInput.value.trim());
   claimsSendButton.disabled = !hasText;
   claimsSendButton.setAttribute("aria-disabled", String(!hasText));
-}
-
-function getClaimErrors() {
-  const errors = claimCategories[claimState.selectedCategory].errors;
-  return errors
-    .filter(([id]) => {
-      const draft = claimState.draft;
-      if (id === "duplicate") return !draft.invoiceNumber.includes("ALT");
-      if (id === "name") return draft.employeeName !== "Virat Sharma";
-      if (id === "amount") return draft.amount === "₹2,149";
-      if (id === "vehicle") return !draft.vehicleNumber;
-      if (id === "blur") return draft.uploadedDocument === "shell-fuel-receipt.jpg";
-      if (id === "future") return draft.billDate.includes("2027");
-      if (id === "lines") return draft.amount === "₹3,280";
-      if (id === "approval") return draft.managerApproval === "Missing";
-      if (id === "certificate") return draft.completionCertificate === "Missing";
-      if (id === "course") return !draft.courseName;
-      if (id === "screenshot") return draft.uploadedDocument.endsWith(".png");
-      return false;
-    })
-    .slice(0, 3)
-    .map(([id, title, detail, action]) => ({ id, title, detail, action }));
-}
-
-function resolveClaimError(id) {
-  const draft = claimState.draft;
-  if (id === "period") draft.billPeriod = "Apr 2026";
-  if (id === "duplicate") draft.invoiceNumber = `${draft.invoiceNumber}-ALT`;
-  if (id === "name") draft.employeeName = "Virat Sharma";
-  if (id === "amount") draft.amount = "₹2,098";
-  if (id === "vehicle") draft.vehicleNumber = "KA 03 MX 9911";
-  if (id === "blur") draft.uploadedDocument = "clear-shell-fuel-receipt.jpg";
-  if (id === "future") draft.billDate = "11 May 2026";
-  if (id === "lines") draft.amount = "₹2,840";
-  if (id === "approval") draft.managerApproval = "Attached";
-  if (id === "certificate") draft.completionCertificate = "Attached";
-  if (id === "course") draft.courseName = "Advanced Product Strategy";
-  if (id === "screenshot") draft.uploadedDocument = "coursera-tax-invoice.pdf";
-  draft.status = "Draft updated";
-  claimState.errors = claimState.errors.filter((error) => error.id !== id);
-  addClaimMessage("user", "Fix applied");
-  addClaimMessage("bot", "Updated the draft. You can validate again when ready.");
-  renderClaimsAssistant();
-}
-
-function formatClaimBillPeriod(value) {
-  if (!value) return "";
-  const [year, month, day] = value.split("-");
-  const date = new Date(Number(year), Number(month) - 1, Number(day));
-  return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-}
-
-function formatClaimBillPeriodRange(startValue, endValue) {
-  const start = formatClaimBillPeriod(startValue);
-  const end = formatClaimBillPeriod(endValue);
-  if (start && end) return start === end ? start : `${start} - ${end}`;
-  return start || end;
-}
-
-function changeClaimCategory(categoryKey) {
-  if (!claimCategories[categoryKey] || categoryKey === claimState.selectedCategory) return;
-  claimState.selectedCategory = categoryKey;
-  claimState.draft = cloneClaimDraft(categoryKey);
-  claimState.errors = getClaimErrors();
-  claimState.stage = "draft";
-  addClaimMessage("user", `Change category to ${claimCategories[categoryKey].label}`);
-  addLiveClaimBotMessage(`Changed this draft to ${claimCategories[categoryKey].label}. I refreshed the extracted fields and policy checks for that category.`, 620);
+  claimsInput.placeholder = claimState.view === "track" ? "Ask about this claim..." : claimState.view === "detail" ? "Ask a question about this claim..." : "Ask or upload a bill...";
 }
 
 function getClaimAssistantReply(text) {
   const message = text.toLowerCase();
-  const draft = claimState.draft;
-  const errors = getClaimErrors();
-  if (/(why|reason|rejected|reject|declined|decline|failed|fail|blocked)/.test(message)) {
-    if (errors.length) {
-      const reason = errors[0];
-      return `The likely reason is: ${reason.title}. ${reason.detail} Other common rejection reasons are merchant not allowed by policy, expired KYC, duplicate bill period, unclear receipt, missing approval, or amount mismatch.`;
-    }
-    return "This draft is not currently rejected in the prototype. Common rejection reasons are merchant not covered by policy, expired KYC, duplicate bill period, missing bill details, unclear receipt, missing approval, or a mismatch between OCR amount and invoice total.";
+  const claim = claimsMockData.canonicalClaim;
+  if (/(policy|eligible|limit|allowed)/.test(message)) {
+    return `For ${claim.category}, the assistant checks bill date, duplicate claims, available balance, and whether the expense is work related. This mock flow flags anything that needs clarification before submission.`;
   }
-  if (/(kyc|know your customer)/.test(message)) {
-    return "If KYC is expired, claims can be blocked until identity verification is renewed. In this mock flow, I would show it as a policy rejection and ask you to update KYC before resubmitting.";
+  if (/(status|track|approved|pending|reimbursed|payout)/.test(message)) {
+    return `Claim ${claim.id} is currently shown as ${claimState.trackStatus.replace("-", " ")}. You can use the status controls to simulate Pending → Approved → Reimbursed.`;
   }
-  if (/(merchant|vendor|policy|allowed|eligible)/.test(message)) {
-    return `${draft.vendor || "This merchant"} is checked against the selected category policy. If the merchant is not in the approved list, the claim should be rejected or routed for manual review.`;
+  if (/(duplicate|same bill|other claim)/.test(message)) {
+    return "The duplicate check compares vendor, amount, bill period, and employee profile. In production this would call a claims history and policy rules API.";
   }
-  if (/(bill period|period|date|calendar)/.test(message)) {
-    return `Use the Bill period row to choose the start and end dates from the calendar. The current value is ${draft.billPeriod || "not added yet"}.`;
+  if (/(ocr|scan|extract|bill)/.test(message)) {
+    return "The OCR result is mocked here. In production, this is where a real OCR/document AI service would extract bill fields and confidence scores.";
   }
-  if (/(amount|total|money|claim amount)/.test(message)) {
-    return `The extracted claim amount is ${draft.amount || "not available"}. If OCR and invoice totals do not match, use the invoice total before submitting.`;
-  }
-  if (/(category|change category)/.test(message)) {
-    return `The current category is ${draft.category}. You can change it from the Category field inside the extracted draft section after upload.`;
-  }
-  if (/(status|where|approval|approved|submitted|payout)/.test(message)) {
-    return `Current claim status is ${draft.status}. After submission, it moves through manager review, finance check, and payout.`;
-  }
-  if (/(hello|hi|hey|help)/.test(message)) {
-    return "I can help explain rejection reasons, policy eligibility, KYC blocks, bill period, amount mismatches, category changes, and submission status.";
-  }
-  return `I checked this against the current draft. Category: ${draft.category}. Vendor: ${draft.vendor}. Amount: ${draft.amount}. Status: ${draft.status}. Ask me about rejection reason, merchant policy, KYC, amount, bill period, or submission status and I will narrow it down.`;
+  return `I can help with claim status, policy eligibility, OCR extraction, duplicate checks, compliance declarations, and payout timing for ${claim.vendor}.`;
 }
 
-function addLiveClaimBotMessage(text, delay = 650) {
+function addLiveClaimBotMessage(text, delay = 520) {
   claimState.isThinking = true;
   renderClaimsAssistant();
   window.setTimeout(() => {
     claimState.isThinking = false;
-    addClaimMessage("bot", text);
+    addClaimMessage("assistant", text);
     renderClaimsAssistant();
   }, delay);
 }
@@ -502,9 +491,7 @@ function openClaimsAssistant() {
   closeMerchantDirectory();
   closeManageCardsOverlay();
   claimsAssistant.hidden = false;
-  if (claimState.stage === "empty" && claimState.messages.length === 0) {
-    claimState.messages = [{ role: "bot", text: "Hi, I’m your Claims Assistant. Upload a bill or choose a category to begin." }];
-  }
+  if (!claimState.messages.length) resetClaimJourney();
   syncClaimsComposer();
   renderClaimsAssistant();
   window.requestAnimationFrame(() => {
@@ -522,130 +509,147 @@ function closeClaimsAssistant() {
   }, 260);
 }
 
-function chooseClaimCategory(categoryKey) {
-  claimState.selectedCategory = categoryKey;
-  claimState.draft = cloneClaimDraft(categoryKey);
-  claimState.errors = [];
+function goToClaimsView(view) {
+  claimState.view = view;
   claimState.isThinking = false;
-  claimState.stage = "upload";
-  addClaimMessage("user", claimCategories[categoryKey].label);
-  addClaimMessage("bot", `Selected ${claimCategories[categoryKey].label}. I’ll look for ${claimCategories[categoryKey].required.join(", ")}.`);
   renderClaimsAssistant();
 }
 
-function simulateClaimUpload() {
-  const category = claimCategories[claimState.selectedCategory];
-  claimState.stage = "scanning";
-  claimState.draft = cloneClaimDraft(claimState.selectedCategory);
-  claimState.errors = [];
-  claimState.isThinking = false;
-  addClaimMessage("user", "Upload bill");
-  addClaimMessage("bot", "Scanning bill… extracting vendor, amount, dates, invoice number and employee name.");
+function goToClaimsHome() {
+  resetClaimJourney();
   renderClaimsAssistant();
-  window.setTimeout(() => {
-    claimState.stage = "draft";
-    claimState.errors = getClaimErrors();
-    addClaimMessage("bot", `I found a ${category.label} claim. I prepared a draft and highlighted what needs attention.`);
+}
+
+function startTelephoneClaim() {
+  claimState.selectedClaim = "telephone";
+  claimState.view = "claimStart";
+  claimState.messages = [
+    { id: "start-1", role: "assistant", text: "Sure — let’s start your Telephone & Internet claim.", time: "9:41 AM" },
+    { id: "start-2", role: "user", text: "<strong>Telephone claim</strong><br><span>Telephone & Internet</span>", time: "9:41 AM" },
+    { id: "start-3", role: "assistant", text: "Great. Please upload your bill so I can extract the details and check policy compliance.", time: "9:41 AM" },
+  ];
+  renderClaimsAssistant();
+}
+
+function openUploadFlow(addMessage = false) {
+  claimState.view = "upload";
+  claimState.uploaded = false;
+  claimState.scanningProgress = 0;
+  if (addMessage) {
+    claimState.messages = [
+      { id: "upload-1", role: "assistant", text: "Upload your bill and I’ll extract vendor, amount, bill date, category, and account details.", time: "9:41 AM" },
+    ];
+  }
+  renderClaimsAssistant();
+}
+
+function selectMockBill() {
+  claimState.uploaded = true;
+  renderClaimsAssistant();
+}
+
+function startMockScan() {
+  claimState.view = "scanning";
+  claimState.scanningProgress = 0;
+  addClaimMessage("assistant", "I’m reading the bill and extracting the important details.");
+  renderClaimsAssistant();
+  const scanTimer = window.setInterval(() => {
+    claimState.scanningProgress = Math.min(100, claimState.scanningProgress + 20);
     renderClaimsAssistant();
-  }, 950);
-}
-
-function validateClaimPolicy() {
-  claimState.stage = "validating";
-  claimState.isThinking = false;
-  addClaimMessage("user", "Validate policy");
-  addClaimMessage("bot", "Validating policy… checking limits, duplicates and required documents.");
-  renderClaimsAssistant();
-  window.setTimeout(() => {
-    claimState.errors = getClaimErrors();
-    if (claimState.errors.length) {
-      claimState.stage = "errors";
-      addClaimMessage("bot", "A few items need quick correction before submission.");
-    } else {
-      claimState.stage = "review";
-      claimState.draft.status = "Ready to submit";
-      addClaimMessage("bot", "Everything looks good. Please review the final claim.");
+    if (claimState.scanningProgress >= 100) {
+      window.clearInterval(scanTimer);
+      window.setTimeout(() => {
+        claimState.view = "extracted";
+        addClaimMessage("assistant", "Here’s what I found. Please review the extracted details.");
+        renderClaimsAssistant();
+      }, 320);
     }
-    renderClaimsAssistant();
-  }, 850);
+  }, 260);
+  // Integration point: replace this timer with OCR/document AI progress events.
 }
 
-function submitClaim() {
-  claimState.stage = "success";
-  claimState.isThinking = false;
-  claimState.claimId = `CLM-${Math.floor(100000 + Math.random() * 900000)}`;
-  claimState.draft.status = "Submitted";
-  addClaimMessage("user", "Submit claim");
-  addClaimMessage("bot", `Submitted successfully. Your claim ID is ${claimState.claimId}.`);
+function confirmExtractedDetails() {
+  claimState.view = "aiReview";
+  addClaimMessage("user", "Looks correct");
+  addClaimMessage("assistant", "I’ll now check policy limits, duplicates, required documents, and compliance declarations.");
+  window.setTimeout(() => {
+    addClaimMessage("assistant", "I’ve reviewed the bill details. Something similar may have already been submitted.", "warning");
+    renderClaimsAssistant();
+  }, 260);
+  renderClaimsAssistant();
+  // Integration point: call policy, duplicate, and compliance checks here.
+}
+
+function resolveDuplicateClaim(response = "Not a duplicate — different period.") {
+  claimState.anomalyResolved = true;
+  addClaimMessage("user", response);
+  addClaimMessage("assistant", "Great, please confirm with a short declaration.");
   renderClaimsAssistant();
 }
 
-function updateClaimField(field, value) {
-  claimState.draft[field] = value;
+function toggleDeclaration(index) {
+  claimState.declarationAccepted[index] = !claimState.declarationAccepted[index];
+  renderClaimsAssistant();
+}
+
+function continueAfterDeclaration() {
+  if (!claimState.declarationAccepted.every(Boolean)) {
+    showToast("Please accept all declarations to continue");
+    return;
+  }
+  claimState.view = "submitReady";
+  addClaimMessage("assistant", "Thanks. I’ve recorded your clarification and declaration.", "success");
+  renderClaimsAssistant();
+}
+
+function submitCanonicalClaim() {
+  claimState.claimSubmitted = true;
+  claimState.view = "track";
+  claimState.trackStatus = "submitted";
+  addClaimMessage("user", "Submit claim");
+  addClaimMessage("assistant", "Your claim has been submitted successfully. We’ll keep you updated at every step.", "success");
+  renderClaimsAssistant();
+  // Integration point: replace this with a real claim submission API call.
+}
+
+function updateTrackStatus(status) {
+  claimState.view = "track";
+  claimState.trackStatus = status;
+  renderClaimsAssistant();
 }
 
 function renderClaimsAssistant() {
   if (!claimsStatus || !claimsThread || !claimsWorkspace) return;
-  const draft = claimState.draft;
-  const showStatus = !["empty", "category", "upload", "scanning"].includes(claimState.stage);
-  claimsStatus.hidden = !showStatus;
-  claimsStatus.innerHTML = `
-    <article class="transaction-item">
-      <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
-      <span class="transaction-meta"><strong>Claim status</strong><span>${draft.status}</span></span>
-    </article>
-    <article class="transaction-item">
-      <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-money" /></svg></span>
-      <span class="transaction-meta"><strong>Wallet balance</strong><span>${draft.walletBalance}</span></span>
-    </article>
-    <article class="transaction-item">
-      <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-grid" /></svg></span>
-      <span class="transaction-meta"><strong>Category</strong><span>${draft.category}</span></span>
-    </article>
-  `;
-  claimsThread.innerHTML = claimState.messages
-    .map((message) => renderClaimMessage(message))
-    .join("") + (claimState.isThinking ? renderClaimMessage({ role: "bot", text: `<span class="claims-mini-typing"><i></i><i></i><i></i></span>`, typing: true }) : "");
+  claimsStatus.hidden = true;
+  claimsThread.innerHTML = renderClaimsThread();
   claimsWorkspace.innerHTML = renderClaimsWorkspace();
   bindClaimsWorkspaceActions();
   syncClaimsComposer();
   window.requestAnimationFrame(() => {
-    const draftCard = claimsWorkspace.querySelector(".claims-draft-card");
-    if (draftCard) {
-      const targetTop = draftCard.offsetTop - claimsScroll.offsetTop;
-      claimsScroll?.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+    if (["home", "history", "dashboard", "detail"].includes(claimState.view)) {
+      claimsScroll?.scrollTo({ top: 0, behavior: "auto" });
       return;
     }
     claimsScroll?.scrollTo({ top: claimsScroll.scrollHeight, behavior: "smooth" });
   });
 }
 
-function renderClaimsWorkspace() {
-  if (claimState.stage === "empty") return renderClaimsEmptyState();
-  if (claimState.stage === "category") return renderClaimsCategoryPicker();
-  if (claimState.stage === "upload") return renderClaimsUploadState();
-  if (claimState.stage === "scanning") return renderClaimsLoading("Scanning bill…", "Reading the bill and extracting claim details.");
-  if (claimState.stage === "validating") return renderClaimsLoading("Validating policy…", "Checking duplicates, limits and required documents.");
-  if (claimState.stage === "success") return renderClaimsSuccess();
-  return `
-    ${renderClaimDraftCard()}
-    ${claimState.errors.length ? renderClaimErrors() : ""}
-    ${claimState.stage === "review" ? renderClaimReview() : ""}
-    <div class="claims-action-grid wallet-overlay-mode-switch">
-      <button type="button" class="wallet-overlay-mode-button" data-claims-workspace-action="validate">Validate policy</button>
-      <button type="button" class="wallet-overlay-mode-button is-active" data-claims-workspace-action="${claimState.stage === "review" ? "submit" : "review"}">${claimState.stage === "review" ? "Submit claim" : "Review"}</button>
-    </div>
-  `;
+function renderClaimsThread() {
+  const shouldShowThread = !["history", "filteredHistory", "detail", "dashboard", "upload", "track"].includes(claimState.view);
+  if (!shouldShowThread) return "";
+  const messages = claimState.messages.map((message) => renderClaimMessage(message)).join("");
+  return messages + (claimState.isThinking ? renderClaimMessage({ role: "assistant", text: `<span class="claims-mini-typing"><i></i><i></i><i></i></span>`, typing: true }) : "");
 }
 
 function renderClaimMessage(message) {
   const isUser = message.role === "user";
   const typingClass = message.typing ? " is-typing" : "";
-  const time = message.time || "9:40 AM";
+  const variantClass = message.type ? ` is-${message.type}` : "";
+  const time = message.time || "9:41 AM";
   return `
     <div class="claims-message-row ${isUser ? "user" : "bot"}">
       ${isUser ? "" : `<span class="claims-avatar" aria-hidden="true"><svg><use href="#icon-headset" /></svg></span>`}
-      <div class="claims-message ${isUser ? "user" : "bot"}${typingClass}">
+      <div class="claims-message ${isUser ? "user" : "bot"}${typingClass}${variantClass}">
         <span class="claims-message-text">${message.text}</span>
         ${message.typing ? "" : `<span class="claims-message-meta">${time}${isUser ? `<svg aria-hidden="true"><use href="#icon-checks" /></svg>` : ""}</span>`}
       </div>
@@ -653,276 +657,610 @@ function renderClaimMessage(message) {
   `;
 }
 
-function renderClaimsEmptyState() {
-  return `
-    <section class="claims-empty-card wallet-overlay-summary gift">
-      <h3>Start a reimbursement claim</h3>
-      <p>Upload a bill for OCR extraction. Everything here is mocked locally for product review.</p>
-      <button type="button" class="wallet-overlay-cta claims-primary-action claims-empty-upload" data-claims-workspace-action="upload">
-        <span class="wallet-overlay-cta-copy"><strong>Upload bill</strong></span>
-      </button>
-    </section>
-  `;
+function renderClaimsWorkspace() {
+  if (claimState.view === "home") return renderClaimsHome();
+  if (claimState.view === "claimStart") return renderClaimStartActions();
+  if (claimState.view === "upload") return renderUploadScreen();
+  if (claimState.view === "scanning") return renderScanningScreen();
+  if (claimState.view === "extracted") return renderExtractedDetailsScreen();
+  if (claimState.view === "aiReview") return renderAIReviewScreen();
+  if (claimState.view === "submitReady") return renderSubmitReadyScreen();
+  if (claimState.view === "track") return renderTrackClaimScreen();
+  if (claimState.view === "history") return renderClaimHistoryScreen("All");
+  if (claimState.view === "filteredHistory") return renderClaimHistoryScreen("Pending");
+  if (claimState.view === "detail") return renderClaimDetailScreen();
+  if (claimState.view === "dashboard") return renderClaimDashboardScreen();
+  return renderClaimsHome();
 }
 
-function renderClaimsCategoryPicker() {
+function renderClaimsHome() {
   return `
-    <section class="claims-category-shell wallet-overlay-summary gift">
-      <div class="claims-category-grid wallet-merchant-grid">
-        ${Object.entries(claimCategories)
-          .map(([key, category]) => `
-            <button type="button" class="claims-category-card wallet-merchant-card ${category.tone} ${claimState.selectedCategory === key ? "is-selected" : ""}" data-claims-category="${key}">
-              <span class="wallet-merchant-icon merchant-directory-icon" aria-hidden="true"><svg><use href="#${category.icon}" /></svg></span>
-              <strong>${category.label}</strong>
-            </button>
-          `)
-          .join("")}
+    <section class="claims-home">
+      ${renderClaimsQuickActions()}
+      <div class="claims-prompt-section">
+        <h3>Try asking me about</h3>
+        <div class="claims-prompt-grid">
+          ${claimsMockData.promptCards.map((card) => renderPromptCard(card)).join("")}
+        </div>
       </div>
     </section>
   `;
 }
 
-function renderClaimsUploadState() {
-  const category = claimCategories[claimState.selectedCategory];
-  return `
-    <section class="claims-upload-card wallet-overlay-summary ${category.tone}">
-      <h3>Upload ${category.label} bill</h3>
-      <p>PDF, PNG or JPG accepted. This prototype simulates upload and OCR.</p>
-      <div class="claims-required-docs wallet-overlay-pill-row">
-        ${category.required.map((item) => `<small class="wallet-rail-pill is-active">${item}</small>`).join("")}
-      </div>
-      <button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="upload">
-        <span class="wallet-overlay-cta-copy"><strong>Upload bill</strong></span>
-      </button>
-    </section>
-  `;
-}
-
-function renderClaimsLoading(title, detail) {
-  return `
-    <section class="claims-loading-card merchant-directory-summary">
-      <span class="claims-typing"><i></i><i></i><i></i></span>
-      <div>
-        <strong>${title}</strong>
-        <p>${detail}</p>
-      </div>
-    </section>
-  `;
-}
-
-function renderClaimDraftCard() {
-  const draft = claimState.draft;
-  const categoryKey = claimState.selectedCategory;
-  const tone = claimCategories[categoryKey].tone;
-  const title = draft.category.replace(" & ", " &<br>");
-  const fields = [
-    ["category", "Category"],
-    ["vendor", "Vendor"],
-    ["amount", "Amount"],
-    ["billDate", "Bill date"],
-    ["billPeriod", "Bill period"],
-    ["invoiceNumber", "Invoice number"],
-    ["employeeName", "Employee name"],
+function renderClaimsQuickActions() {
+  const actions = [
+    ["history", "History", "icon-receipt"],
+    ["track", "Track claim", "icon-refresh"],
+    ["dashboard", "Claim dashboard", "icon-grid"],
+    ["policy", "Policy help", "icon-help"],
   ];
-  if (categoryKey === "fuel") fields.push(["vehicleNumber", "Vehicle number"]);
-  if (categoryKey === "development") fields.push(["courseName", "Course name"], ["managerApproval", "Manager approval"], ["completionCertificate", "Completion certificate"]);
   return `
-    <section class="claims-draft-card wallet-overlay-summary ${tone}">
-      <div class="claims-card-head wallet-overlay-section-head">
-        <div>
-          <span>Extracted draft</span>
-          <h3>${title}</h3>
-        </div>
-        <small class="wallet-rail-pill is-active">${draft.status}</small>
-      </div>
-      <div class="claims-draft-hero">
-        <span>Claim amount</span>
-        <strong>${draft.amount || "Add amount"}</strong>
-      </div>
-      <div class="claims-document-card merchant-directory-item">
-        <span class="merchant-directory-item-icon"><svg><use href="#icon-receipt" /></svg></span>
-        <div class="merchant-directory-item-copy">
-          <strong>${draft.uploadedDocument}</strong>
-          <small>${claimState.stage === "review" ? "Ready for submission" : "Uploaded and scanned"}</small>
-        </div>
-        <button type="button" class="merchant-directory-chip" data-claims-workspace-action="upload">Replace</button>
-      </div>
-      <div class="claims-field-grid transaction-list">
-        ${fields
-          .map(([field, label]) => {
-            const value = draft[field] || "";
-            const needsAttention = isClaimFieldMissing(field);
-            const isBillPeriod = field === "billPeriod";
-            const isCategory = field === "category";
-            return `
-            <label class="claims-field-row transaction-item ${needsAttention ? "needs-attention" : ""} ${value && !needsAttention ? "is-filled" : "is-empty"}">
-              <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
-              <span class="transaction-meta">
-                <strong>${label}</strong>
-                ${isCategory ? `
-                  <select class="claims-category-select" data-claims-category-select aria-label="Change claim category">
-                    ${Object.entries(claimCategories)
-                      .map(([key, category]) => `<option value="${key}" ${key === categoryKey ? "selected" : ""}>${category.label}</option>`)
-                      .join("")}
-                  </select>
-                ` : isBillPeriod ? `
-                  <span class="claims-period-entry">
-                    <input value="${value}" placeholder="Add bill period" data-claims-field="${field}" />
-                    <button type="button" class="claims-period-calendar" aria-label="Choose bill period start date" data-claims-period-open="start">
-                      <svg aria-hidden="true"><use href="#icon-calendar" /></svg>
-                      <small>From</small>
-                    </button>
-                    <button type="button" class="claims-period-calendar" aria-label="Choose bill period end date" data-claims-period-open="end">
-                      <svg aria-hidden="true"><use href="#icon-calendar" /></svg>
-                      <small>To</small>
-                    </button>
-                    <input class="claims-period-picker" type="date" value="${draft.billPeriodStart || ""}" data-claims-period-picker="start" aria-label="Bill period start date" />
-                    <input class="claims-period-picker" type="date" value="${draft.billPeriodEnd || ""}" data-claims-period-picker="end" aria-label="Bill period end date" />
-                  </span>
-                ` : `<input value="${value}" placeholder="Add ${label.toLowerCase()}" data-claims-field="${field}" />`}
-              </span>
-            </label>
-          `;})
-          .join("")}
-      </div>
-    </section>
+    <div class="claims-quick-action-grid" aria-label="Claims quick actions">
+      ${actions.map(([action, label, icon]) => `
+        <button type="button" class="claims-quick-action-card" data-claims-workspace-action="${action}">
+          <span aria-hidden="true"><svg><use href="#${icon}" /></svg></span>
+          <strong>${label}</strong>
+        </button>
+      `).join("")}
+    </div>
   `;
 }
 
-function isClaimFieldMissing(field) {
-  const draft = claimState.draft;
-  return (field === "vehicleNumber" && claimState.selectedCategory === "fuel" && !draft.vehicleNumber)
-    || (field === "courseName" && claimState.selectedCategory === "development" && !draft.courseName)
-    || (field === "managerApproval" && draft.managerApproval === "Missing")
-    || (field === "completionCertificate" && draft.completionCertificate === "Missing");
-}
-
-function renderClaimErrors() {
+function renderPromptCard(card) {
+  const action = card.id === "telephone" ? "start-telephone" : card.id === "upload" ? "upload-start" : "policy";
   return `
-    <section class="claims-error-stack">
-      ${claimState.errors
-        .map((error) => `
-          <article class="claims-error-card merchant-directory-item">
-            <span class="merchant-directory-item-icon"><svg><use href="#icon-bell" /></svg></span>
-            <div class="merchant-directory-item-copy">
-              <strong>${error.title}</strong>
-              <span>${error.detail}</span>
-              <button type="button" class="merchant-directory-chip" data-claims-fix="${error.id}">${error.action}</button>
-            </div>
-          </article>
-        `)
-        .join("")}
-    </section>
+    <button type="button" class="claims-prompt-card" data-claims-workspace-action="${action}">
+      <span aria-hidden="true"><svg><use href="#${card.icon}" /></svg></span>
+      <strong>${card.title}</strong>
+      <small>${card.subtitle}</small>
+    </button>
   `;
 }
 
-function renderClaimReview() {
-  const draft = claimState.draft;
+function renderClaimStartActions() {
   return `
-    <section class="claims-review-card wallet-overlay-summary gift">
-      <span>Final review</span>
-      <h3>Ready to submit</h3>
-      <div class="claims-review-amount">
-        <span>Total reimbursement</span>
-        <strong>${draft.amount}</strong>
-      </div>
-      <div class="claims-review-list transaction-list">
+    <section class="claims-upload-options-card">
+      <h3>Upload your bill</h3>
+      <div class="claims-upload-option-grid">
         ${[
-        ["Category", draft.category],
-        ["Vendor", draft.vendor],
-        ["Amount", draft.amount],
-        ["Bill date", draft.billDate],
-        ["Document", draft.uploadedDocument],
-        ["Wallet balance", draft.walletBalance],
-      ].map(([label, value]) => `
-          <article class="transaction-item">
-            <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
-            <span class="transaction-meta"><strong>${label}</strong><span>${value || "-"}</span></span>
-          </article>
+          ["Upload bill", "From device", "icon-plus"],
+          ["Take photo", "Use camera", "icon-eye"],
+          ["Choose PDF", "Select file", "icon-receipt"],
+        ].map(([title, subtitle, icon]) => `
+          <button type="button" class="claims-upload-option" data-claims-workspace-action="upload-start">
+            <span aria-hidden="true"><svg><use href="#${icon}" /></svg></span>
+            <strong>${title}</strong>
+            <small>${subtitle}</small>
+          </button>
         `).join("")}
       </div>
     </section>
   `;
 }
 
-function renderClaimsSuccess() {
+function renderClaimStepper(activeStep) {
+  const steps = ["Upload", "Review", "Verify", "Submit"];
   return `
-    <section class="claims-success-card wallet-overlay-summary gift">
-      <span><svg><use href="#icon-receipt" /></svg></span>
-      <h3>Claim submitted</h3>
-      <p>Your reimbursement claim has been sent for approval.</p>
-      <strong>${claimState.claimId}</strong>
-      <div class="claims-success-meta">
-        <p><span>Amount</span><strong>${claimState.draft.amount}</strong></p>
-        <p><span>Category</span><strong>${claimState.draft.category}</strong></p>
-      </div>
-      <div class="claims-tracking-card">
-        <p class="is-complete"><i><svg aria-hidden="true"><use href="#icon-checks" /></svg></i>Submitted</p>
-        <p class="is-pending"><i></i>Manager review</p>
-        <p class="is-pending"><i></i>Finance check</p>
-        <p class="is-pending"><i></i>Payout</p>
-      </div>
-      <button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="reset">
-        <span class="wallet-overlay-cta-copy"><strong>Start another claim</strong></span>
+    <div class="claim-stepper" aria-label="Claim progress">
+      ${steps.map((step, index) => {
+        const stepNumber = index + 1;
+        const isActive = stepNumber === activeStep;
+        const isDone = stepNumber < activeStep;
+        return `
+          <span class="${isActive ? "is-active" : ""} ${isDone ? "is-done" : ""}">
+            <i>${isDone ? "✓" : stepNumber}</i>
+            <small>${step}</small>
+          </span>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function renderUploadScreen() {
+  const claim = claimsMockData.canonicalClaim;
+  return `
+    <section class="claims-screen">
+      ${renderClaimStepper(1)}
+      <button type="button" class="upload-bill-card" data-claims-workspace-action="mock-upload">
+        <span aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
+        <strong>Upload your bill</strong>
+        <p>Drag & drop an image or PDF, or tap to browse</p>
+        <small>JPG, PNG, PDF • Max 10MB</small>
       </button>
+      ${claimState.uploaded ? renderBillPreviewCard() : ""}
+      <div class="claims-tips-card">
+        <strong>Tips for a better scan</strong>
+        <span>✓ Ensure all edges are visible</span>
+        <span>✓ No shadows or blur</span>
+        <span>✓ Good lighting</span>
+      </div>
+      ${claimState.uploaded ? `<button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="start-scan"><span class="wallet-overlay-cta-copy"><strong>Start scan</strong></span></button>` : ""}
+      <p class="claims-integration-note">Mock upload selected: ${claim.uploadedDocument.name}. Real file validation and storage APIs plug in here.</p>
     </section>
   `;
 }
 
-function bindClaimsWorkspaceActions() {
-  claimsWorkspace?.querySelectorAll("[data-claims-category]").forEach((button) => {
-    button.addEventListener("click", () => chooseClaimCategory(button.dataset.claimsCategory));
+function renderBillPreviewCard() {
+  const doc = claimsMockData.canonicalClaim.uploadedDocument;
+  return `
+    <article class="bill-preview-card">
+      <span aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
+      <div>
+        <strong>${doc.name}</strong>
+        <small>${doc.type} • ${doc.size}</small>
+      </div>
+      <button type="button" data-claims-workspace-action="mock-upload">Replace</button>
+    </article>
+  `;
+}
+
+function renderScanningScreen() {
+  return `
+    <section class="claims-screen">
+      ${renderClaimStepper(1)}
+      ${renderBillPreviewCard()}
+      <article class="scanning-progress-card">
+        <span class="claims-typing"><i></i><i></i><i></i></span>
+        <div>
+          <strong>Scanning your bill…</strong>
+          <p>Extracting text and details</p>
+        </div>
+        <em>${claimState.scanningProgress}%</em>
+        <span class="claims-progress-track"><i style="width: ${claimState.scanningProgress}%"></i></span>
+      </article>
+    </section>
+  `;
+}
+
+function renderExtractedDetailsScreen() {
+  return `
+    <section class="claims-screen">
+      ${renderClaimStepper(2)}
+      ${renderExtractedDetailsCard()}
+      <div class="claims-action-grid wallet-overlay-mode-switch">
+        <button type="button" class="wallet-overlay-mode-button is-active" data-claims-workspace-action="confirm-details">Looks correct</button>
+        <button type="button" class="wallet-overlay-mode-button" data-claims-workspace-action="edit-details">Edit details</button>
+        <button type="button" class="wallet-overlay-mode-button" data-claims-workspace-action="upload-start">Replace bill</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderExtractedDetailsCard() {
+  const details = claimsMockData.canonicalClaim.extractedDetails;
+  return `
+    <section class="extracted-details-card claims-draft-card wallet-overlay-summary gift">
+      <div class="claims-card-head wallet-overlay-section-head">
+        <div>
+          <span>Extracted details</span>
+          <h3>Telephone & Internet</h3>
+        </div>
+        <small class="wallet-rail-pill is-active">Review</small>
+      </div>
+      ${[
+        ["vendor", "Vendor", details.vendor],
+        ["billDate", "Bill date", details.billDate],
+        ["amount", "Amount", details.amount],
+        ["category", "Category", details.category],
+        ["accountNumber", "Account / Number", details.accountNumber],
+      ].map(([field, label, value]) => renderExtractedDetailRow(field, label, value, details.confidenceByField[field] || "High")).join("")}
+    </section>
+  `;
+}
+
+function renderExtractedDetailRow(field, label, value, confidence) {
+  const currentValue = claimState.manualDetails[field] || value;
+  return `
+    <label class="claims-field-row transaction-item is-filled">
+      <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-checks" /></svg></span>
+      <span class="transaction-meta">
+        <strong>${label} <em>${confidence}</em></strong>
+        <input value="${currentValue}" data-claims-field="${field}" aria-label="${label}" />
+      </span>
+    </label>
+  `;
+}
+
+function renderAIReviewScreen() {
+  return `
+    <section class="claims-screen">
+      ${renderClaimStepper(3)}
+      ${renderPolicyReviewCard()}
+      ${renderAnomalyCard(claimsMockData.canonicalClaim.anomalies[0])}
+      ${claimState.anomalyResolved ? renderComplianceDeclarationCard() : renderQuickReplyChips(["Not a duplicate", "Yes, same bill", "Show me the other claim"])}
+      <div class="claims-edge-scenarios">
+        <button type="button" data-claims-workspace-action="edge-date">Bill date issue</button>
+        <button type="button" data-claims-workspace-action="edge-ocr">Low OCR</button>
+        <button type="button" data-claims-workspace-action="edge-usage">Personal usage</button>
+        <button type="button" data-claims-workspace-action="edge-limit">Limit exceeded</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderPolicyReviewCard() {
+  return `
+    <article class="policy-review-card">
+      <span aria-hidden="true"><svg><use href="#icon-refresh" /></svg></span>
+      <div>
+        <strong>AI policy review</strong>
+        <p>Checking policy limits, duplicates, required documents, and compliance declarations.</p>
+      </div>
+    </article>
+  `;
+}
+
+function renderAnomalyCard(anomaly) {
+  if (anomaly.type === "dateWindow") {
+    return `
+      <article class="anomaly-card warning">
+        <strong>${anomaly.title}</strong>
+        <p>${anomaly.description}</p>
+        <div class="claim-mini-card"><span>Detected bill date</span><strong>30 Apr 2024</strong><span>Allowed window: 1 May 2024 - Today</span></div>
+        ${renderQuickReplyChips(["Attach proof", "It was missed earlier", "Provide explanation"])}
+        ${claimState.supportingDocumentAttached ? renderSupportingDocumentUploadCard(true) : renderSupportingDocumentUploadCard(false)}
+      </article>
+    `;
+  }
+  if (anomaly.type === "lowConfidenceOCR") {
+    return `
+      <article class="anomaly-card danger">
+        <strong>${anomaly.title}</strong>
+        <p>${anomaly.description}</p>
+        <ul><li>Vendor: Not detected</li><li>Amount: Unclear</li><li>Bill date: Detected</li></ul>
+        <div class="claims-manual-grid">
+          <input data-claims-field="vendor" placeholder="e.g., Airtel Broadband" value="${claimState.manualDetails.vendor}" />
+          <input data-claims-field="amount" placeholder="e.g., 2,149" value="${claimState.manualDetails.amount}" />
+          <input data-claims-field="billDate" placeholder="30 Apr 2026" value="${claimState.manualDetails.billDate}" />
+        </div>
+        ${renderQuickReplyChips(["Re-upload bill", "Enter manually"])}
+      </article>
+    `;
+  }
+  if (anomaly.type === "personalUsage") {
+    return `
+      <article class="anomaly-card danger">
+        <strong>${anomaly.title}</strong>
+        <p>${anomaly.description}</p>
+        ${renderQuickReplyChips(["This is a work expense", "Mixed usage", "Not sure"])}
+      </article>
+    `;
+  }
+  if (anomaly.type === "limitExceeded") {
+    return `
+      <article class="anomaly-card warning">
+        <strong>${anomaly.title}</strong>
+        <p>${anomaly.description}</p>
+        <div class="claims-metric-grid">
+          <span><small>Claim amount</small><strong>₹12,149</strong></span>
+          <span><small>Available limit</small><strong>₹9,100</strong></span>
+          <span><small>Eligible</small><strong>₹9,100</strong></span>
+          <span><small>Not eligible</small><strong>₹3,049</strong></span>
+        </div>
+        ${renderQuickReplyChips(["Submit eligible amount", "Edit amount", "Ask policy question"])}
+      </article>
+    `;
+  }
+  return `
+    <article class="anomaly-card warning">
+      <strong>${anomaly.title}</strong>
+      <p>${anomaly.description}</p>
+      <div class="claim-mini-card">
+        <span>Similar claim</span>
+        <strong>Claim ID: ${anomaly.similarClaim.id}</strong>
+        <span>${anomaly.similarClaim.date} • ${anomaly.similarClaim.amount}</span>
+      </div>
+      <p>Is this the same bill? Please confirm it is not a duplicate and submit a declaration.</p>
+    </article>
+  `;
+}
+
+function renderQuickReplyChips(replies) {
+  return `<div class="quick-reply-chips">${replies.map((reply) => `<button type="button" data-claims-reply="${reply}">${reply}</button>`).join("")}</div>`;
+}
+
+function renderSupportingDocumentUploadCard(isAttached) {
+  return `
+    <article class="supporting-document-card">
+      <span aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
+      <div>
+        <strong>${isAttached ? "Approval_Late_Claim.pdf" : "Attach prior approval"}</strong>
+        <small>${isAttached ? "Uploaded • 9:42 AM" : "PDF, PNG, JPG accepted"}</small>
+      </div>
+      <button type="button" data-claims-workspace-action="attach-proof">${isAttached ? "Replace" : "Attach"}</button>
+    </article>
+  `;
+}
+
+function renderComplianceDeclarationCard() {
+  const declarations = claimsMockData.canonicalClaim.declarations;
+  return `
+    <section class="compliance-declaration-card">
+      <div class="claims-card-head wallet-overlay-section-head">
+        <div>
+          <span>Required action</span>
+          <h3>Compliance declaration</h3>
+        </div>
+        <small class="wallet-rail-pill is-active">Required</small>
+      </div>
+      ${declarations.map((item, index) => `
+        <label class="claims-checkbox-row">
+          <input type="checkbox" ${claimState.declarationAccepted[index] ? "checked" : ""} data-claims-declaration="${index}" />
+          <span>${item}</span>
+        </label>
+      `).join("")}
+      <button type="button" class="wallet-overlay-cta claims-primary-action" ${claimState.declarationAccepted.every(Boolean) ? "" : "disabled"} data-claims-workspace-action="declaration-continue">
+        <span class="wallet-overlay-cta-copy"><strong>I Agree & Continue</strong></span>
+      </button>
+      <small class="claims-helper-text">Continue is enabled after the declaration is accepted.</small>
+    </section>
+  `;
+}
+
+function renderSubmitReadyScreen() {
+  return `
+    <section class="claims-screen">
+      ${renderClaimStepper(4)}
+      <section class="claims-review-card wallet-overlay-summary gift">
+        <span>Ready to submit</span>
+        <h3>Telephone & Internet</h3>
+        <div class="claims-review-amount"><span>Claim amount</span><strong>₹2,149</strong></div>
+        <p>Clarification and declaration are recorded. Submit this claim for review.</p>
+        <button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="submit-claim">
+          <span class="wallet-overlay-cta-copy"><strong>Submit claim</strong></span>
+        </button>
+      </section>
+    </section>
+  `;
+}
+
+function renderTrackClaimScreen() {
+  const claim = claimsMockData.canonicalClaim;
+  const statusCopy = {
+    submitted: ["Your claim has been submitted successfully.", "We’ll keep you updated at every step."],
+    pending: ["Your claim is under review.", "Our team and assistant are reviewing your claim. We may request more information if needed."],
+    approved: ["Great news! Your claim is approved.", "It will be reimbursed in the next payout cycle."],
+    reimbursed: ["Reimbursement successful!", "₹2,149 has been credited to your account."],
+  };
+  return `
+    <section class="claims-screen">
+      <div class="claims-subscreen-head"><h3>Track Claim</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <section class="claim-summary-card">
+        <div><span>Claim ID</span><strong>${claim.id}</strong></div>
+        <div><span>Category</span><strong>${claim.category}</strong></div>
+        <div><span>Claim amount</span><strong>${claim.amount}</strong></div>
+        <div><span>Submitted on</span><strong>${claim.submittedDate}</strong></div>
+      </section>
+      ${renderClaimStatusTimeline(claimState.trackStatus)}
+      <article class="claim-status-note ${claimState.trackStatus}">
+        <span aria-hidden="true"><svg><use href="#${claimState.trackStatus === "approved" || claimState.trackStatus === "reimbursed" ? "icon-checks" : "icon-headset"}" /></svg></span>
+        <div><strong>${statusCopy[claimState.trackStatus][0]}</strong><p>${statusCopy[claimState.trackStatus][1]}</p></div>
+      </article>
+      ${claimState.trackStatus === "approved" ? renderApprovalSummary() : ""}
+      <div class="claims-action-grid wallet-overlay-mode-switch">
+        <button type="button" class="wallet-overlay-mode-button" data-claims-track="submitted">Submitted</button>
+        <button type="button" class="wallet-overlay-mode-button" data-claims-track="pending">Pending review</button>
+        <button type="button" class="wallet-overlay-mode-button" data-claims-track="approved">Approved</button>
+        <button type="button" class="wallet-overlay-mode-button" data-claims-track="reimbursed">Reimbursed</button>
+      </div>
+    </section>
+  `;
+}
+
+function renderApprovalSummary() {
+  const claim = claimsMockData.canonicalClaim;
+  return `
+    <section class="approval-summary-card">
+      <strong>Approval summary</strong>
+      <span>Claim type: ${claim.category}</span>
+      <span>Amount: ${claim.amount}</span>
+      <span>Claim ID: ${claim.id}</span>
+      <span>Approved on: ${claim.approvedDate}</span>
+      <span>Payout: Paid in next cycle</span>
+    </section>
+  `;
+}
+
+function renderClaimStatusTimeline(activeStatus = "submitted") {
+  const steps = [
+    ["submitted", "Submitted", "30 Apr 2026, 9:41 AM"],
+    ["pending", "Pending review", "30 Apr 2026, 10:15 AM"],
+    ["approved", "Approved", "1 May 2026, 11:20 AM"],
+    ["reimbursed", "Reimbursed", "5 May 2026, 2:45 PM"],
+  ];
+  const activeIndex = steps.findIndex(([id]) => id === activeStatus);
+  return `
+    <section class="claim-status-timeline">
+      <h4>Claim status</h4>
+      ${steps.map(([id, label, date], index) => `
+        <article class="${index < activeIndex ? "is-complete" : ""} ${index === activeIndex ? "is-current" : ""}">
+          <i>${index <= activeIndex ? "✓" : ""}</i>
+          <div><strong>${label}</strong><span>${index <= activeIndex ? date : "Upcoming"}</span></div>
+        </article>
+      `).join("")}
+    </section>
+  `;
+}
+
+function renderClaimHistoryScreen(filter = "All") {
+  const activeFilter = filter === "Pending" ? "Pending" : claimState.historyFilter;
+  const search = claimState.historySearch.trim().toLowerCase();
+  const claims = claimsMockData.history.filter((claim) => {
+    const matchesFilter = activeFilter === "All" || claim.status === activeFilter;
+    const matchesSearch = !search || `${claim.title} ${claim.vendor}`.toLowerCase().includes(search);
+    return matchesFilter && matchesSearch;
   });
+  return `
+    <section class="claims-screen">
+      <div class="claims-subscreen-head"><h3>Claim history</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <label class="claims-search-bar"><svg><use href="#icon-search" /></svg><input value="${claimState.historySearch}" placeholder="Search claims by category, vendor..." data-claims-history-search /></label>
+      <div class="claims-filter-row">
+        ${["All", "Pending", "Approved", "Rejected"].map((item) => `<button type="button" class="${activeFilter === item ? "active" : ""}" data-claims-filter="${item}">${item}</button>`).join("")}
+      </div>
+      ${activeFilter === "Pending" ? `<div class="claims-filter-summary"><strong>Pending (${claims.length})</strong><button type="button" data-claims-workspace-action="clear-filter">Clear filters</button></div>` : ""}
+      <div class="claim-history-list">
+        ${claims.length ? claims.map(renderClaimHistoryListItem).join("") : renderEmptyClaimsState(activeFilter === "All" ? "No claims yet" : "No claims match this filter")}
+      </div>
+    </section>
+  `;
+}
+
+function renderClaimHistoryListItem(claim) {
+  return `
+    <button type="button" class="claim-history-item" data-claims-detail="${claim.id}">
+      <span class="transaction-icon"><svg><use href="#${claim.icon}" /></svg></span>
+      <span class="transaction-meta"><strong>${claim.title}</strong><span>${claim.vendor}</span></span>
+      <span class="transaction-amount"><strong>${claim.amount}</strong><span>${claim.date}</span>${renderStatusBadge(claim.status)}</span>
+    </button>
+  `;
+}
+
+function renderEmptyClaimsState(copy) {
+  return `<article class="claims-empty-inline"><strong>${copy}</strong><button type="button" data-claims-workspace-action="start-telephone">Start a claim</button></article>`;
+}
+
+function renderClaimDetailScreen() {
+  const claim = claimsMockData.canonicalClaim;
+  return `
+    <section class="claims-screen">
+      <div class="claims-subscreen-head"><h3>Claim details</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <section class="claim-detail-summary">
+        ${renderStatusBadge("Approved")}
+        <div class="claim-detail-title"><div><strong>${claim.category}</strong><span>${claim.vendor}</span></div><strong>${claim.amount}</strong></div>
+        <small>${claim.id}</small>
+        <div class="claims-detail-chip-row"><span>Bill date<br><strong>${claim.billDate}</strong></span><span>Vendor<br><strong>${claim.vendor}</strong></span><span>Category<br><strong>${claim.category}</strong></span></div>
+      </section>
+      ${renderClaimStatusTimeline("approved")}
+      <article class="supporting-document-card">
+        <span aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
+        <div><strong>airtel-broadband-bill-apr.pdf</strong><small>Uploaded on 30 Apr 2026</small></div>
+        <button type="button" data-toast="Document preview opened">View</button>
+      </article>
+      <section class="decision-summary-card"><strong>Decision summary</strong><p>${claim.decisionSummary}</p><button type="button" data-claims-workspace-action="thread">View full thread</button></section>
+    </section>
+  `;
+}
+
+function renderClaimDashboardScreen() {
+  const dashboard = claimsMockData.dashboard;
+  return `
+    <section class="claims-screen">
+      <div class="claims-subscreen-head"><h3>Claim dashboard</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <section class="dashboard-balance-card">
+        <span>Total reimbursement balance</span>
+        <strong>${dashboard.totalBalance}</strong>
+        <div><p><small>Available balance</small><b>${dashboard.availableBalance}</b></p><p><small>Pending payouts</small><b>${dashboard.pendingPayouts}</b></p></div>
+      </section>
+      <section class="dashboard-month-card"><span>This month: Apr 2026</span><div><p><b>${dashboard.monthlyTotalClaims}</b><small>Total claims</small></p><p><b>${dashboard.monthlyClaimedAmount}</b><small>Claimed amount</small></p><p><b>${dashboard.monthlyReimbursedAmount}</b><small>Reimbursed</small></p></div></section>
+      <div class="dashboard-metric-grid">${dashboard.statusCounts.map((metric) => renderMetricCard(metric)).join("")}</div>
+      <section class="dashboard-chart-card">
+        <h4>Status analytics</h4>
+        <div class="claims-donut" aria-hidden="true"><span>12<br><small>Total</small></span></div>
+        <div class="dashboard-insights"><p>Average approval time <strong>2.4 days</strong></p><p>Pending payout amount <strong>${dashboard.pendingPayouts}</strong></p><p>Approved this month <strong>5</strong></p></div>
+      </section>
+      <section class="dashboard-activity-card"><h4>Recent activity</h4>${dashboard.recentActivity.map((item) => `<article><span>${item.vendor}<small>${item.meta}</small></span><strong>${item.amount}<em>${item.status}</em></strong></article>`).join("")}</section>
+      <section class="dashboard-activity-card"><h4>Upcoming reimbursements</h4><article><span>2 payouts scheduled<small>Next payout on 07 May 2026</small></span><strong>${dashboard.pendingPayouts}</strong></article></section>
+      <div class="dashboard-action-list">${[["Start a claim", "start-telephone"], ["Track claim", "track"], ["View history", "history"], ["Ask policy question", "policy"]].map(([label, action]) => `<button type="button" data-claims-workspace-action="${action}">${label}<svg><use href="#icon-arrow-right" /></svg></button>`).join("")}</div>
+    </section>
+  `;
+}
+
+function renderMetricCard(metric) {
+  return `<article class="metric-card ${metric.status}"><span>${metric.label}</span><strong>${metric.count}</strong><small>${metric.amount}</small></article>`;
+}
+
+function renderStatusBadge(status) {
+  const key = status.toLowerCase().replace(/\s+/g, "-");
+  return `<span class="status-badge ${key}">${status}</span>`;
+}
+
+function bindClaimsWorkspaceActions() {
   claimsWorkspace?.querySelectorAll("[data-claims-workspace-action]").forEach((button) => {
     button.addEventListener("click", () => handleClaimsAction(button.dataset.claimsWorkspaceAction));
   });
-  claimsWorkspace?.querySelectorAll("[data-claims-fix]").forEach((button) => {
-    button.addEventListener("click", () => resolveClaimError(button.dataset.claimsFix));
+  claimsWorkspace?.querySelectorAll("[data-claims-reply]").forEach((button) => {
+    button.addEventListener("click", () => handleClaimsReply(button.dataset.claimsReply));
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-declaration]").forEach((input) => {
+    input.addEventListener("change", () => toggleDeclaration(Number(input.dataset.claimsDeclaration)));
   });
   claimsWorkspace?.querySelectorAll("[data-claims-field]").forEach((input) => {
-    input.addEventListener("input", () => updateClaimField(input.dataset.claimsField, input.value));
-  });
-  claimsWorkspace?.querySelectorAll("[data-claims-category-select]").forEach((select) => {
-    select.addEventListener("change", () => changeClaimCategory(select.value));
-  });
-  claimsWorkspace?.querySelectorAll("[data-claims-period-open]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const picker = button.parentElement?.querySelector(`[data-claims-period-picker="${button.dataset.claimsPeriodOpen}"]`);
-      if (!picker) return;
-      if (picker.showPicker) picker.showPicker();
-      else picker.click();
+    input.addEventListener("input", () => {
+      claimState.manualDetails[input.dataset.claimsField] = input.value;
     });
   });
-  claimsWorkspace?.querySelectorAll("[data-claims-period-picker]").forEach((picker) => {
-    picker.addEventListener("change", () => {
-      const key = picker.dataset.claimsPeriodPicker === "start" ? "billPeriodStart" : "billPeriodEnd";
-      claimState.draft[key] = picker.value;
-      updateClaimField("billPeriod", formatClaimBillPeriodRange(claimState.draft.billPeriodStart, claimState.draft.billPeriodEnd));
+  claimsWorkspace?.querySelectorAll("[data-claims-track]").forEach((button) => {
+    button.addEventListener("click", () => updateTrackStatus(button.dataset.claimsTrack));
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      claimState.historyFilter = button.dataset.claimsFilter;
+      claimState.view = button.dataset.claimsFilter === "Pending" ? "filteredHistory" : "history";
       renderClaimsAssistant();
+    });
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-history-search]").forEach((input) => {
+    input.addEventListener("input", () => {
+      claimState.historySearch = input.value;
+      renderClaimsAssistant();
+    });
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-detail]").forEach((button) => {
+    button.addEventListener("click", () => {
+      claimState.selectedHistoryId = button.dataset.claimsDetail;
+      goToClaimsView("detail");
     });
   });
 }
 
-function handleClaimsAction(action) {
-  if (action === "upload") simulateClaimUpload();
-  if (action === "validate") validateClaimPolicy();
-  if (action === "review") {
-    claimState.errors = getClaimErrors();
-    claimState.stage = claimState.errors.length ? "errors" : "review";
-    addClaimMessage("user", "Review claim");
-    addClaimMessage("bot", claimState.errors.length ? "Resolve these items first, then we can review." : "Here is the final review.");
+function handleClaimsReply(reply) {
+  if (reply === "Not a duplicate") resolveDuplicateClaim("Not a duplicate — different period.");
+  else if (reply === "Attach proof") {
+    claimState.supportingDocumentAttached = true;
+    addClaimMessage("user", "Attaching email approval for late claim.");
+    addClaimMessage("assistant", "Thanks! I’ll review the approval and update the claim.");
     renderClaimsAssistant();
+  } else if (reply === "This is a work expense") {
+    resolveDuplicateClaim("This is a work expense.");
+  } else {
+    addClaimMessage("user", reply);
+    addLiveClaimBotMessage(getClaimAssistantReply(reply), 420);
   }
-  if (action === "submit") submitClaim();
-  if (action === "reset") {
-    claimState.stage = "empty";
-    claimState.selectedCategory = "telephone";
-    claimState.draft = cloneClaimDraft("telephone");
-    claimState.errors = [];
-    claimState.isThinking = false;
-    claimState.claimId = "";
-    claimState.messages = [{ role: "bot", text: "Ready for another claim. Upload a bill to begin." }];
-    renderClaimsAssistant();
+}
+
+function handleClaimsAction(action) {
+  if (action === "home") goToClaimsHome();
+  if (action === "history") goToClaimsView("history");
+  if (action === "track") goToClaimsView("track");
+  if (action === "dashboard") goToClaimsView("dashboard");
+  if (action === "start-telephone") startTelephoneClaim();
+  if (action === "upload" || action === "upload-start") openUploadFlow(action === "upload");
+  if (action === "mock-upload") selectMockBill();
+  if (action === "start-scan") startMockScan();
+  if (action === "confirm-details") confirmExtractedDetails();
+  if (action === "edit-details") showToast("Fields are editable inline");
+  if (action === "declaration-continue") continueAfterDeclaration();
+  if (action === "submit-claim") submitCanonicalClaim();
+  if (action === "clear-filter") {
+    claimState.historyFilter = "All";
+    claimState.historySearch = "";
+    goToClaimsView("history");
+  }
+  if (action === "thread") {
+    claimState.messages = [
+      { role: "assistant", text: "Here is the full thread for this Airtel Broadband claim. The duplicate concern was resolved with your declaration.", time: "9:41 AM" },
+      { role: "user", text: "Not a duplicate — different period.", time: "9:42 AM" },
+      { role: "assistant", text: "All checks passed and the claim was approved.", time: "9:43 AM", type: "success" },
+    ];
+    goToClaimsView("aiReview");
+  }
+  if (action === "policy") addLiveClaimBotMessage("I can explain eligible categories, duplicate checks, reimbursement windows, available balance, and required declarations.", 420);
+  if (action?.startsWith("edge-")) {
+    const map = { "edge-date": 1, "edge-ocr": 2, "edge-usage": 3, "edge-limit": 4 };
+    addClaimMessage("assistant", "Here’s another possible edge scenario the assistant can handle.", "warning");
+    claimsWorkspace.innerHTML = `<section class="claims-screen">${renderClaimStepper(3)}${renderAnomalyCard(claimsMockData.canonicalClaim.anomalies[map[action]])}</section>`;
+    bindClaimsWorkspaceActions();
   }
 }
 
@@ -1217,7 +1555,13 @@ claimsOpenButton?.addEventListener("click", () => {
 });
 
 claimsCloseButtons.forEach((button) => {
-  button.addEventListener("click", closeClaimsAssistant);
+  button.addEventListener("click", () => {
+    if (claimState.view && claimState.view !== "home") {
+      goToClaimsHome();
+      return;
+    }
+    closeClaimsAssistant();
+  });
 });
 
 claimsActionButtons.forEach((button) => {
