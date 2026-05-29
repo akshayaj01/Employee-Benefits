@@ -209,6 +209,33 @@
           </span>
           <span class="upi-status" data-lens-text="Active" data-pluspay-text="Primary">Active</span>
         </button>
+        <button class="scan-pay-card" type="button" data-toast="Scan & Pay is not available for Meal wallet" data-pluspay-hide>
+          <span class="scan-pay-icon" aria-hidden="true"><svg><use href="#icon-scan" /></svg></span>
+          <span class="scan-pay-copy">
+            <strong>Scan &amp; Pay</strong>
+            <small>Scan any QR code to pay instantly</small>
+          </span>
+          <span class="scan-pay-arrow" aria-hidden="true"><svg><use href="#icon-chevron-right" /></svg></span>
+          <span class="scan-pay-tooltip" aria-hidden="true">Scan &amp; Pay is not available<br>for Meal wallet</span>
+        </button>
+        <button
+          class="tap-pay-discovery"
+          type="button"
+          aria-label="Tap and Pay is now available. Pay instantly with your phone."
+          data-tap-pay-discovery
+          data-pluspay-hide
+        >
+          <span class="tap-pay-discovery-art" aria-hidden="true">
+            <span class="tap-pay-spark one"></span>
+            <span class="tap-pay-spark two"></span>
+            <span class="tap-pay-discovery-icon"><svg><use href="#icon-nfc" /></svg></span>
+          </span>
+          <span class="tap-pay-discovery-copy">
+            <strong>Tap &amp; Pay is now available</strong>
+            <small>Pay instantly with your phone anywhere<br>NFC works</small>
+          </span>
+          <span class="tap-pay-close" aria-hidden="true"><svg><use href="#icon-close" /></svg></span>
+        </button>
       </section>
 
       <section class="pluspay-actions-panel" aria-label="PlusPay actions" data-pluspay-show>
@@ -225,24 +252,6 @@
           </button>
         </div>
       </section>
-
-      <button
-        class="tap-pay-discovery"
-        type="button"
-        aria-label="Tap and Pay is now available. Pay instantly with your phone."
-        data-tap-pay-discovery
-        data-pluspay-hide
-      >
-        <span class="tap-pay-discovery-art" aria-hidden="true">
-          <span class="tap-pay-spark one"></span>
-          <span class="tap-pay-spark two"></span>
-          <span class="tap-pay-discovery-icon"><svg><use href="#icon-nfc" /></svg></span>
-        </span>
-        <span class="tap-pay-discovery-copy">
-          <strong>Tap &amp; Pay is now available</strong>
-          <small>Pay instantly with your phone anywhere NFC works</small>
-        </span>
-      </button>
 
       <section class="wallet-experience-panel" aria-label="Wallets" data-pluspay-hide>
         <div class="section-heading compact-heading">
@@ -267,7 +276,8 @@
               <span class="wallet-icon meal-icon" aria-hidden="true"><svg><use href="#icon-food" /></svg></span>
               <span class="wallet-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </div>
-            <span class="wallet-name">Meal Wallet</span>
+            <span class="wallet-name">Meal</span>
+            <small>Daily essentials</small>
             <strong>₹6,400</strong>
             <div class="wallet-rail-pills" aria-hidden="true">
               <span class="wallet-rail-pill is-active"><svg><use href="#icon-nfc" /></svg>Tap &amp; Pay</span>
@@ -289,7 +299,8 @@
               <span class="wallet-icon fuel-icon" aria-hidden="true"><svg><use href="#icon-fuel" /></svg></span>
               <span class="wallet-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </div>
-            <span class="wallet-name">Fuel Wallet</span>
+            <span class="wallet-name">Fuel</span>
+            <small>Commute ready</small>
             <strong>₹3,150</strong>
             <div class="wallet-rail-pills" aria-hidden="true">
               <span class="wallet-rail-pill is-active"><svg><use href="#icon-nfc" /></svg>Tap &amp; Pay</span>
@@ -312,7 +323,8 @@
               <span class="wallet-icon misc-icon" aria-hidden="true"><svg><use href="#icon-scan" /></svg></span>
               <span class="wallet-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </div>
-            <span class="wallet-name">Reimbursement Wallet</span>
+            <span class="wallet-name">Reimbursement</span>
+            <small>Flexible spends</small>
             <strong>₹9,100</strong>
             <div class="wallet-rail-pills" aria-hidden="true">
               <span class="wallet-rail-pill is-active"><svg><use href="#icon-scan" /></svg>Scan &amp; Pay</span>
@@ -323,7 +335,7 @@
             type="button"
             data-wallet-card
             data-wallet-name="Gift Wallet"
-            data-wallet-balance="6,200 pts"
+            data-wallet-balance="6200 pts"
             data-wallet-description="Rewards and gifting"
             data-wallet-detail="Gift balance for card-linked spends and brand redemption journeys when gifting is the primary intent."
             data-wallet-actions="card"
@@ -334,11 +346,9 @@
               <span class="wallet-icon gift-icon" aria-hidden="true"><svg><use href="#icon-gift" /></svg></span>
               <span class="wallet-arrow" aria-hidden="true"><svg><use href="#icon-arrow-right" /></svg></span>
             </div>
-            <span class="wallet-name">Gift Wallet</span>
-            <strong>6,200 pts</strong>
-            <div class="wallet-rail-pills" aria-hidden="true">
-              <span class="wallet-rail-pill"><svg><use href="#icon-card" /></svg>Card Access</span>
-            </div>
+            <span class="wallet-name">Gift</span>
+            <small>Rewards and gifting</small>
+            <strong>6200 pts</strong>
           </button>
         </div>
       </section>

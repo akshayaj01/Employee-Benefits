@@ -2,6 +2,7 @@ const toastRegion = document.querySelector("[data-toast-region]");
 const filterButtons = document.querySelectorAll("[data-filter]");
 const transactions = document.querySelectorAll("[data-wallet]");
 const virtualCardToggle = document.querySelector("[data-virtual-card-toggle]");
+const balanceCard = document.querySelector(".balance-card");
 const cardOverlay = document.querySelector("[data-card-overlay]");
 const overlayCloseButtons = document.querySelectorAll("[data-card-overlay-close]");
 const walletButtons = document.querySelectorAll("[data-wallet-card]");
@@ -819,9 +820,7 @@ function renderExtractedDetailsScreen() {
       ${renderClaimStepper(2)}
       ${renderExtractedDetailsCard()}
       <div class="claims-action-grid wallet-overlay-mode-switch">
-        <button type="button" class="wallet-overlay-mode-button is-active" data-claims-workspace-action="confirm-details">Looks correct</button>
-        <button type="button" class="wallet-overlay-mode-button" data-claims-workspace-action="edit-details">Edit details</button>
-        <button type="button" class="wallet-overlay-mode-button" data-claims-workspace-action="upload-start">Replace bill</button>
+        <button type="button" class="wallet-overlay-mode-button is-active" data-claims-workspace-action="confirm-details">Submit</button>
       </div>
     </section>
   `;
@@ -851,15 +850,54 @@ function renderExtractedDetailsCard() {
 
 function renderExtractedDetailRow(field, label, value, confidence) {
   const currentValue = claimState.manualDetails[field] || value;
+  const dateValue = parseClaimDateValue(currentValue);
   return `
     <label class="claims-field-row transaction-item is-filled">
       <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-checks" /></svg></span>
       <span class="transaction-meta">
         <strong>${label} <em>${confidence}</em></strong>
-        <input value="${currentValue}" data-claims-field="${field}" aria-label="${label}" />
+        ${field === "billDate" ? `
+          <span class="claims-detail-date-entry">
+            <input value="${currentValue}" data-claims-field="${field}" data-claims-date-display aria-label="${label}" />
+            <button type="button" class="claims-period-calendar claims-detail-calendar" data-claims-date-trigger aria-label="Update bill date">
+              <svg aria-hidden="true"><use href="#icon-calendar" /></svg>
+            </button>
+            <input class="claims-period-picker" type="date" value="${dateValue}" data-claims-date-picker aria-label="${label}" />
+          </span>
+        ` : `<input value="${currentValue}" data-claims-field="${field}" aria-label="${label}" />`}
       </span>
     </label>
   `;
+}
+
+function parseClaimDateValue(value) {
+  const match = String(value || "").match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+  if (!match) return "";
+  const months = {
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Aug: "08",
+    Sep: "09",
+    Oct: "10",
+    Nov: "11",
+    Dec: "12",
+  };
+  const month = months[match[2]];
+  if (!month) return "";
+  return `${match[3]}-${month}-${match[1].padStart(2, "0")}`;
+}
+
+function formatClaimDateValue(value) {
+  if (!value) return "";
+  const [year, month, day] = value.split("-");
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).replace(",", "");
 }
 
 function renderAIReviewScreen() {
@@ -1188,6 +1226,28 @@ function bindClaimsWorkspaceActions() {
   claimsWorkspace?.querySelectorAll("[data-claims-field]").forEach((input) => {
     input.addEventListener("input", () => {
       claimState.manualDetails[input.dataset.claimsField] = input.value;
+    });
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-date-display]").forEach((input) => {
+    input.addEventListener("click", () => {
+      const picker = input.closest(".claims-detail-date-entry")?.querySelector("[data-claims-date-picker]");
+      picker?.showPicker?.();
+    });
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-date-trigger]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const picker = button.closest(".claims-detail-date-entry")?.querySelector("[data-claims-date-picker]");
+      picker?.showPicker?.();
+    });
+  });
+  claimsWorkspace?.querySelectorAll("[data-claims-date-picker]").forEach((picker) => {
+    picker.addEventListener("change", () => {
+      const dateEntry = picker.closest(".claims-detail-date-entry");
+      const displayInput = dateEntry?.querySelector("[data-claims-date-display]");
+      const formattedDate = formatClaimDateValue(picker.value);
+      if (!displayInput || !formattedDate) return;
+      displayInput.value = formattedDate;
+      claimState.manualDetails.billDate = formattedDate;
     });
   });
   claimsWorkspace?.querySelectorAll("[data-claims-track]").forEach((button) => {
@@ -1802,6 +1862,12 @@ virtualCardToggle?.addEventListener("click", () => {
     syncPageScrollLock();
   });
   showToast("Virtual card details revealed");
+});
+
+balanceCard?.addEventListener("click", (event) => {
+  if (document.body.classList.contains("is-pluspay")) return;
+  if (event.target.closest("[data-virtual-card-toggle]")) return;
+  virtualCardToggle?.click();
 });
 
 overlayCloseButtons.forEach((button) => {
