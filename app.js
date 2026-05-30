@@ -1875,7 +1875,15 @@ function initializeTapPayDiscovery() {
     tapPayDiscovery.classList.add("is-visible");
   });
 
-  tapPayDiscovery.addEventListener("click", () => {
+  tapPayDiscovery.addEventListener("click", (event) => {
+    if (event.target.closest(".tap-pay-close")) {
+      tapPayDiscovery.classList.add("is-dismissed");
+      window.setTimeout(() => {
+        tapPayDiscovery.hidden = true;
+      }, 280);
+      return;
+    }
+
     const tapWallet = Array.from(walletButtons).find((button) =>
       (button.dataset.walletActions || "")
         .split(",")

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Poppins:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
@@ -235,13 +235,36 @@
           </div>
         </header>
 
+        <button
+          class="tap-pay-discovery"
+          type="button"
+          aria-label="Tap and Pay is now available. Pay instantly with your phone."
+          data-tap-pay-discovery
+          data-pluspay-hide
+        >
+          <span class="tap-pay-discovery-art" aria-hidden="true">
+            <span class="tap-pay-spark one"></span>
+            <span class="tap-pay-spark two"></span>
+            <span class="tap-pay-discovery-icon"
+              ><svg><use href="#icon-nfc" /></svg
+            ></span>
+          </span>
+          <span class="tap-pay-discovery-copy">
+            <strong>Tap &amp; Pay is now available</strong>
+            <small>Pay instantly with your phone anywhere<br />NFC works</small>
+          </span>
+          <span class="tap-pay-close" aria-hidden="true">
+            <svg><use href="#icon-close" /></svg>
+          </span>
+        </button>
+
         <section class="balance-card" aria-labelledby="balance-title">
           <div class="card-strip">
             <span
               class="category-title"
-              data-lens-text="Pine Visa"
+              data-lens-text="Pine Card"
               data-pluspay-text="Pluspay"
-              >Pine Visa</span
+              >Pine Card</span
             >
             <span
               class="status-pill"
@@ -340,41 +363,22 @@
           data-scan-pay-open
           data-pluspay-hide
         >
-          <span class="scan-pay-icon" aria-hidden="true"
-            ><svg><use href="#icon-scan" /></svg
-          ></span>
-          <span class="scan-pay-copy">
-            <strong>Scan &amp; Pay</strong>
-            <small>Scan any QR code to pay instantly</small>
-          </span>
-          <span class="scan-pay-arrow" aria-hidden="true"
-            ><svg><use href="#icon-chevron-right" /></svg
-          ></span>
-          <span class="scan-pay-tooltip" aria-hidden="true"
-            >Scan &amp; Pay is not available<br />for Meal wallet</span
-          >
-        </button>
-        <button
-          class="tap-pay-discovery"
-          type="button"
-          aria-label="Tap and Pay is now available. Pay instantly with your phone."
-          data-tap-pay-discovery
-          data-pluspay-hide
-        >
-          <span class="tap-pay-discovery-art" aria-hidden="true">
-            <span class="tap-pay-spark one"></span>
-            <span class="tap-pay-spark two"></span>
-            <span class="tap-pay-discovery-icon"
-              ><svg><use href="#icon-nfc" /></svg
+          <span class="scan-pay-main">
+            <span class="scan-pay-icon" aria-hidden="true"
+              ><svg><use href="#icon-scan" /></svg
+            ></span>
+            <span class="scan-pay-copy">
+              <strong>Scan &amp; Pay</strong>
+              <small>Scan any QR code to pay instantly</small>
+            </span>
+            <span class="scan-pay-arrow" aria-hidden="true"
+              ><svg><use href="#icon-chevron-right" /></svg
             ></span>
           </span>
-          <span class="tap-pay-discovery-copy">
-            <strong>Tap &amp; Pay is now available</strong>
-            <small>Pay instantly with your phone anywhere<br />NFC works</small>
+          <span class="scan-pay-tooltip" aria-hidden="true">
+            <span class="scan-pay-tooltip-icon">i</span>
+            <span>Scan &amp; Pay is not available for Meal wallet.</span>
           </span>
-          <span class="tap-pay-close" aria-hidden="true"
-            ><svg><use href="#icon-close" /></svg
-          ></span>
         </button>
       </section>
 
@@ -436,9 +440,6 @@
               <span class="wallet-icon meal-icon" aria-hidden="true"
                 ><svg><use href="#icon-food" /></svg
               ></span>
-              <span class="wallet-arrow" aria-hidden="true"
-                ><svg><use href="#icon-arrow-right" /></svg
-              ></span>
             </div>
             <span class="wallet-name">Meal</span>
             <small>Daily essentials</small>
@@ -464,9 +465,6 @@
             <div class="wallet-topline">
               <span class="wallet-icon fuel-icon" aria-hidden="true"
                 ><svg><use href="#icon-fuel" /></svg
-              ></span>
-              <span class="wallet-arrow" aria-hidden="true"
-                ><svg><use href="#icon-arrow-right" /></svg
               ></span>
             </div>
             <span class="wallet-name">Fuel</span>
@@ -497,9 +495,6 @@
               <span class="wallet-icon misc-icon" aria-hidden="true"
                 ><svg><use href="#icon-scan" /></svg
               ></span>
-              <span class="wallet-arrow" aria-hidden="true"
-                ><svg><use href="#icon-arrow-right" /></svg
-              ></span>
             </div>
             <span class="wallet-name">Reimbursement</span>
             <small>Flexible spends</small>
@@ -526,9 +521,6 @@
               <span class="wallet-icon gift-icon" aria-hidden="true"
                 ><svg><use href="#icon-gift" /></svg
               ></span>
-              <span class="wallet-arrow" aria-hidden="true"
-                ><svg><use href="#icon-arrow-right" /></svg
-              ></span>
             </div>
             <span class="wallet-name">Gift</span>
             <small>Rewards and gifting</small>
@@ -542,9 +534,9 @@
         aria-label="Wallet tools"
         data-pluspay-hide
       >
-        <!-- <div class="section-heading compact-heading">
+        <div class="section-heading compact-heading">
           <h2>Quick Actions</h2>
-        </div> -->
+        </div>
         <div class="utility-grid">
           <button
             class="utility-card"
@@ -797,7 +789,7 @@
       <section class="card-overlay-panel" aria-label="Virtual card details">
         <div class="card-overlay-visual">
           <div class="overlay-card">
-            <span class="overlay-card-brand">PINE VISA</span>
+            <span class="overlay-card-brand">Pine Card</span>
             <span class="overlay-card-number">4356 2468 0089 7845</span>
             <div class="overlay-card-meta">
               <div>
@@ -1083,7 +1075,7 @@
                 <small class="manage-cards-selected-badge">Selected</small>
                 <small class="manage-cards-status-badge">Active</small>
                 <span>Meal Wallet</span>
-                <b>Pine Visa ending 7845</b>
+                <b>Pine Card ending 7845</b>
                 <strong>₹6,400</strong>
                 <em
                   ><i></i>Daily essentials<svg aria-hidden="true">
@@ -1105,7 +1097,7 @@
                 <small class="manage-cards-selected-badge">Selected</small>
                 <small class="manage-cards-status-badge">Active</small>
                 <span>Fuel Wallet</span>
-                <b>Pine Visa ending 7846</b>
+                <b>Pine Card ending 7846</b>
                 <strong>₹3,150</strong>
                 <em
                   ><i></i>Commute ready<svg aria-hidden="true">
@@ -1127,7 +1119,7 @@
                 <small class="manage-cards-selected-badge">Selected</small>
                 <small class="manage-cards-status-badge">Active</small>
                 <span>Reimbursement Wallet</span>
-                <b>Pine Visa ending 7847</b>
+                <b>Pine Card ending 7847</b>
                 <strong>₹9,100</strong>
                 <em
                   ><i></i>Flexible spends<svg aria-hidden="true">
@@ -1149,7 +1141,7 @@
                 <small class="manage-cards-selected-badge">Selected</small>
                 <small class="manage-cards-status-badge">Active</small>
                 <span>Gift Wallet</span>
-                <b>Pine Visa ending 7848</b>
+                <b>Pine Card ending 7848</b>
                 <strong>6,200 pts</strong>
                 <em
                   ><i></i>Rewards &amp; gifting<svg aria-hidden="true">
