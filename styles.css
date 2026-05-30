@@ -3868,6 +3868,68 @@ body.is-merchant-directory-open .bottom-nav {
   gap: 8px;
 }
 
+.manage-cards-control-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 12px;
+}
+
+.manage-cards-control-tile {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  min-height: 128px;
+  padding: 16px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  background: #ffffff;
+  color: #595e70;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(0, 52, 52, 0.04);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.manage-cards-control-tile:active {
+  transform: scale(0.98);
+  border-color: rgba(22, 179, 116, 0.28);
+  box-shadow: 0 12px 26px rgba(0, 52, 52, 0.08);
+}
+
+.manage-cards-control-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #eaf3ec;
+}
+
+.manage-cards-control-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.manage-cards-control-tile > span:last-child {
+  min-width: 0;
+  color: #595e70;
+  font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0;
+}
+
+.manage-cards-control-tile.is-enabled {
+  border-color: rgba(22, 179, 116, 0.36);
+  background: linear-gradient(180deg, #ffffff, #f4fbf6);
+}
+
 .manage-cards-action,
 .manage-cards-setting-list {
   border: 1px solid #e5e7eb;
@@ -6380,7 +6442,7 @@ body.is-merchant-directory-open .bottom-nav {
 
 .claims-quick-action-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   width: 100%;
 }

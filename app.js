@@ -4,64 +4,138 @@ const transactions = document.querySelectorAll("[data-wallet]");
 const virtualCardToggle = document.querySelector("[data-virtual-card-toggle]");
 const balanceCard = document.querySelector(".balance-card");
 const cardOverlay = document.querySelector("[data-card-overlay]");
-const overlayCloseButtons = document.querySelectorAll("[data-card-overlay-close]");
+const overlayCloseButtons = document.querySelectorAll(
+  "[data-card-overlay-close]",
+);
 const walletButtons = document.querySelectorAll("[data-wallet-card]");
 const toastButtons = document.querySelectorAll("[data-toast]");
 const pluspayToggle = document.querySelector("[data-pluspay-toggle]");
 const pluspayLabel = document.querySelector("[data-pluspay-label]");
-const swapTextNodes = document.querySelectorAll("[data-lens-text][data-pluspay-text]");
+const swapTextNodes = document.querySelectorAll(
+  "[data-lens-text][data-pluspay-text]",
+);
 const lensFilterButton = document.querySelector('[data-filter="all"]');
 const walletOverlay = document.querySelector("[data-wallet-overlay]");
 const walletOverlayName = document.querySelector("[data-wallet-overlay-name]");
-const walletOverlayBalance = document.querySelector("[data-wallet-overlay-balance]");
-const walletOverlayPills = document.querySelector("[data-wallet-overlay-pills]");
-const walletOverlayLimitValue = document.querySelector("[data-wallet-overlay-limit-value]");
-const walletOverlayLimitFill = document.querySelector("[data-wallet-overlay-limit-fill]");
-const walletOverlaySummary = document.querySelector("[data-wallet-overlay-tone]");
+const walletOverlayBalance = document.querySelector(
+  "[data-wallet-overlay-balance]",
+);
+const walletOverlayPills = document.querySelector(
+  "[data-wallet-overlay-pills]",
+);
+const walletOverlayLimitValue = document.querySelector(
+  "[data-wallet-overlay-limit-value]",
+);
+const walletOverlayLimitFill = document.querySelector(
+  "[data-wallet-overlay-limit-fill]",
+);
+const walletOverlaySummary = document.querySelector(
+  "[data-wallet-overlay-tone]",
+);
 const walletOverlayIcon = document.querySelector("[data-wallet-overlay-icon]");
-const walletOverlayModeSwitch = document.querySelector("[data-wallet-overlay-mode-switch]");
-const walletOverlayPrimaryAction = document.querySelector("[data-wallet-overlay-primary-action]");
-const walletOverlayDirectoryCopy = document.querySelector("[data-wallet-overlay-directory-copy]");
-const walletOverlaySelectCopy = document.querySelector("[data-wallet-overlay-select-copy]");
-const walletOverlayHistory = document.querySelector("[data-wallet-overlay-history]");
-const walletOverlayScroll = document.querySelector("[data-wallet-overlay-scroll]");
-const walletOverlayViewAllHistory = document.querySelector("[data-wallet-overlay-view-all-history]");
-const walletOverlayCloseButtons = document.querySelectorAll("[data-wallet-overlay-close]");
-const walletDirectoryOpenButtons = document.querySelectorAll("[data-wallet-directory-open]");
-const merchantDirectoryOverlay = document.querySelector("[data-merchant-directory-overlay]");
-const merchantDirectoryTitle = document.querySelector("[data-merchant-directory-title]");
-const merchantDirectoryCount = document.querySelector("[data-merchant-directory-count]");
-const merchantDirectorySummaryCopy = document.querySelector("[data-merchant-directory-summary-copy]");
-const merchantDirectorySearchCopy = document.querySelector("[data-merchant-directory-search-copy]");
-const merchantDirectoryChips = document.querySelector("[data-merchant-directory-chips]");
-const merchantDirectoryList = document.querySelector("[data-merchant-directory-list]");
-const merchantDirectoryCloseButtons = document.querySelectorAll("[data-merchant-directory-close]");
-const merchantDirectoryScroll = document.querySelector("[data-merchant-directory-scroll]");
-const manageCardsOpenButtons = document.querySelectorAll("[data-manage-cards-open]");
-const manageCardsOverlay = document.querySelector("[data-manage-cards-overlay]");
-const manageCardsCloseButtons = document.querySelectorAll("[data-manage-cards-close]");
+const walletOverlayModeSwitch = document.querySelector(
+  "[data-wallet-overlay-mode-switch]",
+);
+const walletOverlayPrimaryAction = document.querySelector(
+  "[data-wallet-overlay-primary-action]",
+);
+const walletOverlayDirectoryCopy = document.querySelector(
+  "[data-wallet-overlay-directory-copy]",
+);
+const walletOverlaySelectCopy = document.querySelector(
+  "[data-wallet-overlay-select-copy]",
+);
+const walletOverlayHistory = document.querySelector(
+  "[data-wallet-overlay-history]",
+);
+const walletOverlayScroll = document.querySelector(
+  "[data-wallet-overlay-scroll]",
+);
+const walletOverlayViewAllHistory = document.querySelector(
+  "[data-wallet-overlay-view-all-history]",
+);
+const walletOverlayCloseButtons = document.querySelectorAll(
+  "[data-wallet-overlay-close]",
+);
+const walletDirectoryOpenButtons = document.querySelectorAll(
+  "[data-wallet-directory-open]",
+);
+const merchantDirectoryOverlay = document.querySelector(
+  "[data-merchant-directory-overlay]",
+);
+const merchantDirectoryTitle = document.querySelector(
+  "[data-merchant-directory-title]",
+);
+const merchantDirectoryCount = document.querySelector(
+  "[data-merchant-directory-count]",
+);
+const merchantDirectorySummaryCopy = document.querySelector(
+  "[data-merchant-directory-summary-copy]",
+);
+const merchantDirectorySearchCopy = document.querySelector(
+  "[data-merchant-directory-search-copy]",
+);
+const merchantDirectoryChips = document.querySelector(
+  "[data-merchant-directory-chips]",
+);
+const merchantDirectoryList = document.querySelector(
+  "[data-merchant-directory-list]",
+);
+const merchantDirectoryCloseButtons = document.querySelectorAll(
+  "[data-merchant-directory-close]",
+);
+const merchantDirectoryScroll = document.querySelector(
+  "[data-merchant-directory-scroll]",
+);
+const manageCardsOpenButtons = document.querySelectorAll(
+  "[data-manage-cards-open]",
+);
+const manageCardsOverlay = document.querySelector(
+  "[data-manage-cards-overlay]",
+);
+const manageCardsCloseButtons = document.querySelectorAll(
+  "[data-manage-cards-close]",
+);
 const manageCardsPanel = document.querySelector(".manage-cards-panel");
-const manageWalletCarousel = document.querySelector(".manage-cards-wallet-carousel");
+const manageWalletCarousel = document.querySelector(
+  ".manage-cards-wallet-carousel",
+);
 const manageWalletButtons = document.querySelectorAll("[data-manage-wallet]");
-const manageOnlineButton = document.querySelector("[data-manage-online-toggle]");
+const manageOnlineButton = document.querySelector(
+  "[data-manage-online-toggle]",
+);
 const manageWalletCount = document.querySelector("[data-manage-wallet-count]");
-const manageWalletDots = document.querySelectorAll(".manage-cards-wallet-dots i");
+const manageWalletDots = document.querySelectorAll(
+  ".manage-cards-wallet-dots i",
+);
 const manageAccessCopy = document.querySelector("[data-manage-access-copy]");
 const manageAccessValue = document.querySelector("[data-manage-access-value]");
 const manageLimitCopy = document.querySelector("[data-manage-limit-copy]");
 const manageLimitValue = document.querySelector("[data-manage-limit-value]");
-const manageLimitProgress = document.querySelector("[data-manage-limit-progress]");
+const manageLimitProgress = document.querySelector(
+  "[data-manage-limit-progress]",
+);
 const manageLimitUsed = document.querySelector("[data-manage-limit-used]");
 const manageLimitTotal = document.querySelector("[data-manage-limit-total]");
 const manageOnlineCopy = document.querySelector("[data-manage-online-copy]");
 const manageStatusCopy = document.querySelector("[data-manage-status-copy]");
-const manageSensitiveFields = document.querySelectorAll("[data-card-sensitive]");
+const manageSensitiveFields = document.querySelectorAll(
+  "[data-card-sensitive]",
+);
 const manageRevealButtons = document.querySelectorAll("[data-card-reveal]");
-const managePreviewNumber = document.querySelector("[data-manage-preview-number]");
-const managePreviewHolder = document.querySelector("[data-manage-preview-holder]");
-const managePreviewExpiry = document.querySelector("[data-manage-preview-expiry]");
+const managePreviewNumber = document.querySelector(
+  "[data-manage-preview-number]",
+);
+const managePreviewHolder = document.querySelector(
+  "[data-manage-preview-holder]",
+);
+const managePreviewExpiry = document.querySelector(
+  "[data-manage-preview-expiry]",
+);
 const manageWalletType = document.querySelector("[data-manage-wallet-type]");
-const manageFreezeButton = document.querySelector("[data-manage-freeze-toggle]");
+const manageFreezeButton = document.querySelector(
+  "[data-manage-freeze-toggle]",
+);
 const manageFreezeTitle = document.querySelector("[data-manage-freeze-title]");
 const manageFreezeCopy = document.querySelector("[data-manage-freeze-copy]");
 const claimsOpenButton = document.querySelector("[data-claims-open]");
@@ -92,7 +166,13 @@ const manageWalletState = {
     limitTotal: 10000,
     online: true,
     frozen: false,
-    card: { number: "4521 8890 4432 7845", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7845" },
+    card: {
+      number: "4521 8890 4432 7845",
+      holder: "John Doe",
+      expiry: "05 / 29",
+      cvv: "731",
+      last4: "7845",
+    },
     reveal: { number: false, cvv: false },
   },
   fuel: {
@@ -105,7 +185,13 @@ const manageWalletState = {
     limitTotal: 10000,
     online: true,
     frozen: false,
-    card: { number: "4521 8890 4432 7846", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7846" },
+    card: {
+      number: "4521 8890 4432 7846",
+      holder: "John Doe",
+      expiry: "05 / 29",
+      cvv: "731",
+      last4: "7846",
+    },
     reveal: { number: false, cvv: false },
   },
   misc: {
@@ -118,7 +204,13 @@ const manageWalletState = {
     limitTotal: 10000,
     online: true,
     frozen: false,
-    card: { number: "4521 8890 4432 7847", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7847" },
+    card: {
+      number: "4521 8890 4432 7847",
+      holder: "John Doe",
+      expiry: "05 / 29",
+      cvv: "731",
+      last4: "7847",
+    },
     reveal: { number: false, cvv: false },
   },
   gift: {
@@ -131,15 +223,26 @@ const manageWalletState = {
     limitTotal: 10000,
     online: true,
     frozen: false,
-    card: { number: "4521 8890 4432 7848", holder: "John Doe", expiry: "05 / 29", cvv: "731", last4: "7848" },
+    card: {
+      number: "4521 8890 4432 7848",
+      holder: "John Doe",
+      expiry: "05 / 29",
+      cvv: "731",
+      last4: "7848",
+    },
     reveal: { number: false, cvv: false },
   },
 };
 
 function syncPageScrollLock() {
-  const hasOpenOverlay = [cardOverlay, walletOverlay, merchantDirectoryOverlay, manageCardsOverlay, claimsAssistant, scanPayFlow].some((overlay) =>
-    overlay?.classList.contains("is-open")
-  );
+  const hasOpenOverlay = [
+    cardOverlay,
+    walletOverlay,
+    merchantDirectoryOverlay,
+    manageCardsOverlay,
+    claimsAssistant,
+    scanPayFlow,
+  ].some((overlay) => overlay?.classList.contains("is-open"));
   document.body.classList.toggle("is-overlay-open", hasOpenOverlay);
 }
 
@@ -175,19 +278,85 @@ const walletOverlayContent = {
     limitProgress: 16,
     categories: ["Nearby", "Cafe", "Groceries", "Dining"],
     merchants: [
-      { name: "WeWork counter", subtitle: "Cafe · 0.3 km", meta: "Open now", reward: "Meal", icon: "icon-food" },
-      { name: "Star Bazaar", subtitle: "Groceries · 1.1 km", meta: "Open now", reward: "Meal", icon: "icon-bag" },
-      { name: "Subway", subtitle: "Dining · 0.8 km", meta: "Closes 10 PM", reward: "Meal", icon: "icon-food" },
-      { name: "FreshMenu", subtitle: "Dining · 1.2 km", meta: "Open now", reward: "Meal", icon: "icon-food" },
-      { name: "Nature's Basket", subtitle: "Groceries · 2.0 km", meta: "Closes 11 PM", reward: "Meal", icon: "icon-bag" },
-      { name: "Cafe Coffee Day", subtitle: "Cafe · 0.9 km", meta: "Open now", reward: "Meal", icon: "icon-food" },
+      {
+        name: "WeWork counter",
+        subtitle: "Cafe · 0.3 km",
+        meta: "Open now",
+        reward: "Meal",
+        icon: "icon-food",
+      },
+      {
+        name: "Star Bazaar",
+        subtitle: "Groceries · 1.1 km",
+        meta: "Open now",
+        reward: "Meal",
+        icon: "icon-bag",
+      },
+      {
+        name: "Subway",
+        subtitle: "Dining · 0.8 km",
+        meta: "Closes 10 PM",
+        reward: "Meal",
+        icon: "icon-food",
+      },
+      {
+        name: "FreshMenu",
+        subtitle: "Dining · 1.2 km",
+        meta: "Open now",
+        reward: "Meal",
+        icon: "icon-food",
+      },
+      {
+        name: "Nature's Basket",
+        subtitle: "Groceries · 2.0 km",
+        meta: "Closes 11 PM",
+        reward: "Meal",
+        icon: "icon-bag",
+      },
+      {
+        name: "Cafe Coffee Day",
+        subtitle: "Cafe · 0.9 km",
+        meta: "Open now",
+        reward: "Meal",
+        icon: "icon-food",
+      },
     ],
     history: [
-      { merchant: "WeWork counter", reference: "Ref ID: 1277834681", date: "15 Mar 2026", amount: "- ₹1,000", icon: "icon-food" },
-      { merchant: "Star Bazaar", reference: "Ref ID: 1277834604", date: "12 Mar 2026", amount: "- ₹2,000", icon: "icon-bag" },
-      { merchant: "Subway", reference: "Ref ID: 1277834591", date: "09 Mar 2026", amount: "- ₹480", icon: "icon-food" },
-      { merchant: "FreshMenu", reference: "Ref ID: 1277834528", date: "06 Mar 2026", amount: "- ₹725", icon: "icon-food" },
-      { merchant: "Nature's Basket", reference: "Ref ID: 1277834495", date: "03 Mar 2026", amount: "- ₹1,240", icon: "icon-bag" },
+      {
+        merchant: "WeWork counter",
+        reference: "Ref ID: 1277834681",
+        date: "15 Mar 2026",
+        amount: "- ₹1,000",
+        icon: "icon-food",
+      },
+      {
+        merchant: "Star Bazaar",
+        reference: "Ref ID: 1277834604",
+        date: "12 Mar 2026",
+        amount: "- ₹2,000",
+        icon: "icon-bag",
+      },
+      {
+        merchant: "Subway",
+        reference: "Ref ID: 1277834591",
+        date: "09 Mar 2026",
+        amount: "- ₹480",
+        icon: "icon-food",
+      },
+      {
+        merchant: "FreshMenu",
+        reference: "Ref ID: 1277834528",
+        date: "06 Mar 2026",
+        amount: "- ₹725",
+        icon: "icon-food",
+      },
+      {
+        merchant: "Nature's Basket",
+        reference: "Ref ID: 1277834495",
+        date: "03 Mar 2026",
+        amount: "- ₹1,240",
+        icon: "icon-bag",
+      },
     ],
   },
   fuel: {
@@ -200,19 +369,85 @@ const walletOverlayContent = {
     limitProgress: 26,
     categories: ["Nearby", "Fuel", "Service", "QR Pay"],
     merchants: [
-      { name: "Shell Select", subtitle: "Fuel station · 0.6 km", meta: "Tap + QR", reward: "Fuel", icon: "icon-fuel" },
-      { name: "HP Petrol Pump", subtitle: "Fuel station · 1.4 km", meta: "Tap + QR", reward: "Fuel", icon: "icon-fuel" },
-      { name: "Park+ Fastag Hub", subtitle: "Mobility · 2.1 km", meta: "QR only", reward: "Fuel", icon: "icon-car" },
-      { name: "IndianOil COCO", subtitle: "Fuel station · 2.5 km", meta: "Tap only", reward: "Fuel", icon: "icon-fuel" },
-      { name: "Bharat Petroleum", subtitle: "Fuel station · 3.0 km", meta: "Tap + QR", reward: "Fuel", icon: "icon-fuel" },
-      { name: "DriveU Mobility", subtitle: "Mobility · Online", meta: "QR only", reward: "Fuel", icon: "icon-car" },
+      {
+        name: "Shell Select",
+        subtitle: "Fuel station · 0.6 km",
+        meta: "Tap + QR",
+        reward: "Fuel",
+        icon: "icon-fuel",
+      },
+      {
+        name: "HP Petrol Pump",
+        subtitle: "Fuel station · 1.4 km",
+        meta: "Tap + QR",
+        reward: "Fuel",
+        icon: "icon-fuel",
+      },
+      {
+        name: "Park+ Fastag Hub",
+        subtitle: "Mobility · 2.1 km",
+        meta: "QR only",
+        reward: "Fuel",
+        icon: "icon-car",
+      },
+      {
+        name: "IndianOil COCO",
+        subtitle: "Fuel station · 2.5 km",
+        meta: "Tap only",
+        reward: "Fuel",
+        icon: "icon-fuel",
+      },
+      {
+        name: "Bharat Petroleum",
+        subtitle: "Fuel station · 3.0 km",
+        meta: "Tap + QR",
+        reward: "Fuel",
+        icon: "icon-fuel",
+      },
+      {
+        name: "DriveU Mobility",
+        subtitle: "Mobility · Online",
+        meta: "QR only",
+        reward: "Fuel",
+        icon: "icon-car",
+      },
     ],
     history: [
-      { merchant: "Shell Select", reference: "Ref ID: 2277834607", date: "16 Mar 2026", amount: "- ₹2,200", icon: "icon-car" },
-      { merchant: "HP Petrol Pump", reference: "Ref ID: 2277834588", date: "11 Mar 2026", amount: "- ₹1,450", icon: "icon-car" },
-      { merchant: "Park+ Fastag Hub", reference: "Ref ID: 2277834562", date: "08 Mar 2026", amount: "- ₹650", icon: "icon-car" },
-      { merchant: "IndianOil COCO", reference: "Ref ID: 2277834517", date: "05 Mar 2026", amount: "- ₹2,000", icon: "icon-fuel" },
-      { merchant: "Bharat Petroleum", reference: "Ref ID: 2277834490", date: "02 Mar 2026", amount: "- ₹1,800", icon: "icon-fuel" },
+      {
+        merchant: "Shell Select",
+        reference: "Ref ID: 2277834607",
+        date: "16 Mar 2026",
+        amount: "- ₹2,200",
+        icon: "icon-car",
+      },
+      {
+        merchant: "HP Petrol Pump",
+        reference: "Ref ID: 2277834588",
+        date: "11 Mar 2026",
+        amount: "- ₹1,450",
+        icon: "icon-car",
+      },
+      {
+        merchant: "Park+ Fastag Hub",
+        reference: "Ref ID: 2277834562",
+        date: "08 Mar 2026",
+        amount: "- ₹650",
+        icon: "icon-car",
+      },
+      {
+        merchant: "IndianOil COCO",
+        reference: "Ref ID: 2277834517",
+        date: "05 Mar 2026",
+        amount: "- ₹2,000",
+        icon: "icon-fuel",
+      },
+      {
+        merchant: "Bharat Petroleum",
+        reference: "Ref ID: 2277834490",
+        date: "02 Mar 2026",
+        amount: "- ₹1,800",
+        icon: "icon-fuel",
+      },
     ],
   },
   misc: {
@@ -225,19 +460,90 @@ const walletOverlayContent = {
     limitProgress: 61,
     categories: ["Nearby", "Pharmacy", "Travel", "Services"],
     merchants: [
-      { name: "Apollo Pharmacy", subtitle: "Pharmacy · 0.4 km", meta: "UPI QR", reward: "Reimbursement", icon: "icon-receipt" },
-      { name: "Urban Company", subtitle: "Services · Online", meta: "UPI QR", reward: "Reimbursement", icon: "icon-settings" },
-      { name: "Cleartrip Counter", subtitle: "Travel · 1.7 km", meta: "UPI QR", reward: "Reimbursement", icon: "icon-send" },
-      { name: "Tata 1mg", subtitle: "Pharmacy · Online", meta: "UPI QR", reward: "Reimbursement", icon: "icon-receipt" },
-      { name: "MakeMyTrip Desk", subtitle: "Travel · 2.8 km", meta: "UPI QR", reward: "Reimbursement", icon: "icon-send" },
-      { name: "Cult Fit Center", subtitle: "Wellness · 1.9 km", meta: "UPI QR", reward: "Reimbursement", icon: "icon-settings" },
+      {
+        name: "Apollo Pharmacy",
+        subtitle: "Pharmacy · 0.4 km",
+        meta: "UPI QR",
+        reward: "Reimbursement",
+        icon: "icon-receipt",
+      },
+      {
+        name: "Urban Company",
+        subtitle: "Services · Online",
+        meta: "UPI QR",
+        reward: "Reimbursement",
+        icon: "icon-settings",
+      },
+      {
+        name: "Cleartrip Counter",
+        subtitle: "Travel · 1.7 km",
+        meta: "UPI QR",
+        reward: "Reimbursement",
+        icon: "icon-send",
+      },
+      {
+        name: "Tata 1mg",
+        subtitle: "Pharmacy · Online",
+        meta: "UPI QR",
+        reward: "Reimbursement",
+        icon: "icon-receipt",
+      },
+      {
+        name: "MakeMyTrip Desk",
+        subtitle: "Travel · 2.8 km",
+        meta: "UPI QR",
+        reward: "Reimbursement",
+        icon: "icon-send",
+      },
+      {
+        name: "Cult Fit Center",
+        subtitle: "Wellness · 1.9 km",
+        meta: "UPI QR",
+        reward: "Reimbursement",
+        icon: "icon-settings",
+      },
     ],
     history: [
-      { merchant: "Apollo Pharmacy", reference: "Ref ID: 3277834582", date: "14 Mar 2026", amount: "- ₹850", icon: "icon-money", status: "Processed" },
-      { merchant: "Urban Company", reference: "Ref ID: 3277834539", date: "10 Mar 2026", amount: "- ₹1,600", icon: "icon-money", status: "Under review" },
-      { merchant: "Tata 1mg", reference: "Ref ID: 3277834506", date: "07 Mar 2026", amount: "- ₹940", icon: "icon-receipt", status: "Processed" },
-      { merchant: "Cleartrip Counter", reference: "Ref ID: 3277834481", date: "04 Mar 2026", amount: "- ₹2,300", icon: "icon-send", status: "Denied" },
-      { merchant: "Cult Fit Center", reference: "Ref ID: 3277834455", date: "01 Mar 2026", amount: "- ₹1,200", icon: "icon-settings", status: "Under review" },
+      {
+        merchant: "Apollo Pharmacy",
+        reference: "Ref ID: 3277834582",
+        date: "14 Mar 2026",
+        amount: "- ₹850",
+        icon: "icon-money",
+        status: "Processed",
+      },
+      {
+        merchant: "Urban Company",
+        reference: "Ref ID: 3277834539",
+        date: "10 Mar 2026",
+        amount: "- ₹1,600",
+        icon: "icon-money",
+        status: "Under review",
+      },
+      {
+        merchant: "Tata 1mg",
+        reference: "Ref ID: 3277834506",
+        date: "07 Mar 2026",
+        amount: "- ₹940",
+        icon: "icon-receipt",
+        status: "Processed",
+      },
+      {
+        merchant: "Cleartrip Counter",
+        reference: "Ref ID: 3277834481",
+        date: "04 Mar 2026",
+        amount: "- ₹2,300",
+        icon: "icon-send",
+        status: "Denied",
+      },
+      {
+        merchant: "Cult Fit Center",
+        reference: "Ref ID: 3277834455",
+        date: "01 Mar 2026",
+        amount: "- ₹1,200",
+        icon: "icon-settings",
+        status: "Under review",
+      },
     ],
   },
   gift: {
@@ -250,19 +556,85 @@ const walletOverlayContent = {
     limitProgress: 62,
     categories: ["Nearby", "Fashion", "Lifestyle", "Gift Cards"],
     merchants: [
-      { name: "Amazon Pay", subtitle: "Gift cards · Online", meta: "Redeem now", reward: "Gift", icon: "icon-gift" },
-      { name: "Lifestyle Store", subtitle: "Fashion · 2.4 km", meta: "Redeem now", reward: "Gift", icon: "icon-bag" },
-      { name: "Shoppers Stop", subtitle: "Lifestyle · 1.9 km", meta: "Redeem now", reward: "Gift", icon: "icon-grid" },
-      { name: "Myntra", subtitle: "Fashion · Online", meta: "Redeem now", reward: "Gift", icon: "icon-bag" },
-      { name: "BookMyShow", subtitle: "Entertainment · Online", meta: "Redeem now", reward: "Gift", icon: "icon-gift" },
-      { name: "Croma", subtitle: "Electronics · 3.1 km", meta: "Redeem now", reward: "Gift", icon: "icon-grid" },
+      {
+        name: "Amazon Pay",
+        subtitle: "Gift cards · Online",
+        meta: "Redeem now",
+        reward: "Gift",
+        icon: "icon-gift",
+      },
+      {
+        name: "Lifestyle Store",
+        subtitle: "Fashion · 2.4 km",
+        meta: "Redeem now",
+        reward: "Gift",
+        icon: "icon-bag",
+      },
+      {
+        name: "Shoppers Stop",
+        subtitle: "Lifestyle · 1.9 km",
+        meta: "Redeem now",
+        reward: "Gift",
+        icon: "icon-grid",
+      },
+      {
+        name: "Myntra",
+        subtitle: "Fashion · Online",
+        meta: "Redeem now",
+        reward: "Gift",
+        icon: "icon-bag",
+      },
+      {
+        name: "BookMyShow",
+        subtitle: "Entertainment · Online",
+        meta: "Redeem now",
+        reward: "Gift",
+        icon: "icon-gift",
+      },
+      {
+        name: "Croma",
+        subtitle: "Electronics · 3.1 km",
+        meta: "Redeem now",
+        reward: "Gift",
+        icon: "icon-grid",
+      },
     ],
     history: [
-      { merchant: "Amazon Pay", reference: "Ref ID: 4277834561", date: "13 Mar 2026", amount: "- ₹1,500", icon: "icon-bag" },
-      { merchant: "Lifestyle Store", reference: "Ref ID: 4277834518", date: "08 Mar 2026", amount: "- ₹2,400", icon: "icon-card" },
-      { merchant: "Myntra", reference: "Ref ID: 4277834492", date: "05 Mar 2026", amount: "- ₹1,100", icon: "icon-bag" },
-      { merchant: "BookMyShow", reference: "Ref ID: 4277834468", date: "02 Mar 2026", amount: "- ₹800", icon: "icon-gift" },
-      { merchant: "Croma", reference: "Ref ID: 4277834437", date: "28 Feb 2026", amount: "- ₹2,000", icon: "icon-grid" },
+      {
+        merchant: "Amazon Pay",
+        reference: "Ref ID: 4277834561",
+        date: "13 Mar 2026",
+        amount: "- ₹1,500",
+        icon: "icon-bag",
+      },
+      {
+        merchant: "Lifestyle Store",
+        reference: "Ref ID: 4277834518",
+        date: "08 Mar 2026",
+        amount: "- ₹2,400",
+        icon: "icon-card",
+      },
+      {
+        merchant: "Myntra",
+        reference: "Ref ID: 4277834492",
+        date: "05 Mar 2026",
+        amount: "- ₹1,100",
+        icon: "icon-bag",
+      },
+      {
+        merchant: "BookMyShow",
+        reference: "Ref ID: 4277834468",
+        date: "02 Mar 2026",
+        amount: "- ₹800",
+        icon: "icon-gift",
+      },
+      {
+        merchant: "Croma",
+        reference: "Ref ID: 4277834437",
+        date: "28 Feb 2026",
+        amount: "- ₹2,000",
+        icon: "icon-grid",
+      },
     ],
   },
 };
@@ -305,9 +677,15 @@ const claimsMockData = {
         type: "duplicate",
         severity: "warning",
         title: "Possible duplicate detected",
-        description: "We found a similar claim for Airtel Broadband on 28 Apr 2026 for ₹2,149.",
-        requiredAction: "Confirm this is not a duplicate and submit a declaration.",
-        similarClaim: { id: "CLM-2026-0487", date: "28 Apr 2026", amount: "₹2,149" },
+        description:
+          "We found a similar claim for Airtel Broadband on 28 Apr 2026 for ₹2,149.",
+        requiredAction:
+          "Confirm this is not a duplicate and submit a declaration.",
+        similarClaim: {
+          id: "CLM-2026-0487",
+          date: "28 Apr 2026",
+          amount: "₹2,149",
+        },
         resolved: false,
       },
       {
@@ -315,8 +693,10 @@ const claimsMockData = {
         type: "dateWindow",
         severity: "warning",
         title: "Bill date outside policy window",
-        description: "This bill date appears to be older than the allowed reimbursement period.",
-        requiredAction: "Attach prior approval or explain why the expense is being claimed now.",
+        description:
+          "This bill date appears to be older than the allowed reimbursement period.",
+        requiredAction:
+          "Attach prior approval or explain why the expense is being claimed now.",
         resolved: false,
       },
       {
@@ -324,7 +704,8 @@ const claimsMockData = {
         type: "lowConfidenceOCR",
         severity: "error",
         title: "Low-confidence OCR",
-        description: "The scan is blurry or missing key information. Details may be incomplete.",
+        description:
+          "The scan is blurry or missing key information. Details may be incomplete.",
         requiredAction: "Re-upload bill or enter missing details manually.",
         resolved: false,
       },
@@ -333,8 +714,10 @@ const claimsMockData = {
         type: "personalUsage",
         severity: "error",
         title: "Possible personal usage",
-        description: "This amount is higher than typical plans. It may include personal usage or mixed usage.",
-        requiredAction: "Confirm this is a work expense and submit a compliance declaration.",
+        description:
+          "This amount is higher than typical plans. It may include personal usage or mixed usage.",
+        requiredAction:
+          "Confirm this is a work expense and submit a compliance declaration.",
         resolved: false,
       },
       {
@@ -342,30 +725,109 @@ const claimsMockData = {
         type: "limitExceeded",
         severity: "warning",
         title: "Amount exceeds available limit",
-        description: "This claim amount is higher than the remaining eligible balance for this category.",
-        requiredAction: "Submit eligible amount, edit amount, or ask a policy question.",
+        description:
+          "This claim amount is higher than the remaining eligible balance for this category.",
+        requiredAction:
+          "Submit eligible amount, edit amount, or ask a policy question.",
         resolved: false,
       },
     ],
     declarations: [
       "I confirm this claim is accurate, work-related, not claimed before, and complies with the company’s reimbursement policy.",
     ],
-    decisionSummary: "All policy checks passed. Amount within limits and required document attached.",
+    decisionSummary:
+      "All policy checks passed. Amount within limits and required document attached.",
   },
   promptCards: [
-    { id: "telephone", title: "Telephone claim", subtitle: "Submit a telephone or internet bill", icon: "icon-card" },
-    { id: "meal", title: "Meal claim", subtitle: "Submit meal expenses", icon: "icon-food" },
-    { id: "fuel", title: "Fuel claim", subtitle: "Submit fuel expenses", icon: "icon-fuel" },
-    { id: "upload", title: "Upload a bill", subtitle: "Scan and extract details", icon: "icon-receipt" },
+    {
+      id: "telephone",
+      title: "Telephone claim",
+      subtitle: "Submit a telephone or internet bill",
+      icon: "icon-card",
+    },
+    {
+      id: "meal",
+      title: "Meal claim",
+      subtitle: "Submit meal expenses",
+      icon: "icon-food",
+    },
+    {
+      id: "fuel",
+      title: "Fuel claim",
+      subtitle: "Submit fuel expenses",
+      icon: "icon-fuel",
+    },
+    {
+      id: "upload",
+      title: "Upload a bill",
+      subtitle: "Scan and extract details",
+      icon: "icon-receipt",
+    },
   ],
   history: [
-    { id: "CLM-2026-0428", title: "Telephone & Internet", vendor: "Airtel Broadband", amount: "₹2,149", date: "30 Apr 2026", status: "Pending", icon: "icon-card" },
-    { id: "CLM-2026-0417", title: "Meal claim", vendor: "Team lunch with client", amount: "₹1,250", date: "29 Apr 2026", status: "Approved", icon: "icon-food" },
-    { id: "CLM-2026-0398", title: "Fuel claim", vendor: "Drive to client site", amount: "₹1,980", date: "27 Apr 2026", status: "Approved", icon: "icon-fuel" },
-    { id: "CLM-2026-0384", title: "Travel claim", vendor: "Bengaluru to Mumbai", amount: "₹4,850", date: "24 Apr 2026", status: "Rejected", icon: "icon-send" },
-    { id: "CLM-2026-0372", title: "Cab/Taxi", vendor: "Airport pickup", amount: "₹720", date: "22 Apr 2026", status: "Approved", icon: "icon-car" },
-    { id: "CLM-2026-0366", title: "Software subscription", vendor: "Notion Labs, Inc.", amount: "₹1,299", date: "25 Apr 2026", status: "Pending", icon: "icon-receipt" },
-    { id: "CLM-2026-0341", title: "Travel claim", vendor: "Delhi to Bengaluru", amount: "₹6,320", date: "29 Apr 2026", status: "Pending", icon: "icon-send" },
+    {
+      id: "CLM-2026-0428",
+      title: "Telephone & Internet",
+      vendor: "Airtel Broadband",
+      amount: "₹2,149",
+      date: "30 Apr 2026",
+      status: "Pending",
+      icon: "icon-card",
+    },
+    {
+      id: "CLM-2026-0417",
+      title: "Meal claim",
+      vendor: "Team lunch with client",
+      amount: "₹1,250",
+      date: "29 Apr 2026",
+      status: "Approved",
+      icon: "icon-food",
+    },
+    {
+      id: "CLM-2026-0398",
+      title: "Fuel claim",
+      vendor: "Drive to client site",
+      amount: "₹1,980",
+      date: "27 Apr 2026",
+      status: "Approved",
+      icon: "icon-fuel",
+    },
+    {
+      id: "CLM-2026-0384",
+      title: "Travel claim",
+      vendor: "Bengaluru to Mumbai",
+      amount: "₹4,850",
+      date: "24 Apr 2026",
+      status: "Rejected",
+      icon: "icon-send",
+    },
+    {
+      id: "CLM-2026-0372",
+      title: "Cab/Taxi",
+      vendor: "Airport pickup",
+      amount: "₹720",
+      date: "22 Apr 2026",
+      status: "Approved",
+      icon: "icon-car",
+    },
+    {
+      id: "CLM-2026-0366",
+      title: "Software subscription",
+      vendor: "Notion Labs, Inc.",
+      amount: "₹1,299",
+      date: "25 Apr 2026",
+      status: "Pending",
+      icon: "icon-receipt",
+    },
+    {
+      id: "CLM-2026-0341",
+      title: "Travel claim",
+      vendor: "Delhi to Bengaluru",
+      amount: "₹6,320",
+      date: "29 Apr 2026",
+      status: "Pending",
+      icon: "icon-send",
+    },
   ],
   dashboard: {
     totalBalance: "₹9,100",
@@ -381,10 +843,30 @@ const claimsMockData = {
       { label: "Reimbursed", count: 4, amount: "₹6,180", status: "reimbursed" },
     ],
     recentActivity: [
-      { vendor: "Airtel Broadband", amount: "₹2,149", status: "Approved", meta: "Bill date: 30 Apr 2026" },
-      { vendor: "Telephone & Internet", amount: "₹1,299", status: "Under review", meta: "Bill date: 25 Apr 2026" },
-      { vendor: "Mobile Recharge", amount: "₹799", status: "Rejected", meta: "Bill date: 20 Apr 2026" },
-      { vendor: "Electricity Bill", amount: "₹1,880", status: "Reimbursed", meta: "Bill date: 15 Apr 2026" },
+      {
+        vendor: "Airtel Broadband",
+        amount: "₹2,149",
+        status: "Approved",
+        meta: "Bill date: 30 Apr 2026",
+      },
+      {
+        vendor: "Telephone & Internet",
+        amount: "₹1,299",
+        status: "Under review",
+        meta: "Bill date: 25 Apr 2026",
+      },
+      {
+        vendor: "Mobile Recharge",
+        amount: "₹799",
+        status: "Rejected",
+        meta: "Bill date: 20 Apr 2026",
+      },
+      {
+        vendor: "Electricity Bill",
+        amount: "₹1,880",
+        status: "Reimbursed",
+        meta: "Bill date: 15 Apr 2026",
+      },
     ],
   },
 };
@@ -433,16 +915,60 @@ const scanPayMock = {
     finalBalance: 2522,
   },
   activity: [
-    { source: "Scan & Pay", merchant: "Coffee Shop Cafe", coins: "+72", time: "Today, 9:40 AM" },
-    { source: "Scan & Pay", merchant: "BookWorld Store", coins: "+45", time: "Yesterday, 6:15 PM" },
-    { source: "Scan & Pay", merchant: "Green Bites", coins: "+28", time: "Yesterday, 1:20 PM" },
-    { source: "Scan & Pay", merchant: "Metro Mart", coins: "+36", time: "12 May, 7:18 PM" },
+    {
+      source: "Scan & Pay",
+      merchant: "Coffee Shop Cafe",
+      coins: "+72",
+      time: "Today, 9:40 AM",
+    },
+    {
+      source: "Scan & Pay",
+      merchant: "BookWorld Store",
+      coins: "+45",
+      time: "Yesterday, 6:15 PM",
+    },
+    {
+      source: "Scan & Pay",
+      merchant: "Green Bites",
+      coins: "+28",
+      time: "Yesterday, 1:20 PM",
+    },
+    {
+      source: "Scan & Pay",
+      merchant: "Metro Mart",
+      coins: "+36",
+      time: "12 May, 7:18 PM",
+    },
   ],
   vouchers: [
-    { name: "FoodHub Gift Card", brand: "FoodHub", cost: "500", icon: "icon-food", tone: "food" },
-    { name: "ShopNest Gift Card", brand: "ShopNest", cost: "750", icon: "icon-bag", tone: "shop" },
-    { name: "TravelGo Voucher", brand: "TravelGo", cost: "1,000", icon: "icon-send", tone: "travel" },
-    { name: "CineJoy Voucher", brand: "CineJoy", cost: "400", icon: "icon-grid", tone: "cine" },
+    {
+      name: "FoodHub Gift Card",
+      brand: "FoodHub",
+      cost: "500",
+      icon: "icon-food",
+      tone: "food",
+    },
+    {
+      name: "ShopNest Gift Card",
+      brand: "ShopNest",
+      cost: "750",
+      icon: "icon-bag",
+      tone: "shop",
+    },
+    {
+      name: "TravelGo Voucher",
+      brand: "TravelGo",
+      cost: "1,000",
+      icon: "icon-send",
+      tone: "travel",
+    },
+    {
+      name: "CineJoy Voucher",
+      brand: "CineJoy",
+      cost: "400",
+      icon: "icon-grid",
+      tone: "cine",
+    },
   ],
 };
 
@@ -458,14 +984,7 @@ let scanPayScanTimer;
 let scanPayProcessingTimer;
 
 function createBaseClaimMessages() {
-  return [
-    {
-      id: "intro",
-      role: "assistant",
-      text: "Hi, I’m your Claims Assistant. Upload a bill, ask questions, and I’ll extract details, check policy rules, detect anomalies, and help with compliance declarations before submission.",
-      time: "9:41 AM",
-    },
-  ];
+  return [];
 }
 
 function resetClaimJourney() {
@@ -535,7 +1054,11 @@ function closeScanPayFlow() {
     scanPayFlow.hidden = true;
   }, 260);
   if (window.location.hash === "#scan-pay") {
-    history.replaceState(null, "", window.location.pathname + window.location.search);
+    history.replaceState(
+      null,
+      "",
+      window.location.pathname + window.location.search,
+    );
   }
 }
 
@@ -559,7 +1082,10 @@ function scheduleScanPayStep() {
     scanPayScanTimer = window.setTimeout(simulateScanPayDetection, 1500);
   }
   if (scanPayState.step === "processing") {
-    scanPayProcessingTimer = window.setTimeout(() => setScanPayStep("success"), 2100);
+    scanPayProcessingTimer = window.setTimeout(
+      () => setScanPayStep("success"),
+      2100,
+    );
   }
 }
 
@@ -646,7 +1172,9 @@ function renderScanPayUpiFallbackSheet() {
 function renderScanPayMerchant(withReview = false) {
   const valid = isScanPayAmountValid();
   const showError = scanPayState.amountTouched && scanPayState.amount && !valid;
-  const amountDisplay = scanPayState.amount ? formatScanPayAmount(scanPayState.amount).replace(".00", ".00") : "";
+  const amountDisplay = scanPayState.amount
+    ? formatScanPayAmount(scanPayState.amount).replace(".00", ".00")
+    : "";
   return `
     <section class="scan-pay-screen pay ${withReview ? "is-dimmed" : ""}" aria-label="Merchant payment">
       ${renderScanPayDeviceStatus()}
@@ -784,8 +1312,16 @@ function renderScanPaySuccess() {
             ["Transaction ID", scanPayMock.transaction.id],
             ["Date & Time", scanPayMock.transaction.dateTime],
             ["Paid to", scanPayMock.merchant.name],
-            ["Paid from", `${scanPayMock.cashWallet.label}<br>${scanPayMock.cashWallet.balanceCopy}`],
-          ].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join("")}
+            [
+              "Paid from",
+              `${scanPayMock.cashWallet.label}<br>${scanPayMock.cashWallet.balanceCopy}`,
+            ],
+          ]
+            .map(
+              ([label, value]) =>
+                `<div><span>${label}</span><strong>${value}</strong></div>`,
+            )
+            .join("")}
         </section>
       </main>
     </section>
@@ -868,13 +1404,17 @@ function renderScanPayCoinsWallet() {
         </section>
         <section class="scan-pay-activity-list">
           <h2>Recent activity <button type="button">See all</button></h2>
-          ${scanPayMock.activity.map((item) => `
+          ${scanPayMock.activity
+            .map(
+              (item) => `
             <article>
               <span>${scanPayIcon("icon-scan")}</span>
               <div><strong>${item.source}</strong><small>${item.merchant}</small></div>
               <strong>${item.coins} 🪙<small>${item.time}</small></strong>
             </article>
-          `).join("")}
+          `,
+            )
+            .join("")}
         </section>
       </main>
       <footer class="scan-pay-fixed-footer">
@@ -901,14 +1441,18 @@ function renderScanPayVouchers() {
         </section>
         <h2 class="scan-pay-section-title">Popular vouchers</h2>
         <div class="voucher-grid">
-          ${scanPayMock.vouchers.map((voucher) => `
+          ${scanPayMock.vouchers
+            .map(
+              (voucher) => `
             <article class="voucher-card ${voucher.tone}">
               <div><span>${scanPayIcon(voucher.icon)}</span><strong>${voucher.brand}</strong></div>
               <p>${voucher.name}</p>
               <strong>${voucher.cost} 🪙</strong>
               <button type="button">Redeem</button>
             </article>
-          `).join("")}
+          `,
+            )
+            .join("")}
         </div>
         <section class="scan-pay-promo-strip">
           <span>${scanPayIcon("icon-trophy")}</span>
@@ -923,7 +1467,9 @@ function renderScanPayVouchers() {
 function bindScanPayFlowActions() {
   if (!scanPayFlow) return;
   scanPayFlow.querySelectorAll("[data-scan-pay-action]").forEach((control) => {
-    control.addEventListener("click", () => handleScanPayAction(control.dataset.scanPayAction));
+    control.addEventListener("click", () =>
+      handleScanPayAction(control.dataset.scanPayAction),
+    );
   });
   scanPayFlow.querySelectorAll("[data-scan-pay-quick]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -937,7 +1483,9 @@ function bindScanPayFlowActions() {
     const cleaned = amountInput.value.replace(/[^\d.]/g, "");
     scanPayState.amount = cleaned;
     scanPayState.amountTouched = true;
-    const continueButton = scanPayFlow.querySelector('[data-scan-pay-action="open-review"]');
+    const continueButton = scanPayFlow.querySelector(
+      '[data-scan-pay-action="open-review"]',
+    );
     const error = scanPayFlow.querySelector(".scan-pay-error");
     if (continueButton) continueButton.disabled = Number(cleaned || 0) < 1;
     if (error) error.hidden = Number(cleaned || 0) >= 1;
@@ -988,7 +1536,12 @@ function syncClaimsComposer() {
   const hasText = Boolean(claimsInput.value.trim());
   claimsSendButton.disabled = !hasText;
   claimsSendButton.setAttribute("aria-disabled", String(!hasText));
-  claimsInput.placeholder = claimState.view === "track" ? "Ask about this claim..." : claimState.view === "detail" ? "Ask a question about this claim..." : "Ask or upload a bill...";
+  claimsInput.placeholder =
+    claimState.view === "track"
+      ? "Ask about this claim..."
+      : claimState.view === "detail"
+        ? "Ask a question about this claim..."
+        : "Ask or upload a bill...";
 }
 
 function getClaimAssistantReply(text) {
@@ -1059,9 +1612,24 @@ function startTelephoneClaim() {
   claimState.selectedClaim = "telephone";
   claimState.view = "claimStart";
   claimState.messages = [
-    { id: "start-1", role: "assistant", text: "Sure — let’s start your Telephone & Internet claim.", time: "9:41 AM" },
-    { id: "start-2", role: "user", text: "<strong>Telephone claim</strong><br><span>Telephone & Internet</span>", time: "9:41 AM" },
-    { id: "start-3", role: "assistant", text: "Great. Please upload your bill so I can extract the details and check policy compliance.", time: "9:41 AM" },
+    {
+      id: "start-1",
+      role: "assistant",
+      text: "Sure — let’s start your Telephone & Internet claim.",
+      time: "9:41 AM",
+    },
+    {
+      id: "start-2",
+      role: "user",
+      text: "<strong>Telephone claim</strong><br><span>Telephone & Internet</span>",
+      time: "9:41 AM",
+    },
+    {
+      id: "start-3",
+      role: "assistant",
+      text: "Great. Please upload your bill so I can extract the details and check policy compliance.",
+      time: "9:41 AM",
+    },
   ];
   renderClaimsAssistant();
 }
@@ -1072,7 +1640,12 @@ function openUploadFlow(addMessage = false) {
   claimState.scanningProgress = 0;
   if (addMessage) {
     claimState.messages = [
-      { id: "upload-1", role: "assistant", text: "Upload your bill and I’ll extract vendor, amount, bill date, category, and account details.", time: "9:41 AM" },
+      {
+        id: "upload-1",
+        role: "assistant",
+        text: "Upload your bill and I’ll extract vendor, amount, bill date, category, and account details.",
+        time: "9:41 AM",
+      },
     ];
   }
   renderClaimsAssistant();
@@ -1086,16 +1659,25 @@ function selectMockBill() {
 function startMockScan() {
   claimState.view = "scanning";
   claimState.scanningProgress = 0;
-  addClaimMessage("assistant", "I’m reading the bill and extracting the important details.");
+  addClaimMessage(
+    "assistant",
+    "I’m reading the bill and extracting the important details.",
+  );
   renderClaimsAssistant();
   const scanTimer = window.setInterval(() => {
-    claimState.scanningProgress = Math.min(100, claimState.scanningProgress + 20);
+    claimState.scanningProgress = Math.min(
+      100,
+      claimState.scanningProgress + 20,
+    );
     renderClaimsAssistant();
     if (claimState.scanningProgress >= 100) {
       window.clearInterval(scanTimer);
       window.setTimeout(() => {
         claimState.view = "extracted";
-        addClaimMessage("assistant", "Here’s what I found. Please review the extracted details.");
+        addClaimMessage(
+          "assistant",
+          "Here’s what I found. Please review the extracted details.",
+        );
         renderClaimsAssistant();
       }, 320);
     }
@@ -1106,24 +1688,37 @@ function startMockScan() {
 function confirmExtractedDetails() {
   claimState.view = "aiReview";
   addClaimMessage("user", "Looks correct");
-  addClaimMessage("assistant", "I’ll now check policy limits, duplicates, required documents, and compliance declarations.");
+  addClaimMessage(
+    "assistant",
+    "I’ll now check policy limits, duplicates, required documents, and compliance declarations.",
+  );
   window.setTimeout(() => {
-    addClaimMessage("assistant", "I’ve reviewed the bill details. Something similar may have already been submitted.", "warning");
+    addClaimMessage(
+      "assistant",
+      "I’ve reviewed the bill details. Something similar may have already been submitted.",
+      "warning",
+    );
     renderClaimsAssistant();
   }, 260);
   renderClaimsAssistant();
   // Integration point: call policy, duplicate, and compliance checks here.
 }
 
-function resolveDuplicateClaim(response = "Not a duplicate — different period.") {
+function resolveDuplicateClaim(
+  response = "Not a duplicate — different period.",
+) {
   claimState.anomalyResolved = true;
   addClaimMessage("user", response);
-  addClaimMessage("assistant", "Great, please confirm with a short declaration.");
+  addClaimMessage(
+    "assistant",
+    "Great, please confirm with a short declaration.",
+  );
   renderClaimsAssistant();
 }
 
 function toggleDeclaration(index) {
-  claimState.declarationAccepted[index] = !claimState.declarationAccepted[index];
+  claimState.declarationAccepted[index] =
+    !claimState.declarationAccepted[index];
   renderClaimsAssistant();
 }
 
@@ -1133,7 +1728,11 @@ function continueAfterDeclaration() {
     return;
   }
   claimState.view = "submitReady";
-  addClaimMessage("assistant", "Thanks. I’ve recorded your clarification and declaration.", "success");
+  addClaimMessage(
+    "assistant",
+    "Thanks. I’ve recorded your clarification and declaration.",
+    "success",
+  );
   renderClaimsAssistant();
 }
 
@@ -1142,7 +1741,11 @@ function submitCanonicalClaim() {
   claimState.view = "track";
   claimState.trackStatus = "submitted";
   addClaimMessage("user", "Submit claim");
-  addClaimMessage("assistant", "Your claim has been submitted successfully. We’ll keep you updated at every step.", "success");
+  addClaimMessage(
+    "assistant",
+    "Your claim has been submitted successfully. We’ll keep you updated at every step.",
+    "success",
+  );
   renderClaimsAssistant();
   // Integration point: replace this with a real claim submission API call.
 }
@@ -1165,15 +1768,36 @@ function renderClaimsAssistant() {
       claimsScroll?.scrollTo({ top: 0, behavior: "auto" });
       return;
     }
-    claimsScroll?.scrollTo({ top: claimsScroll.scrollHeight, behavior: "smooth" });
+    claimsScroll?.scrollTo({
+      top: claimsScroll.scrollHeight,
+      behavior: "smooth",
+    });
   });
 }
 
 function renderClaimsThread() {
-  const shouldShowThread = !["history", "filteredHistory", "detail", "dashboard", "upload", "track"].includes(claimState.view);
+  const shouldShowThread = ![
+    "history",
+    "filteredHistory",
+    "detail",
+    "dashboard",
+    "upload",
+    "track",
+  ].includes(claimState.view);
   if (!shouldShowThread) return "";
-  const messages = claimState.messages.map((message) => renderClaimMessage(message)).join("");
-  return messages + (claimState.isThinking ? renderClaimMessage({ role: "assistant", text: `<span class="claims-mini-typing"><i></i><i></i><i></i></span>`, typing: true }) : "");
+  const messages = claimState.messages
+    .map((message) => renderClaimMessage(message))
+    .join("");
+  return (
+    messages +
+    (claimState.isThinking
+      ? renderClaimMessage({
+          role: "assistant",
+          text: `<span class="claims-mini-typing"><i></i><i></i><i></i></span>`,
+          typing: true,
+        })
+      : "")
+  );
 }
 
 function renderClaimMessage(message) {
@@ -1202,7 +1826,8 @@ function renderClaimsWorkspace() {
   if (claimState.view === "submitReady") return renderSubmitReadyScreen();
   if (claimState.view === "track") return renderTrackClaimScreen();
   if (claimState.view === "history") return renderClaimHistoryScreen("All");
-  if (claimState.view === "filteredHistory") return renderClaimHistoryScreen("Pending");
+  if (claimState.view === "filteredHistory")
+    return renderClaimHistoryScreen("Pending");
   if (claimState.view === "detail") return renderClaimDetailScreen();
   if (claimState.view === "dashboard") return renderClaimDashboardScreen();
   return renderClaimsHome();
@@ -1225,24 +1850,32 @@ function renderClaimsHome() {
 function renderClaimsQuickActions() {
   const actions = [
     ["history", "History", "icon-receipt"],
-    ["track", "Track claim", "icon-refresh"],
-    ["dashboard", "Claim dashboard", "icon-grid"],
+    ["dashboard", "Dashboard", "icon-grid"],
     ["policy", "Policy help", "icon-help"],
   ];
   return `
     <div class="claims-quick-action-grid" aria-label="Claims quick actions">
-      ${actions.map(([action, label, icon]) => `
+      ${actions
+        .map(
+          ([action, label, icon]) => `
         <button type="button" class="claims-quick-action-card" data-claims-workspace-action="${action}">
           <span aria-hidden="true"><svg><use href="#${icon}" /></svg></span>
           <strong>${label}</strong>
         </button>
-      `).join("")}
+      `,
+        )
+        .join("")}
     </div>
   `;
 }
 
 function renderPromptCard(card) {
-  const action = card.id === "telephone" ? "start-telephone" : card.id === "upload" ? "upload-start" : "policy";
+  const action =
+    card.id === "telephone"
+      ? "start-telephone"
+      : card.id === "upload"
+        ? "upload-start"
+        : "policy";
   return `
     <button type="button" class="claims-prompt-card" data-claims-workspace-action="${action}">
       <span aria-hidden="true"><svg><use href="#${card.icon}" /></svg></span>
@@ -1261,13 +1894,17 @@ function renderClaimStartActions() {
           ["Upload bill", "From device", "icon-plus"],
           ["Take photo", "Use camera", "icon-eye"],
           ["Choose PDF", "Select file", "icon-receipt"],
-        ].map(([title, subtitle, icon]) => `
+        ]
+          .map(
+            ([title, subtitle, icon]) => `
           <button type="button" class="claims-upload-option" data-claims-workspace-action="upload-start">
             <span aria-hidden="true"><svg><use href="#${icon}" /></svg></span>
             <strong>${title}</strong>
             <small>${subtitle}</small>
           </button>
-        `).join("")}
+        `,
+          )
+          .join("")}
       </div>
     </section>
   `;
@@ -1277,17 +1914,19 @@ function renderClaimStepper(activeStep) {
   const steps = ["Upload", "Review", "Verify", "Submit"];
   return `
     <div class="claim-stepper" aria-label="Claim progress">
-      ${steps.map((step, index) => {
-        const stepNumber = index + 1;
-        const isActive = stepNumber === activeStep;
-        const isDone = stepNumber < activeStep;
-        return `
+      ${steps
+        .map((step, index) => {
+          const stepNumber = index + 1;
+          const isActive = stepNumber === activeStep;
+          const isDone = stepNumber < activeStep;
+          return `
           <span class="${isActive ? "is-active" : ""} ${isDone ? "is-done" : ""}">
             <i>${isDone ? "✓" : stepNumber}</i>
             <small>${step}</small>
           </span>
         `;
-      }).join("")}
+        })
+        .join("")}
     </div>
   `;
 }
@@ -1377,7 +2016,16 @@ function renderExtractedDetailsCard() {
         ["amount", "Amount", details.amount],
         ["category", "Category", details.category],
         ["accountNumber", "Account / Number", details.accountNumber],
-      ].map(([field, label, value]) => renderExtractedDetailRow(field, label, value, details.confidenceByField[field] || "High")).join("")}
+      ]
+        .map(([field, label, value]) =>
+          renderExtractedDetailRow(
+            field,
+            label,
+            value,
+            details.confidenceByField[field] || "High",
+          ),
+        )
+        .join("")}
     </section>
   `;
 }
@@ -1390,7 +2038,9 @@ function renderExtractedDetailRow(field, label, value, confidence) {
       <span class="transaction-icon" aria-hidden="true"><svg><use href="#icon-checks" /></svg></span>
       <span class="transaction-meta">
         <strong>${label} <em>${confidence}</em></strong>
-        ${field === "billDate" ? `
+        ${
+          field === "billDate"
+            ? `
           <span class="claims-detail-date-entry">
             <input value="${currentValue}" data-claims-field="${field}" data-claims-date-display aria-label="${label}" />
             <button type="button" class="claims-period-calendar claims-detail-calendar" data-claims-date-trigger aria-label="Update bill date">
@@ -1398,14 +2048,18 @@ function renderExtractedDetailRow(field, label, value, confidence) {
             </button>
             <input class="claims-period-picker" type="date" value="${dateValue}" data-claims-date-picker aria-label="${label}" />
           </span>
-        ` : `<input value="${currentValue}" data-claims-field="${field}" aria-label="${label}" />`}
+        `
+            : `<input value="${currentValue}" data-claims-field="${field}" aria-label="${label}" />`
+        }
       </span>
     </label>
   `;
 }
 
 function parseClaimDateValue(value) {
-  const match = String(value || "").match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+  const match = String(value || "").match(
+    /^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/,
+  );
   if (!match) return "";
   const months = {
     Jan: "01",
@@ -1431,7 +2085,13 @@ function formatClaimDateValue(value) {
   const [year, month, day] = value.split("-");
   const date = new Date(Number(year), Number(month) - 1, Number(day));
   if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).replace(",", "");
+  return date
+    .toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    })
+    .replace(",", "");
 }
 
 function renderAIReviewScreen() {
@@ -1556,12 +2216,16 @@ function renderComplianceDeclarationCard() {
         </div>
         <small class="wallet-rail-pill is-active">Required</small>
       </div>
-      ${declarations.map((item, index) => `
+      ${declarations
+        .map(
+          (item, index) => `
         <label class="claims-checkbox-row">
           <input type="checkbox" ${claimState.declarationAccepted[index] ? "checked" : ""} data-claims-declaration="${index}" />
           <span>${item}</span>
         </label>
-      `).join("")}
+      `,
+        )
+        .join("")}
       <button type="button" class="wallet-overlay-cta claims-primary-action" ${claimState.declarationAccepted.every(Boolean) ? "" : "disabled"} data-claims-workspace-action="declaration-continue">
         <span class="wallet-overlay-cta-copy"><strong>I Agree & Continue</strong></span>
       </button>
@@ -1590,14 +2254,25 @@ function renderSubmitReadyScreen() {
 function renderTrackClaimScreen() {
   const claim = claimsMockData.canonicalClaim;
   const statusCopy = {
-    submitted: ["Your claim has been submitted successfully.", "We’ll keep you updated at every step."],
-    pending: ["Your claim is under review.", "Our team and assistant are reviewing your claim. We may request more information if needed."],
-    approved: ["Great news! Your claim is approved.", "It will be reimbursed in the next payout cycle."],
-    reimbursed: ["Reimbursement successful!", "₹2,149 has been credited to your account."],
+    submitted: [
+      "Your claim has been submitted successfully.",
+      "We’ll keep you updated at every step.",
+    ],
+    pending: [
+      "Your claim is under review.",
+      "Our team and assistant are reviewing your claim. We may request more information if needed.",
+    ],
+    approved: [
+      "Great news! Your claim is approved.",
+      "It will be reimbursed in the next payout cycle.",
+    ],
+    reimbursed: [
+      "Reimbursement successful!",
+      "₹2,149 has been credited to your account.",
+    ],
   };
   return `
     <section class="claims-screen">
-      <div class="claims-subscreen-head"><h3>Track Claim</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
       <section class="claim-summary-card">
         <div><span>Claim ID</span><strong>${claim.id}</strong></div>
         <div><span>Category</span><strong>${claim.category}</strong></div>
@@ -1645,27 +2320,35 @@ function renderClaimStatusTimeline(activeStatus = "submitted") {
   return `
     <section class="claim-status-timeline">
       <h4>Claim status</h4>
-      ${steps.map(([id, label, date], index) => `
+      ${steps
+        .map(
+          ([id, label, date], index) => `
         <article class="${index < activeIndex ? "is-complete" : ""} ${index === activeIndex ? "is-current" : ""}">
           <i>${index <= activeIndex ? "✓" : ""}</i>
           <div><strong>${label}</strong><span>${index <= activeIndex ? date : "Upcoming"}</span></div>
         </article>
-      `).join("")}
+      `,
+        )
+        .join("")}
     </section>
   `;
 }
 
 function renderClaimHistoryScreen(filter = "All") {
-  const activeFilter = filter === "Pending" ? "Pending" : claimState.historyFilter;
+  const activeFilter =
+    filter === "Pending" ? "Pending" : claimState.historyFilter;
   const search = claimState.historySearch.trim().toLowerCase();
   const claims = claimsMockData.history.filter((claim) => {
-    const matchesFilter = activeFilter === "All" || claim.status === activeFilter;
-    const matchesSearch = !search || `${claim.title} ${claim.vendor}`.toLowerCase().includes(search);
+    const matchesFilter =
+      activeFilter === "All" || claim.status === activeFilter;
+    const matchesSearch =
+      !search ||
+      `${claim.title} ${claim.vendor}`.toLowerCase().includes(search);
     return matchesFilter && matchesSearch;
   });
   return `
     <section class="claims-screen">
-      <div class="claims-subscreen-head"><h3>Claim history</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <div class="claims-subscreen-head"><h3>Claim history</h3></div>
       <label class="claims-search-bar"><svg><use href="#icon-search" /></svg><input value="${claimState.historySearch}" placeholder="Search claims by category, vendor..." data-claims-history-search /></label>
       <div class="claims-filter-row">
         ${["All", "Pending", "Approved", "Rejected"].map((item) => `<button type="button" class="${activeFilter === item ? "active" : ""}" data-claims-filter="${item}">${item}</button>`).join("")}
@@ -1696,7 +2379,7 @@ function renderClaimDetailScreen() {
   const claim = claimsMockData.canonicalClaim;
   return `
     <section class="claims-screen">
-      <div class="claims-subscreen-head"><h3>Claim details</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <div class="claims-subscreen-head"><h3>Claim details</h3></div>
       <section class="claim-detail-summary">
         ${renderStatusBadge("Approved")}
         <div class="claim-detail-title"><div><strong>${claim.category}</strong><span>${claim.vendor}</span></div><strong>${claim.amount}</strong></div>
@@ -1718,7 +2401,7 @@ function renderClaimDashboardScreen() {
   const dashboard = claimsMockData.dashboard;
   return `
     <section class="claims-screen">
-      <div class="claims-subscreen-head"><h3>Claim dashboard</h3><button type="button" data-claims-workspace-action="home">Assistant home</button></div>
+      <div class="claims-subscreen-head"><h3>Claim dashboard</h3></div>
       <section class="dashboard-balance-card">
         <span>Total reimbursement balance</span>
         <strong>${dashboard.totalBalance}</strong>
@@ -1733,7 +2416,17 @@ function renderClaimDashboardScreen() {
       </section>
       <section class="dashboard-activity-card"><h4>Recent activity</h4>${dashboard.recentActivity.map((item) => `<article><span>${item.vendor}<small>${item.meta}</small></span><strong>${item.amount}<em>${item.status}</em></strong></article>`).join("")}</section>
       <section class="dashboard-activity-card"><h4>Upcoming reimbursements</h4><article><span>2 payouts scheduled<small>Next payout on 07 May 2026</small></span><strong>${dashboard.pendingPayouts}</strong></article></section>
-      <div class="dashboard-action-list">${[["Start a claim", "start-telephone"], ["Track claim", "track"], ["View history", "history"], ["Ask policy question", "policy"]].map(([label, action]) => `<button type="button" data-claims-workspace-action="${action}">${label}<svg><use href="#icon-arrow-right" /></svg></button>`).join("")}</div>
+      <div class="dashboard-action-list">${[
+        ["Start a claim", "start-telephone"],
+        ["Track claim", "track"],
+        ["View history", "history"],
+        ["Ask policy question", "policy"],
+      ]
+        .map(
+          ([label, action]) =>
+            `<button type="button" data-claims-workspace-action="${action}">${label}<svg><use href="#icon-arrow-right" /></svg></button>`,
+        )
+        .join("")}</div>
     </section>
   `;
 }
@@ -1748,72 +2441,109 @@ function renderStatusBadge(status) {
 }
 
 function bindClaimsWorkspaceActions() {
-  claimsWorkspace?.querySelectorAll("[data-claims-workspace-action]").forEach((button) => {
-    button.addEventListener("click", () => handleClaimsAction(button.dataset.claimsWorkspaceAction));
-  });
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-workspace-action]")
+    .forEach((button) => {
+      button.addEventListener("click", () =>
+        handleClaimsAction(button.dataset.claimsWorkspaceAction),
+      );
+    });
   claimsWorkspace?.querySelectorAll("[data-claims-reply]").forEach((button) => {
-    button.addEventListener("click", () => handleClaimsReply(button.dataset.claimsReply));
+    button.addEventListener("click", () =>
+      handleClaimsReply(button.dataset.claimsReply),
+    );
   });
-  claimsWorkspace?.querySelectorAll("[data-claims-declaration]").forEach((input) => {
-    input.addEventListener("change", () => toggleDeclaration(Number(input.dataset.claimsDeclaration)));
-  });
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-declaration]")
+    .forEach((input) => {
+      input.addEventListener("change", () =>
+        toggleDeclaration(Number(input.dataset.claimsDeclaration)),
+      );
+    });
   claimsWorkspace?.querySelectorAll("[data-claims-field]").forEach((input) => {
     input.addEventListener("input", () => {
       claimState.manualDetails[input.dataset.claimsField] = input.value;
     });
   });
-  claimsWorkspace?.querySelectorAll("[data-claims-date-display]").forEach((input) => {
-    input.addEventListener("click", () => {
-      const picker = input.closest(".claims-detail-date-entry")?.querySelector("[data-claims-date-picker]");
-      picker?.showPicker?.();
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-date-display]")
+    .forEach((input) => {
+      input.addEventListener("click", () => {
+        const picker = input
+          .closest(".claims-detail-date-entry")
+          ?.querySelector("[data-claims-date-picker]");
+        picker?.showPicker?.();
+      });
     });
-  });
-  claimsWorkspace?.querySelectorAll("[data-claims-date-trigger]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const picker = button.closest(".claims-detail-date-entry")?.querySelector("[data-claims-date-picker]");
-      picker?.showPicker?.();
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-date-trigger]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const picker = button
+          .closest(".claims-detail-date-entry")
+          ?.querySelector("[data-claims-date-picker]");
+        picker?.showPicker?.();
+      });
     });
-  });
-  claimsWorkspace?.querySelectorAll("[data-claims-date-picker]").forEach((picker) => {
-    picker.addEventListener("change", () => {
-      const dateEntry = picker.closest(".claims-detail-date-entry");
-      const displayInput = dateEntry?.querySelector("[data-claims-date-display]");
-      const formattedDate = formatClaimDateValue(picker.value);
-      if (!displayInput || !formattedDate) return;
-      displayInput.value = formattedDate;
-      claimState.manualDetails.billDate = formattedDate;
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-date-picker]")
+    .forEach((picker) => {
+      picker.addEventListener("change", () => {
+        const dateEntry = picker.closest(".claims-detail-date-entry");
+        const displayInput = dateEntry?.querySelector(
+          "[data-claims-date-display]",
+        );
+        const formattedDate = formatClaimDateValue(picker.value);
+        if (!displayInput || !formattedDate) return;
+        displayInput.value = formattedDate;
+        claimState.manualDetails.billDate = formattedDate;
+      });
     });
-  });
   claimsWorkspace?.querySelectorAll("[data-claims-track]").forEach((button) => {
-    button.addEventListener("click", () => updateTrackStatus(button.dataset.claimsTrack));
+    button.addEventListener("click", () =>
+      updateTrackStatus(button.dataset.claimsTrack),
+    );
   });
-  claimsWorkspace?.querySelectorAll("[data-claims-filter]").forEach((button) => {
-    button.addEventListener("click", () => {
-      claimState.historyFilter = button.dataset.claimsFilter;
-      claimState.view = button.dataset.claimsFilter === "Pending" ? "filteredHistory" : "history";
-      renderClaimsAssistant();
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-filter]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        claimState.historyFilter = button.dataset.claimsFilter;
+        claimState.view =
+          button.dataset.claimsFilter === "Pending"
+            ? "filteredHistory"
+            : "history";
+        renderClaimsAssistant();
+      });
     });
-  });
-  claimsWorkspace?.querySelectorAll("[data-claims-history-search]").forEach((input) => {
-    input.addEventListener("input", () => {
-      claimState.historySearch = input.value;
-      renderClaimsAssistant();
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-history-search]")
+    .forEach((input) => {
+      input.addEventListener("input", () => {
+        claimState.historySearch = input.value;
+        renderClaimsAssistant();
+      });
     });
-  });
-  claimsWorkspace?.querySelectorAll("[data-claims-detail]").forEach((button) => {
-    button.addEventListener("click", () => {
-      claimState.selectedHistoryId = button.dataset.claimsDetail;
-      goToClaimsView("detail");
+  claimsWorkspace
+    ?.querySelectorAll("[data-claims-detail]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        claimState.selectedHistoryId = button.dataset.claimsDetail;
+        goToClaimsView("detail");
+      });
     });
-  });
 }
 
 function handleClaimsReply(reply) {
-  if (reply === "Not a duplicate") resolveDuplicateClaim("Not a duplicate — different period.");
+  if (reply === "Not a duplicate")
+    resolveDuplicateClaim("Not a duplicate — different period.");
   else if (reply === "Attach proof") {
     claimState.supportingDocumentAttached = true;
     addClaimMessage("user", "Attaching email approval for late claim.");
-    addClaimMessage("assistant", "Thanks! I’ll review the approval and update the claim.");
+    addClaimMessage(
+      "assistant",
+      "Thanks! I’ll review the approval and update the claim.",
+    );
     renderClaimsAssistant();
   } else if (reply === "This is a work expense") {
     resolveDuplicateClaim("This is a work expense.");
@@ -1829,7 +2559,8 @@ function handleClaimsAction(action) {
   if (action === "track") goToClaimsView("track");
   if (action === "dashboard") goToClaimsView("dashboard");
   if (action === "start-telephone") startTelephoneClaim();
-  if (action === "upload" || action === "upload-start") openUploadFlow(action === "upload");
+  if (action === "upload" || action === "upload-start")
+    openUploadFlow(action === "upload");
   if (action === "mock-upload") selectMockBill();
   if (action === "start-scan") startMockScan();
   if (action === "confirm-details") confirmExtractedDetails();
@@ -1843,16 +2574,42 @@ function handleClaimsAction(action) {
   }
   if (action === "thread") {
     claimState.messages = [
-      { role: "assistant", text: "Here is the full thread for this Airtel Broadband claim. The duplicate concern was resolved with your declaration.", time: "9:41 AM" },
-      { role: "user", text: "Not a duplicate — different period.", time: "9:42 AM" },
-      { role: "assistant", text: "All checks passed and the claim was approved.", time: "9:43 AM", type: "success" },
+      {
+        role: "assistant",
+        text: "Here is the full thread for this Airtel Broadband claim. The duplicate concern was resolved with your declaration.",
+        time: "9:41 AM",
+      },
+      {
+        role: "user",
+        text: "Not a duplicate — different period.",
+        time: "9:42 AM",
+      },
+      {
+        role: "assistant",
+        text: "All checks passed and the claim was approved.",
+        time: "9:43 AM",
+        type: "success",
+      },
     ];
     goToClaimsView("aiReview");
   }
-  if (action === "policy") addLiveClaimBotMessage("I can explain eligible categories, duplicate checks, reimbursement windows, available balance, and required declarations.", 420);
+  if (action === "policy")
+    addLiveClaimBotMessage(
+      "I can explain eligible categories, duplicate checks, reimbursement windows, available balance, and required declarations.",
+      420,
+    );
   if (action?.startsWith("edge-")) {
-    const map = { "edge-date": 1, "edge-ocr": 2, "edge-usage": 3, "edge-limit": 4 };
-    addClaimMessage("assistant", "Here’s another possible edge scenario the assistant can handle.", "warning");
+    const map = {
+      "edge-date": 1,
+      "edge-ocr": 2,
+      "edge-usage": 3,
+      "edge-limit": 4,
+    };
+    addClaimMessage(
+      "assistant",
+      "Here’s another possible edge scenario the assistant can handle.",
+      "warning",
+    );
     claimsWorkspace.innerHTML = `<section class="claims-screen">${renderClaimStepper(3)}${renderAnomalyCard(claimsMockData.canonicalClaim.anomalies[map[action]])}</section>`;
     bindClaimsWorkspaceActions();
   }
@@ -1888,7 +2645,7 @@ function initializeTapPayDiscovery() {
       (button.dataset.walletActions || "")
         .split(",")
         .map((value) => value.trim())
-        .includes("tap")
+        .includes("tap"),
     );
     if (tapWallet) {
       openWalletOverlay(tapWallet);
@@ -1928,7 +2685,10 @@ function createOverlayAction(actionKey) {
 function renderPrimaryAction(action) {
   if (!walletOverlayPrimaryAction || !action) return;
   const idleLetters = Array.from(action.label)
-    .map((char) => `<span class="wallet-cta-letter">${char === " " ? "&nbsp;" : char}</span>`)
+    .map(
+      (char) =>
+        `<span class="wallet-cta-letter">${char === " " ? "&nbsp;" : char}</span>`,
+    )
     .join("");
   walletOverlayPrimaryAction.dataset.toast = action.toast;
   walletOverlayPrimaryAction.innerHTML = `
@@ -1971,8 +2731,12 @@ function renderModeSwitch(actionKeys, selectedKey) {
 function createHistoryItem(item) {
   const article = document.createElement("article");
   article.className = `transaction-item${item.positive ? " positive" : ""}`;
-  const statusKey = item.status ? item.status.toLowerCase().replace(/\s+/g, "-") : "";
-  const status = item.status ? `<span class="transaction-status ${statusKey}">${item.status}</span>` : "";
+  const statusKey = item.status
+    ? item.status.toLowerCase().replace(/\s+/g, "-")
+    : "";
+  const status = item.status
+    ? `<span class="transaction-status ${statusKey}">${item.status}</span>`
+    : "";
   article.innerHTML = `
     <span class="transaction-icon" aria-hidden="true"><svg><use href="#${item.icon || "icon-arrow-right"}" /></svg></span>
     <span class="transaction-meta">
@@ -2032,50 +2796,80 @@ function renderManageWalletState() {
   const frozen = Boolean(state.frozen);
 
   if (manageWalletType) manageWalletType.textContent = state.label;
-  if (manageFreezeTitle) manageFreezeTitle.textContent = `Freeze ${state.label}`;
-  if (manageFreezeCopy) manageFreezeCopy.textContent = frozen ? `${state.label} is frozen` : `Pause ${state.label} instantly`;
+  if (manageFreezeTitle)
+    manageFreezeTitle.innerHTML = frozen
+      ? "Unfreeze<br />Card"
+      : "Freeze<br />Card";
+  if (manageFreezeCopy)
+    manageFreezeCopy.textContent = frozen
+      ? `${state.label} is frozen`
+      : `Pause ${state.label} instantly`;
   manageFreezeButton?.classList.toggle("is-enabled", frozen);
   manageFreezeButton?.setAttribute("aria-pressed", String(frozen));
-  manageFreezeButton?.querySelector(".manage-cards-toggle")?.setAttribute("aria-checked", String(frozen));
+  manageFreezeButton
+    ?.querySelector(".manage-cards-toggle")
+    ?.setAttribute("aria-checked", String(frozen));
   if (manageAccessCopy) manageAccessCopy.textContent = state.accessCopy;
   if (manageAccessValue) manageAccessValue.textContent = state.accessValue;
-  if (manageOnlineCopy) manageOnlineCopy.textContent = `Online merchant transactions ${onlineEnabled ? "enabled" : "disabled"}`;
+  if (manageOnlineCopy)
+    manageOnlineCopy.textContent = `Online merchant transactions ${onlineEnabled ? "enabled" : "disabled"}`;
   manageOnlineButton?.classList.toggle("is-enabled", onlineEnabled);
   manageOnlineButton?.setAttribute("aria-pressed", String(onlineEnabled));
-  manageOnlineButton?.querySelector(".manage-cards-toggle")?.setAttribute("aria-checked", String(onlineEnabled));
-  if (manageLimitCopy) manageLimitCopy.textContent = `${formatCurrency(state.limitUsed)} of ${formatCurrency(state.limitTotal)}`;
+  manageOnlineButton
+    ?.querySelector(".manage-cards-toggle")
+    ?.setAttribute("aria-checked", String(onlineEnabled));
+  if (manageLimitCopy)
+    manageLimitCopy.textContent = `${formatCurrency(state.limitUsed)} of ${formatCurrency(state.limitTotal)}`;
   if (manageLimitValue) manageLimitValue.textContent = `${progress}% used`;
-  if (manageLimitUsed) manageLimitUsed.textContent = `${formatCurrency(state.limitUsed)} used`;
-  if (manageLimitTotal) manageLimitTotal.textContent = `${formatCurrency(state.limitTotal)} limit`;
+  if (manageLimitUsed)
+    manageLimitUsed.textContent = `${formatCurrency(state.limitUsed)} used`;
+  if (manageLimitTotal)
+    manageLimitTotal.textContent = `${formatCurrency(state.limitTotal)} limit`;
   if (manageLimitProgress) manageLimitProgress.style.width = `${progress}%`;
-  if (manageStatusCopy) manageStatusCopy.textContent = "Your card is active and ready to use";
-  if (managePreviewNumber) managePreviewNumber.textContent = state.reveal.number ? state.card.number : "**** **** **** 7845";
+  if (manageStatusCopy)
+    manageStatusCopy.textContent = "Your card is active and ready to use";
+  if (managePreviewNumber)
+    managePreviewNumber.textContent = state.reveal.number
+      ? state.card.number
+      : "**** **** **** 7845";
   if (managePreviewHolder) managePreviewHolder.textContent = state.card.holder;
   if (managePreviewExpiry) managePreviewExpiry.textContent = state.card.expiry;
   manageSensitiveFields.forEach((field) => {
     const key = field.dataset.cardSensitive;
-    if (key === "number") field.textContent = state.reveal.number ? state.card.number : `**** **** **** ${state.card.last4}`;
+    if (key === "number")
+      field.textContent = state.reveal.number
+        ? state.card.number
+        : `**** **** **** ${state.card.last4}`;
     if (key === "holder") field.textContent = state.card.holder;
     if (key === "expiry") field.textContent = state.card.expiry;
-    if (key === "cvv") field.textContent = state.reveal.cvv ? state.card.cvv : "•••";
+    if (key === "cvv")
+      field.textContent = state.reveal.cvv ? state.card.cvv : "•••";
   });
   manageRevealButtons.forEach((button) => {
     const key = button.dataset.cardReveal;
     if (!Object.prototype.hasOwnProperty.call(state.reveal, key)) return;
-    button.setAttribute("aria-label", `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`);
+    button.setAttribute(
+      "aria-label",
+      `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`,
+    );
   });
   manageWalletButtons.forEach((button) => {
     const walletState = manageWalletState[button.dataset.walletKey];
     const statusBadge = button.querySelector(".manage-cards-status-badge");
     button.classList.toggle("is-frozen", Boolean(walletState?.frozen));
-    if (statusBadge) statusBadge.textContent = walletState?.frozen ? "Frozen" : "Active";
+    if (statusBadge)
+      statusBadge.textContent = walletState?.frozen ? "Frozen" : "Active";
   });
 }
 
 function selectManageWallet(button, announce = true) {
   activeManageWalletKey = button.dataset.walletKey || "meal";
-  const state = manageWalletState[activeManageWalletKey] || manageWalletState.meal;
-  const selectedIndex = Math.max(0, Array.from(manageWalletButtons).indexOf(button));
+  const state =
+    manageWalletState[activeManageWalletKey] || manageWalletState.meal;
+  const selectedIndex = Math.max(
+    0,
+    Array.from(manageWalletButtons).indexOf(button),
+  );
 
   manageWalletButtons.forEach((walletButton, index) => {
     const isSelected = walletButton === button;
@@ -2083,7 +2877,8 @@ function selectManageWallet(button, announce = true) {
     walletButton.setAttribute("aria-pressed", String(isSelected));
     manageWalletDots[index]?.classList.toggle("is-active", isSelected);
   });
-  if (manageWalletCount) manageWalletCount.textContent = `${selectedIndex + 1}/${manageWalletButtons.length}`;
+  if (manageWalletCount)
+    manageWalletCount.textContent = `${selectedIndex + 1}/${manageWalletButtons.length}`;
 
   renderManageWalletState();
   if (announce) showToast(`${state.label} selected`);
@@ -2092,7 +2887,11 @@ function selectManageWallet(button, announce = true) {
 manageWalletButtons.forEach((button) => {
   button.addEventListener("click", () => {
     selectManageWallet(button);
-    button.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    button.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
   });
 });
 
@@ -2101,22 +2900,36 @@ manageWalletDots.forEach((dot, index) => {
     const targetWallet = manageWalletButtons[index];
     if (!targetWallet) return;
     selectManageWallet(targetWallet);
-    targetWallet.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    targetWallet.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
   });
 });
 
 manageWalletCarousel?.addEventListener("scroll", () => {
   window.clearTimeout(manageWalletCarousel.scrollTimer);
   manageWalletCarousel.scrollTimer = window.setTimeout(() => {
-    const carouselCenter = manageWalletCarousel.getBoundingClientRect().left + manageWalletCarousel.clientWidth / 2;
-    const nearestButton = Array.from(manageWalletButtons).reduce((nearest, button) => {
-      const currentRect = button.getBoundingClientRect();
-      const nearestRect = nearest.getBoundingClientRect();
-      const currentDistance = Math.abs(currentRect.left + currentRect.width / 2 - carouselCenter);
-      const nearestDistance = Math.abs(nearestRect.left + nearestRect.width / 2 - carouselCenter);
-      return currentDistance < nearestDistance ? button : nearest;
-    }, manageWalletButtons[0]);
-    if (nearestButton && !nearestButton.classList.contains("is-selected")) selectManageWallet(nearestButton, false);
+    const carouselCenter =
+      manageWalletCarousel.getBoundingClientRect().left +
+      manageWalletCarousel.clientWidth / 2;
+    const nearestButton = Array.from(manageWalletButtons).reduce(
+      (nearest, button) => {
+        const currentRect = button.getBoundingClientRect();
+        const nearestRect = nearest.getBoundingClientRect();
+        const currentDistance = Math.abs(
+          currentRect.left + currentRect.width / 2 - carouselCenter,
+        );
+        const nearestDistance = Math.abs(
+          nearestRect.left + nearestRect.width / 2 - carouselCenter,
+        );
+        return currentDistance < nearestDistance ? button : nearest;
+      },
+      manageWalletButtons[0],
+    );
+    if (nearestButton && !nearestButton.classList.contains("is-selected"))
+      selectManageWallet(nearestButton, false);
   }, 90);
 });
 
@@ -2125,7 +2938,9 @@ manageOnlineButton?.addEventListener("click", () => {
   if (!state) return;
   state.online = !state.online;
   renderManageWalletState();
-  showToast(`${state.label} online transactions ${state.online ? "enabled" : "disabled"}`);
+  showToast(
+    `${state.label} online transactions ${state.online ? "enabled" : "disabled"}`,
+  );
 });
 
 manageFreezeButton?.addEventListener("click", () => {
@@ -2144,9 +2959,13 @@ manageRevealButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const state = manageWalletState[activeManageWalletKey];
     const key = button.dataset.cardReveal;
-    if (!state || !Object.prototype.hasOwnProperty.call(state.reveal, key)) return;
+    if (!state || !Object.prototype.hasOwnProperty.call(state.reveal, key))
+      return;
     state.reveal[key] = !state.reveal[key];
-    button.setAttribute("aria-label", `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`);
+    button.setAttribute(
+      "aria-label",
+      `${state.reveal[key] ? "Hide" : "Reveal"} ${key === "cvv" ? "CVV" : "card number"}`,
+    );
     renderManageWalletState();
   });
 });
@@ -2174,7 +2993,9 @@ claimsCloseButtons.forEach((button) => {
 });
 
 claimsActionButtons.forEach((button) => {
-  button.addEventListener("click", () => handleClaimsAction(button.dataset.claimsAction));
+  button.addEventListener("click", () =>
+    handleClaimsAction(button.dataset.claimsAction),
+  );
 });
 
 claimsSendButton?.addEventListener("click", () => {
@@ -2194,7 +3015,8 @@ claimsInput?.addEventListener("input", syncClaimsComposer);
 
 walletOverlayViewAllHistory?.addEventListener("click", (event) => {
   event.preventDefault();
-  if (walletOverlayViewAllHistory.dataset.toast) showToast(walletOverlayViewAllHistory.dataset.toast);
+  if (walletOverlayViewAllHistory.dataset.toast)
+    showToast(walletOverlayViewAllHistory.dataset.toast);
 });
 
 function applyMode(isPluspay) {
@@ -2206,7 +3028,9 @@ function applyMode(isPluspay) {
   }
 
   swapTextNodes.forEach((node) => {
-    node.textContent = isPluspay ? node.dataset.pluspayText : node.dataset.lensText;
+    node.textContent = isPluspay
+      ? node.dataset.pluspayText
+      : node.dataset.lensText;
   });
 
   if (isPluspay) {
@@ -2241,7 +3065,9 @@ filterButtons.forEach((button) => {
     button.setAttribute("aria-selected", "true");
 
     transactions.forEach((transaction) => {
-      const shouldShow = selectedWallet === "all" || transaction.dataset.wallet === selectedWallet;
+      const shouldShow =
+        selectedWallet === "all" ||
+        transaction.dataset.wallet === selectedWallet;
       transaction.classList.toggle("is-hidden", !shouldShow);
     });
   });
@@ -2286,15 +3112,26 @@ function closeManageCardsOverlay() {
 }
 
 function openMerchantDirectory() {
-  if (!merchantDirectoryOverlay || !merchantDirectoryList || !merchantDirectoryChips) return;
-  const content = walletOverlayContent[activeWalletTone] || walletOverlayContent.meal;
-  const activeWalletButton = Array.from(walletButtons).find((button) => button.classList.contains(activeWalletTone));
+  if (
+    !merchantDirectoryOverlay ||
+    !merchantDirectoryList ||
+    !merchantDirectoryChips
+  )
+    return;
+  const content =
+    walletOverlayContent[activeWalletTone] || walletOverlayContent.meal;
+  const activeWalletButton = Array.from(walletButtons).find((button) =>
+    button.classList.contains(activeWalletTone),
+  );
   const walletName = activeWalletButton?.dataset.walletName || "Wallet";
 
   if (merchantDirectoryTitle) merchantDirectoryTitle.textContent = walletName;
-  if (merchantDirectoryCount) merchantDirectoryCount.textContent = content.directoryCopy;
-  if (merchantDirectorySummaryCopy) merchantDirectorySummaryCopy.textContent = content.summaryCopy;
-  if (merchantDirectorySearchCopy) merchantDirectorySearchCopy.textContent = content.searchCopy;
+  if (merchantDirectoryCount)
+    merchantDirectoryCount.textContent = content.directoryCopy;
+  if (merchantDirectorySummaryCopy)
+    merchantDirectorySummaryCopy.textContent = content.summaryCopy;
+  if (merchantDirectorySearchCopy)
+    merchantDirectorySearchCopy.textContent = content.searchCopy;
 
   merchantDirectoryChips.replaceChildren();
   content.categories.forEach((label, index) => {
@@ -2303,7 +3140,9 @@ function openMerchantDirectory() {
 
   merchantDirectoryList.replaceChildren();
   content.merchants.forEach((item, index) => {
-    merchantDirectoryList.append(createMerchantItem(item, index === content.merchants.length - 1));
+    merchantDirectoryList.append(
+      createMerchantItem(item, index === content.merchants.length - 1),
+    );
   });
 
   merchantDirectoryOverlay.hidden = false;
@@ -2342,9 +3181,12 @@ function openWalletOverlay(button) {
       : button.classList.contains("gift")
         ? "gift"
         : "meal";
-  const overlayContent = walletOverlayContent[walletTone] || walletOverlayContent.meal;
+  const overlayContent =
+    walletOverlayContent[walletTone] || walletOverlayContent.meal;
   const primaryActionKey = actionKeys.includes("tap") ? "tap" : actionKeys[0];
-  const primaryAction = primaryActionKey ? walletActionCatalog[primaryActionKey] : null;
+  const primaryAction = primaryActionKey
+    ? walletActionCatalog[primaryActionKey]
+    : null;
 
   walletButtons.forEach((wallet) => {
     const isTarget = wallet === button;
@@ -2355,17 +3197,27 @@ function openWalletOverlay(button) {
 
   if (walletOverlayName) walletOverlayName.textContent = walletName;
   if (walletOverlayBalance) walletOverlayBalance.textContent = walletBalance;
-  if (walletOverlayLimitValue) walletOverlayLimitValue.textContent = overlayContent.monthlyLimit;
-  if (walletOverlayLimitFill) walletOverlayLimitFill.style.width = `${overlayContent.limitProgress}%`;
-  if (walletOverlayDirectoryCopy) walletOverlayDirectoryCopy.textContent = overlayContent.directoryCopy;
-  if (walletOverlaySelectCopy) walletOverlaySelectCopy.textContent = overlayContent.selectCopy;
-  if (walletOverlayViewAllHistory) walletOverlayViewAllHistory.dataset.toast = overlayContent.viewAllToast;
+  if (walletOverlayLimitValue)
+    walletOverlayLimitValue.textContent = overlayContent.monthlyLimit;
+  if (walletOverlayLimitFill)
+    walletOverlayLimitFill.style.width = `${overlayContent.limitProgress}%`;
+  if (walletOverlayDirectoryCopy)
+    walletOverlayDirectoryCopy.textContent = overlayContent.directoryCopy;
+  if (walletOverlaySelectCopy)
+    walletOverlaySelectCopy.textContent = overlayContent.selectCopy;
+  if (walletOverlayViewAllHistory)
+    walletOverlayViewAllHistory.dataset.toast = overlayContent.viewAllToast;
 
   walletOverlaySummary.classList.remove("meal", "fuel", "misc", "gift");
   walletOverlaySummary.classList.add(walletTone);
 
   if (walletOverlayIcon) {
-    walletOverlayIcon.classList.remove("meal-icon", "fuel-icon", "misc-icon", "gift-icon");
+    walletOverlayIcon.classList.remove(
+      "meal-icon",
+      "fuel-icon",
+      "misc-icon",
+      "gift-icon",
+    );
     walletOverlayIcon.classList.add(`${walletTone}-icon`);
     const sourceIcon = button.querySelector(".wallet-icon");
     if (sourceIcon) {

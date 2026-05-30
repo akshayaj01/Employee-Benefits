@@ -544,7 +544,7 @@
             data-toast="UPI Settings opened"
           >
             <span class="utility-icon" aria-hidden="true">
-              <img src="./assets/icons/upi.svg" alt="" />
+              <img src="./assets/icons/upi-settings.svg" alt="" />
             </span>
             <strong>UPI<br />Settings</strong>
           </button>
@@ -1159,95 +1159,65 @@
             </div>
           </section>
 
-          <section class="manage-cards-section">
+          <section class="manage-cards-section manage-cards-controls-section">
             <div class="manage-cards-section-head">
               <h3>Card Controls</h3>
             </div>
-            <div class="manage-cards-action-grid">
+            <div class="manage-cards-control-grid">
               <button
-                class="manage-cards-action manage-cards-freeze-action"
-                type="button"
-                data-manage-freeze-toggle
-              >
-                <span class="manage-cards-action-icon" aria-hidden="true"
-                  ><svg><use href="#icon-snowflake" /></svg
-                ></span>
-                <span class="manage-cards-setting-copy">
-                  <strong data-manage-freeze-title>Freeze Meal Wallet</strong>
-                  <span data-manage-freeze-copy
-                    >Pause Meal Wallet instantly</span
-                  >
-                </span>
-                <span
-                  class="manage-cards-toggle"
-                  role="switch"
-                  aria-checked="false"
-                  aria-label="Freeze selected wallet"
-                ></span>
-              </button>
-              <button
-                class="manage-cards-action"
+                class="manage-cards-control-tile"
                 type="button"
                 data-toast="PIN management opened"
               >
-                <span class="manage-cards-action-icon" aria-hidden="true"
-                  ><svg><use href="#icon-grid" /></svg
-                ></span>
-                <span class="manage-cards-setting-copy">
-                  <strong>Change PIN</strong>
-                  <span>Update the physical card PIN securely</span>
+                <span class="manage-cards-control-icon" aria-hidden="true">
+                  <img src="./assets/icons/upi-pin-reset.svg" alt="" />
                 </span>
-                <span class="manage-cards-action-arrow" aria-hidden="true"
-                  ><svg><use href="#icon-arrow-right" /></svg
-                ></span>
+                <span>Set/ Reset<br />PIN</span>
               </button>
               <button
-                class="manage-cards-action"
+                class="manage-cards-control-tile"
                 type="button"
-                data-toast="Replace card flow opened"
+                data-toast="Physical card request opened"
               >
-                <span class="manage-cards-action-icon" aria-hidden="true"
-                  ><svg><use href="#icon-refresh" /></svg
-                ></span>
-                <span class="manage-cards-setting-copy">
-                  <strong>Replace Card</strong>
-                  <span>Request a reissue for damage or loss</span>
+                <span class="manage-cards-control-icon" aria-hidden="true">
+                  <img src="./assets/icons/card-physical.svg" alt="" />
                 </span>
-                <span class="manage-cards-action-arrow" aria-hidden="true"
-                  ><svg><use href="#icon-arrow-right" /></svg
-                ></span>
+                <span>Get A<br />Physical Card</span>
+              </button>
+              <button
+                class="manage-cards-control-tile"
+                type="button"
+                data-toast="Block card flow opened"
+              >
+                <span class="manage-cards-control-icon" aria-hidden="true">
+                  <img src="./assets/icons/card-block.svg" alt="" />
+                </span>
+                <span>Block<br />Card</span>
+              </button>
+              <button
+                class="manage-cards-control-tile manage-cards-freeze-action"
+                type="button"
+                data-manage-freeze-toggle
+              >
+                <span class="manage-cards-control-icon" aria-hidden="true">
+                  <img src="./assets/icons/card-freeze.svg" alt="" />
+                </span>
+                <span data-manage-freeze-title>Freeze<br />Card</span>
+              </button>
+              <button
+                class="manage-cards-control-tile"
+                type="button"
+                data-toast="Token management opened"
+              >
+                <span class="manage-cards-control-icon" aria-hidden="true">
+                  <img src="./assets/icons/card-token.svg" alt="" />
+                </span>
+                <span>Manage<br />Tokens</span>
               </button>
             </div>
           </section>
 
-          <section class="manage-cards-section">
-            <div class="manage-cards-section-head">
-              <h3>Wallet Settings</h3>
-            </div>
-            <div class="manage-cards-setting-list">
-              <article class="manage-cards-setting-item">
-                <span class="manage-cards-setting-copy">
-                  <strong>Wallet Type</strong>
-                  <span>Selected card rail</span>
-                </span>
-                <span class="manage-cards-setting-value" data-manage-wallet-type
-                  >Meal Wallet</span
-                >
-              </article>
-              <article class="manage-cards-setting-item">
-                <span class="manage-cards-setting-copy">
-                  <strong>Monthly Limit</strong>
-                  <span>Tap, scan and merchant acceptance</span>
-                  <span class="manage-monthly-limit-progress" aria-hidden="true"
-                    ><i></i
-                  ></span>
-                </span>
-                <span class="manage-cards-setting-value">₹10,000</span>
-              </article>
-            </div>
-          </section>
-
-          <section class="manage-cards-section">
+          <!-- <section class="manage-cards-section">
             <div class="manage-cards-section-head">
               <h3>Security &amp; Support</h3>
             </div>
@@ -1285,7 +1255,7 @@
                 ></span>
               </button>
             </div>
-          </section>
+          </section> -->
         </div>
       </section>
     </div>
