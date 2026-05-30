@@ -2194,7 +2194,7 @@ function applyMode(isPluspay) {
   pluspayToggle?.setAttribute("aria-pressed", String(isPluspay));
 
   if (pluspayLabel) {
-    pluspayLabel.textContent = isPluspay ? "Lens" : "Pluspay";
+    pluspayLabel.textContent = isPluspay ? "Lens" : "PlusPay";
   }
 
   swapTextNodes.forEach((node) => {
@@ -2219,7 +2219,7 @@ function applyMode(isPluspay) {
 pluspayToggle?.addEventListener("click", () => {
   const nextState = pluspayToggle.getAttribute("aria-pressed") !== "true";
   applyMode(nextState);
-  showToast(nextState ? "Switched to Pluspay" : "Switched to Lens");
+  showToast(nextState ? "Switched to PlusPay" : "Switched to Lens");
 });
 
 filterButtons.forEach((button) => {

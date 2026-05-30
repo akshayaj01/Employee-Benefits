@@ -1,0 +1,8 @@
+{
+  "name": "akshayaj01-employee-benefits-https-github-com",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node local-server.js"
+  }
+}
