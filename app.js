@@ -23,12 +23,6 @@ const walletOverlayBalance = document.querySelector(
 const walletOverlayPills = document.querySelector(
   "[data-wallet-overlay-pills]",
 );
-const walletOverlayLimitValue = document.querySelector(
-  "[data-wallet-overlay-limit-value]",
-);
-const walletOverlayLimitFill = document.querySelector(
-  "[data-wallet-overlay-limit-fill]",
-);
 const walletOverlaySummary = document.querySelector(
   "[data-wallet-overlay-tone]",
 );
@@ -278,8 +272,6 @@ const walletOverlayContent = {
     searchCopy: "Search food merchants near you",
     summaryCopy: "Cafes, grocers, and dining partners that accept Meal Wallet",
     viewAllToast: "Meal Wallet statement opened",
-    monthlyLimit: "₹40,000",
-    limitProgress: 16,
     categories: ["Nearby", "Cafe", "Groceries", "Dining"],
     merchants: [
       {
@@ -369,8 +361,6 @@ const walletOverlayContent = {
     searchCopy: "Search fuel stations and QR merchants",
     summaryCopy: "Fuel, mobility, and QR merchants available for this wallet",
     viewAllToast: "Fuel Wallet statement opened",
-    monthlyLimit: "₹12,000",
-    limitProgress: 26,
     categories: ["Nearby", "Fuel", "Service", "QR Pay"],
     merchants: [
       {
@@ -460,8 +450,6 @@ const walletOverlayContent = {
     searchCopy: "Search reimbursement-friendly merchants",
     summaryCopy: "UPI QR merchants eligible for reimbursement-led spends",
     viewAllToast: "Reimbursement Wallet statement opened",
-    monthlyLimit: "₹15,000",
-    limitProgress: 61,
     categories: ["Nearby", "Pharmacy", "Travel", "Services"],
     merchants: [
       {
@@ -556,8 +544,6 @@ const walletOverlayContent = {
     searchCopy: "Search gift redemption partners",
     summaryCopy: "Brand partners and redemption destinations for Gift Wallet",
     viewAllToast: "Gift Wallet statement opened",
-    monthlyLimit: "₹10,000",
-    limitProgress: 62,
     categories: ["Nearby", "Fashion", "Lifestyle", "Gift Cards"],
     merchants: [
       {
@@ -1111,6 +1097,8 @@ function renderScanPayFlow() {
   }[scanPayState.step];
   scanPayFlow.innerHTML = renderer ? renderer() : renderScanPayScanner();
   bindScanPayFlowActions();
+  if (scanPayState.step === "scratch") initScratchCard();
+  if (scanPayState.step === "reward") animateCoinCount();
   scheduleScanPayStep();
 }
 
@@ -1296,18 +1284,21 @@ function renderScanPaySuccess() {
       ${renderScanPayDeviceStatus()}
       ${renderConfetti()}
       <main class="scan-pay-success-content">
-        <span class="scan-pay-success-check">${scanPayIcon("icon-checks")}</span>
+        <span class="scan-pay-success-check">
+          <span class="scan-pay-success-burst" aria-hidden="true"></span>
+          ${scanPayIcon("icon-checks")}
+        </span>
         <strong class="scan-pay-success-amount">${formatScanPayAmount(scanPayState.amount)}</strong>
         <h1>Payment Successful</h1>
         <p>Paid to ${scanPayMock.merchant.name}<br>${scanPayMock.merchant.upiId}</p>
-        <article class="scan-pay-unlocked-card">
-          <span>${scanPayIcon("icon-gift")}</span>
-          <div>
-            <strong>You unlocked a scratch card</strong>
-            <small>Congrats! Scratch and win exciting rewards.</small>
-          </div>
-          <button type="button" class="scan-pay-primary" data-scan-pay-action="scratch-now">Scratch Now ${scanPayIcon("icon-chevron-right")}</button>
-        </article>
+        <button type="button" class="scan-pay-mystery-card" data-scan-pay-action="scratch-now" aria-label="Scratch card unlocked, tap to scratch and win">
+          <span class="scan-pay-mystery-shine" aria-hidden="true"></span>
+          <span class="scan-pay-mystery-badge">🎁 Reward unlocked</span>
+          <span class="scan-pay-mystery-gift" aria-hidden="true">${scanPayIcon("icon-gift")}</span>
+          <strong>You won a scratch card!</strong>
+          <small>Scratch &amp; win up to <b>500</b> Woohoo Coins</small>
+          <span class="scan-pay-mystery-cta">Scratch &amp; win ${scanPayIcon("icon-chevron-right")}</span>
+        </button>
         <div class="scan-pay-secondary-actions">
           <button type="button">${scanPayIcon("icon-receipt")} View receipt</button>
           <button type="button" data-scan-pay-action="close">${scanPayIcon("icon-home")} Return to Home</button>
@@ -1343,16 +1334,23 @@ function renderScanPayScratch() {
       </header>
       <main class="scan-pay-reward-content">
         <h1>You earned a reward</h1>
-        <p>Scratch to reveal your Woohoo Coins</p>
-        <button type="button" class="scratch-card" data-scan-pay-action="reveal-reward" aria-label="Reveal reward">
-          <span>Scratch &amp; win</span>
-          <i>${scanPayIcon("icon-gift")}</i>
-          <em>SCRATCH<br>HERE</em>
-          <b>Reveal a surprise reward ✨</b>
-        </button>
+        <p>Scratch the card to reveal your Woohoo Coins</p>
+        <div class="scratch-stage" data-scratch-stage>
+          <div class="scratch-prize" aria-hidden="true">
+            <span class="scratch-prize-label">You won</span>
+            <strong class="scratch-prize-amount">${scanPayMock.reward.coinsWon}<i>🪙</i></strong>
+            <span class="scratch-prize-sub">Woohoo Coins</span>
+          </div>
+          <canvas class="scratch-foil" data-scratch-foil></canvas>
+          <span class="scratch-hint" data-scratch-hint aria-hidden="true">
+            ${scanPayIcon("icon-gift")}
+            <em>Scratch here</em>
+          </span>
+        </div>
+        <p class="scratch-progress-copy" data-scratch-copy>Use your finger to scratch &amp; win ✨</p>
       </main>
       <footer class="scan-pay-fixed-footer">
-        <button type="button" class="scan-pay-secondary" data-scan-pay-action="reveal-reward">Reveal reward</button>
+        <button type="button" class="scan-pay-secondary" data-scan-pay-action="reveal-reward">Reveal instantly</button>
       </footer>
     </section>
   `;
@@ -1364,9 +1362,10 @@ function renderScanPayReward() {
       ${renderScanPayDeviceStatus()}
       ${renderConfetti()}
       <main class="scan-pay-reward-content revealed">
+        <span class="scan-pay-reward-rays" aria-hidden="true"></span>
         <h1>Woohoo!</h1>
         <p>You won</p>
-        <strong class="scan-pay-coin-win">${scanPayMock.reward.coinsWon}<span>🪙</span></strong>
+        <strong class="scan-pay-coin-win"><span class="scan-pay-coin-count" data-coin-count data-coin-target="${scanPayMock.reward.coinsWon}">0</span><span class="scan-pay-coin-emoji">🪙</span></strong>
         <p>Woohoo Coins</p>
         <div class="scan-pay-coin-box" aria-hidden="true"><span></span><i></i><b></b></div>
         <article class="scan-pay-confirm-card">
@@ -1496,6 +1495,162 @@ function bindScanPayFlowActions() {
     if (continueButton) continueButton.disabled = Number(cleaned || 0) < 1;
     if (error) error.hidden = Number(cleaned || 0) >= 1;
   });
+}
+
+function initScratchCard() {
+  const stage = scanPayFlow.querySelector("[data-scratch-stage]");
+  const canvas = scanPayFlow.querySelector("[data-scratch-foil]");
+  if (!stage || !canvas) return;
+  const hint = stage.querySelector("[data-scratch-hint]");
+  const copy = scanPayFlow.querySelector("[data-scratch-copy]");
+  const ctx = canvas.getContext("2d");
+
+  // Reduced-motion / no-canvas fallback: reveal instantly.
+  if (!ctx || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealReward();
+    return;
+  }
+
+  let revealed = false;
+  let drawing = false;
+  let lastPoint = null;
+
+  const paintFoil = () => {
+    const rect = stage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return false;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+    gradient.addColorStop(0, "#0a8a7c");
+    gradient.addColorStop(0.5, "#00605a");
+    gradient.addColorStop(1, "#01433f");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, rect.width, rect.height);
+    // Sparkle speckles so the foil reads as a real scratch coating.
+    ctx.fillStyle = "rgba(255, 255, 255, 0.10)";
+    for (let n = 0; n < 90; n += 1) {
+      const sx = Math.random() * rect.width;
+      const sy = Math.random() * rect.height;
+      ctx.beginPath();
+      ctx.arc(sx, sy, Math.random() * 1.6 + 0.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = "rgba(255, 255, 255, 0.82)";
+    ctx.font =
+      "600 15px 'PP Telegraf', system-ui, -apple-system, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("SCRATCH HERE", rect.width / 2, rect.height / 2 + 56);
+    return true;
+  };
+
+  const pointerPos = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  };
+
+  const scratchTo = (point) => {
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.lineWidth = 46;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    if (lastPoint) {
+      ctx.beginPath();
+      ctx.moveTo(lastPoint.x, lastPoint.y);
+      ctx.lineTo(point.x, point.y);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 23, 0, Math.PI * 2);
+    ctx.fill();
+    lastPoint = point;
+  };
+
+  const clearedRatio = () => {
+    const { width, height } = canvas;
+    if (!width || !height) return 0;
+    const sample = ctx.getImageData(0, 0, width, height).data;
+    let cleared = 0;
+    const total = width * height;
+    // Sample every 64th pixel's alpha for speed.
+    for (let i = 3; i < sample.length; i += 256) {
+      if (sample[i] === 0) cleared += 1;
+    }
+    return cleared / (total / 64);
+  };
+
+  const finish = () => {
+    if (revealed) return;
+    revealed = true;
+    stage.classList.add("is-clearing");
+    if (copy) copy.textContent = "Nice! Revealing your reward…";
+    window.setTimeout(revealReward, 620);
+  };
+
+  const onDown = (event) => {
+    if (revealed) return;
+    drawing = true;
+    lastPoint = null;
+    stage.classList.add("is-scratching");
+    if (hint) hint.style.opacity = "0";
+    // Keep receiving move events even if the finger drifts off the card.
+    try {
+      canvas.setPointerCapture(event.pointerId);
+    } catch (error) {
+      /* pointer capture unsupported — graceful no-op */
+    }
+    scratchTo(pointerPos(event));
+  };
+  const onMove = (event) => {
+    if (!drawing || revealed) return;
+    event.preventDefault();
+    scratchTo(pointerPos(event));
+    if (clearedRatio() > 0.5) finish();
+  };
+  const onUp = () => {
+    drawing = false;
+    lastPoint = null;
+    if (!revealed && clearedRatio() > 0.5) finish();
+  };
+
+  requestAnimationFrame(() => {
+    if (!paintFoil()) {
+      // Stage not measurable yet (hidden); retry once next frame.
+      requestAnimationFrame(() => {
+        if (!paintFoil()) revealReward();
+      });
+    }
+  });
+
+  canvas.addEventListener("pointerdown", onDown);
+  canvas.addEventListener("pointermove", onMove);
+  canvas.addEventListener("pointerup", onUp);
+  canvas.addEventListener("pointercancel", onUp);
+}
+
+function revealReward() {
+  scanPayState.rewardRevealed = true;
+  setScanPayStep("reward");
+}
+
+function animateCoinCount() {
+  const node = scanPayFlow.querySelector("[data-coin-count]");
+  if (!node) return;
+  const target = Number(node.dataset.coinTarget) || 0;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    node.textContent = String(target);
+    return;
+  }
+  const duration = 900;
+  const start = performance.now();
+  const tick = (now) => {
+    const progress = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    node.textContent = String(Math.round(target * eased));
+    if (progress < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 
 function handleScanPayAction(action) {
@@ -1715,6 +1870,15 @@ function selectMockBill() {
   renderClaimsAssistant();
 }
 
+function quickUploadAndScan() {
+  // Device upload shortcut: skip the upload screen and the manual "Start scan"
+  // tap by selecting the mock bill and kicking off the scan immediately.
+  setClaimsActionMenu(false);
+  claimState.uploaded = true;
+  claimState.scanningProgress = 0;
+  startMockScan();
+}
+
 function startMockScan() {
   claimState.view = "scanning";
   claimState.scanningProgress = 0;
@@ -1767,10 +1931,12 @@ function resolveDuplicateClaim(
   response = "Not a duplicate — different period.",
 ) {
   claimState.anomalyResolved = true;
+  claimState.view = "submitReady";
   addClaimMessage("user", response);
   addClaimMessage(
     "assistant",
-    "Great, please confirm with a short declaration.",
+    "Great, please review the final details and confirm the compliance declaration to submit.",
+    "success",
   );
   renderClaimsAssistant();
 }
@@ -1781,21 +1947,11 @@ function toggleDeclaration(index) {
   renderClaimsAssistant();
 }
 
-function continueAfterDeclaration() {
+function submitCanonicalClaim() {
   if (!claimState.declarationAccepted.every(Boolean)) {
-    showToast("Please accept all declarations to continue");
+    showToast("Please accept the compliance declaration to submit");
     return;
   }
-  claimState.view = "submitReady";
-  addClaimMessage(
-    "assistant",
-    "Thanks. I’ve recorded your clarification and declaration.",
-    "success",
-  );
-  renderClaimsAssistant();
-}
-
-function submitCanonicalClaim() {
   claimState.claimSubmitted = true;
   claimState.view = "track";
   claimState.trackStatus = "submitted";
@@ -1902,8 +2058,8 @@ function renderClaimsHome() {
 
 function renderClaimsQuickActions() {
   const actions = [
-    ["history", "History", "icon-receipt"],
     ["dashboard", "Dashboard", "icon-grid"],
+    ["history", "History", "icon-receipt"],
     ["policy", "Policy help", "icon-help"],
   ];
   return `
@@ -2023,18 +2179,28 @@ function renderBillPreviewCard() {
 }
 
 function renderScanningScreen() {
+  const progress = claimState.scanningProgress;
   return `
     <section class="claims-screen">
       ${renderClaimStepper(1)}
       ${renderBillPreviewCard()}
       <article class="scanning-progress-card">
-        <span class="claims-typing"><i></i><i></i><i></i></span>
-        <div>
-          <strong>Scanning your bill…</strong>
-          <p>Extracting text and details</p>
+        <div class="scanning-progress-head">
+          <span class="claims-typing" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div>
+            <strong>Scanning your bill...</strong>
+            <p>Extracting merchant, amount, and bill date</p>
+          </div>
+          <em>${progress}%</em>
         </div>
-        <em>${claimState.scanningProgress}%</em>
-        <span class="claims-progress-track"><i style="width: ${claimState.scanningProgress}%"></i></span>
+        <div class="claims-progress-meter" aria-label="Bill scan progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}" role="progressbar">
+          <span class="claims-progress-track"><i style="width: ${progress}%"></i></span>
+        </div>
+        <div class="scanning-progress-steps" aria-label="Scan checks">
+          <span class="${progress >= 25 ? "is-active" : ""}">OCR</span>
+          <span class="${progress >= 50 ? "is-active" : ""}">Details</span>
+          <span class="${progress >= 75 ? "is-active" : ""}">Policy</span>
+        </div>
       </article>
     </section>
   `;
@@ -2153,7 +2319,7 @@ function renderAIReviewScreen() {
       ${renderClaimStepper(3)}
       ${renderPolicyReviewCard()}
       ${renderAnomalyCard(claimsMockData.canonicalClaim.anomalies[0])}
-      ${claimState.anomalyResolved ? renderComplianceDeclarationCard() : renderQuickReplyChips(["Not a duplicate", "Yes, same bill", "Show me the other claim"])}
+      ${claimState.anomalyResolved ? "" : renderQuickReplyChips(["Not a duplicate", "Yes, same bill", "Show me the other claim"])}
       <div class="claims-edge-scenarios">
         <button type="button" data-claims-workspace-action="edge-date">Bill date issue</button>
         <button type="button" data-claims-workspace-action="edge-ocr">Low OCR</button>
@@ -2258,47 +2424,41 @@ function renderSupportingDocumentUploadCard(isAttached) {
   `;
 }
 
-function renderComplianceDeclarationCard() {
-  const declarations = claimsMockData.canonicalClaim.declarations;
-  return `
-    <section class="compliance-declaration-card">
-      <div class="claims-card-head wallet-overlay-section-head">
-        <div>
-          <span>Required action</span>
-          <h3>Compliance declaration</h3>
-        </div>
-        <small class="wallet-rail-pill is-active">Required</small>
-      </div>
-      ${declarations
-        .map(
-          (item, index) => `
-        <label class="claims-checkbox-row">
-          <input type="checkbox" ${claimState.declarationAccepted[index] ? "checked" : ""} data-claims-declaration="${index}" />
-          <span>${item}</span>
-        </label>
-      `,
-        )
-        .join("")}
-      <button type="button" class="wallet-overlay-cta claims-primary-action" ${claimState.declarationAccepted.every(Boolean) ? "" : "disabled"} data-claims-workspace-action="declaration-continue">
-        <span class="wallet-overlay-cta-copy"><strong>I Agree & Continue</strong></span>
-      </button>
-      <small class="claims-helper-text">Continue is enabled after the declaration is accepted.</small>
-    </section>
-  `;
-}
-
 function renderSubmitReadyScreen() {
+  const claim = claimsMockData.canonicalClaim;
+  const details = claim.extractedDetails;
+  const declarations = claim.declarations;
   return `
     <section class="claims-screen">
       ${renderClaimStepper(4)}
       <section class="claims-review-card wallet-overlay-summary gift">
         <span>Ready to submit</span>
-        <h3>Telephone & Internet</h3>
-        <div class="claims-review-amount"><span>Claim amount</span><strong>₹2,149</strong></div>
-        <p>Clarification and declaration are recorded. Submit this claim for review.</p>
-        <button type="button" class="wallet-overlay-cta claims-primary-action" data-claims-workspace-action="submit-claim">
+        <h3>${claim.title}</h3>
+        <div class="claims-review-amount"><span>Claim amount</span><strong>${claim.amount}</strong></div>
+        <div class="claims-submit-summary" aria-label="Claim summary">
+          <div><span>Vendor</span><strong>${details.vendor}</strong></div>
+          <div><span>Category</span><strong>${details.category}</strong></div>
+          <div><span>Bill date</span><strong>${details.billDate}</strong></div>
+          <div><span>Available balance</span><strong>${claim.balanceAvailable}</strong></div>
+        </div>
+        <div class="claims-submit-note">
+          <strong>Compliance declaration</strong>
+          <p>Confirm the details are accurate before sending this claim for review.</p>
+        </div>
+        ${declarations
+          .map(
+            (item, index) => `
+        <label class="claims-checkbox-row">
+          <input type="checkbox" ${claimState.declarationAccepted[index] ? "checked" : ""} data-claims-declaration="${index}" />
+          <span>${item}</span>
+        </label>
+      `,
+          )
+          .join("")}
+        <button type="button" class="wallet-overlay-cta claims-primary-action" ${claimState.declarationAccepted.every(Boolean) ? "" : "disabled"} data-claims-workspace-action="submit-claim">
           <span class="wallet-overlay-cta-copy"><strong>Submit claim</strong></span>
         </button>
+        <small class="claims-helper-text">Submit is enabled after the compliance declaration is accepted.</small>
       </section>
     </section>
   `;
@@ -2326,24 +2486,18 @@ function renderTrackClaimScreen() {
   };
   return `
     <section class="claims-screen">
+      ${renderClaimStepper(5)}
       <section class="claim-summary-card">
         <div><span>Claim ID</span><strong>${claim.id}</strong></div>
         <div><span>Category</span><strong>${claim.category}</strong></div>
         <div><span>Claim amount</span><strong>${claim.amount}</strong></div>
         <div><span>Submitted on</span><strong>${claim.submittedDate}</strong></div>
       </section>
-      ${renderClaimStatusTimeline(claimState.trackStatus)}
       <article class="claim-status-note ${claimState.trackStatus}">
         <span aria-hidden="true"><svg><use href="#${claimState.trackStatus === "approved" || claimState.trackStatus === "reimbursed" ? "icon-checks" : "icon-headset"}" /></svg></span>
         <div><strong>${statusCopy[claimState.trackStatus][0]}</strong><p>${statusCopy[claimState.trackStatus][1]}</p></div>
       </article>
       ${claimState.trackStatus === "approved" ? renderApprovalSummary() : ""}
-      <div class="claims-action-grid wallet-overlay-mode-switch">
-        <button type="button" class="wallet-overlay-mode-button" data-claims-track="submitted">Submitted</button>
-        <button type="button" class="wallet-overlay-mode-button" data-claims-track="pending">Pending review</button>
-        <button type="button" class="wallet-overlay-mode-button" data-claims-track="approved">Approved</button>
-        <button type="button" class="wallet-overlay-mode-button" data-claims-track="reimbursed">Reimbursed</button>
-      </div>
     </section>
   `;
 }
@@ -2619,13 +2773,12 @@ function handleClaimsAction(action) {
   if (action === "start-telephone") startTelephoneClaim();
   if (action === "start-meal") startClaimFromPrompt("meal");
   if (action === "start-fuel") startClaimFromPrompt("fuel");
-  if (action === "upload" || action === "upload-start")
-    openUploadFlow(action === "upload");
+  if (action === "upload") openUploadFlow(true);
+  if (action === "upload-start") quickUploadAndScan();
   if (action === "mock-upload") selectMockBill();
   if (action === "start-scan") startMockScan();
   if (action === "confirm-details") confirmExtractedDetails();
   if (action === "edit-details") showToast("Fields are editable inline");
-  if (action === "declaration-continue") continueAfterDeclaration();
   if (action === "submit-claim") submitCanonicalClaim();
   if (action === "clear-filter") {
     claimState.historyFilter = "All";
@@ -3257,10 +3410,6 @@ function openWalletOverlay(button) {
 
   if (walletOverlayName) walletOverlayName.textContent = walletName;
   if (walletOverlayBalance) walletOverlayBalance.textContent = walletBalance;
-  if (walletOverlayLimitValue)
-    walletOverlayLimitValue.textContent = overlayContent.monthlyLimit;
-  if (walletOverlayLimitFill)
-    walletOverlayLimitFill.style.width = `${overlayContent.limitProgress}%`;
   if (walletOverlayDirectoryCopy)
     walletOverlayDirectoryCopy.textContent = overlayContent.directoryCopy;
   if (walletOverlaySelectCopy)

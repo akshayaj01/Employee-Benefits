@@ -39,6 +39,12 @@
   --text-18: 18px;
   --text-20: 20px;
   --text-32: 32px;
+  /* Type weight scale — backed by the three real PP Telegraf faces.
+     Regular for body/meta, SemiBold for labels/sub-headings/UI,
+     Bold for primary headings and key figures. */
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
   --bg: #f1f1f1;
   --bg-soft: #eef8f1;
   --surface: rgba(255, 255, 255, 0.92);
@@ -134,7 +140,7 @@ svg {
 
 .phone-shell {
   position: relative;
-  width: min(100%, 375px);
+  width: min(100%, 400px);
   min-height: 100vh;
   margin: 0 auto;
   padding: 0 var(--space-16) calc(132px + var(--page-end-padding));
@@ -209,7 +215,7 @@ svg {
     "Segoe UI",
     sans-serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
   line-height: 20px;
 }
 
@@ -230,7 +236,7 @@ svg {
   color: #02353d;
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   line-height: 1;
 }
 
@@ -313,7 +319,7 @@ svg {
     "Segoe UI",
     sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
   line-height: 15px;
   white-space: nowrap;
 }
@@ -326,7 +332,7 @@ svg {
 
 .category-title {
   font-size: var(--text-12);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -445,7 +451,7 @@ svg {
   gap: var(--space-12);
   color: #ffffff;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .status-pill {
@@ -456,7 +462,7 @@ svg {
   background: rgba(9, 68, 60, 0.46);
   color: #9cdf80;
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .balance-copy {
@@ -470,7 +476,7 @@ svg {
   margin: 0 0 9px;
   color: #ffffff;
   font-size: var(--text-14);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .balance-copy strong {
@@ -488,7 +494,7 @@ svg {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.34);
 }
 
@@ -497,7 +503,7 @@ svg {
   margin-top: 11px;
   color: #ffffff;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .balance-copy::before {
@@ -514,7 +520,7 @@ svg {
   color: #ffffff;
   opacity: 0.6;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.25;
   white-space: nowrap;
 }
@@ -589,7 +595,7 @@ svg {
   z-index: 1;
   justify-self: end;
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.04em;
 }
 
@@ -598,7 +604,7 @@ svg {
   z-index: 1;
   color: rgba(255, 255, 255, 0.78);
   font-size: var(--text-12);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -624,13 +630,13 @@ svg {
 .balance-insights span {
   color: var(--subtle);
   font-size: var(--text-12);
-  font-weight: 500;
+  font-weight: var(--fw-regular);
 }
 
 .balance-insights strong {
   color: var(--ink);
   font-size: var(--text-16);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .section-heading {
@@ -658,14 +664,14 @@ svg {
   color: var(--brand-900);
   font-size: var(--text-20);
   line-height: 1.06;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .section-heading a {
   flex: 0 0 auto;
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
 }
 
 .upi-panel,
@@ -724,7 +730,7 @@ svg {
   max-width: 260px;
   color: #ffffff;
   font-size: 18px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.24;
   letter-spacing: 0;
 }
@@ -798,7 +804,7 @@ body.is-pluspay .transactions-section {
 
 .upi-panel .section-heading h2 {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .upi-panel .section-heading a {
@@ -893,7 +899,7 @@ body.is-pluspay .transactions-section {
   color: rgba(255, 255, 255, 0.86);
   font-size: 13px;
   line-height: 14px;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   white-space: nowrap;
 }
 
@@ -916,7 +922,7 @@ body.is-pluspay .transactions-section {
     sans-serif;
   font-size: 15px;
   line-height: 18px;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -942,9 +948,9 @@ body.is-pluspay .transactions-section {
 }
 
 .upi-arrow svg {
-  width: 20px;
-  height: 20px;
-  stroke-width: 2.1;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.8;
 }
 
 .scan-pay-card {
@@ -1012,7 +1018,7 @@ body.is-pluspay .transactions-section {
     sans-serif;
   font-size: 16px;
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   white-space: nowrap;
 }
 
@@ -1028,7 +1034,7 @@ body.is-pluspay .transactions-section {
     sans-serif;
   font-size: 13px;
   line-height: 1.24;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
 }
 
 .scan-pay-arrow {
@@ -1064,7 +1070,7 @@ body.is-pluspay .transactions-section {
     sans-serif;
   font-size: 12px;
   line-height: 1.25;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
 }
 
 .scan-pay-tooltip-icon {
@@ -1077,7 +1083,7 @@ body.is-pluspay .transactions-section {
   border-radius: 50%;
   color: #31534e;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .tap-pay-discovery {
@@ -1243,14 +1249,14 @@ body.is-pluspay .transactions-section {
   color: var(--brand-900);
   font-size: 15px;
   line-height: 1.16;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .tap-pay-discovery-copy small {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.35;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .tap-pay-close {
@@ -1358,7 +1364,7 @@ body.is-pluspay .transactions-section {
 .pluspay-action-card small {
   color: var(--subtle);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -1366,7 +1372,7 @@ body.is-pluspay .transactions-section {
   color: var(--ink);
   font-size: 1rem;
   line-height: 1.28;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .pluspay-action-card.is-highlight small {
@@ -1460,7 +1466,7 @@ body.is-pluspay .transactions-section {
   grid-row: 2;
   color: var(--brand-900);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.15;
   white-space: nowrap;
 }
@@ -1472,7 +1478,7 @@ body.is-pluspay .transactions-section {
   justify-self: end;
   color: var(--ink);
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
   white-space: nowrap;
 }
@@ -1497,7 +1503,7 @@ body.is-pluspay .transactions-section {
   margin-top: 5px;
   color: var(--subtle);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
   line-height: 1.15;
   white-space: nowrap;
 }
@@ -1523,7 +1529,7 @@ body.is-pluspay .transactions-section {
   background: #ffffff;
   color: var(--brand-700);
   font-size: 10px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
   white-space: nowrap;
 }
@@ -1583,7 +1589,7 @@ body.is-pluspay .transactions-section {
 
 .wallet-experience-panel .section-heading h2 {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .wallet-detail-action,
@@ -1630,7 +1636,7 @@ body.is-pluspay .transactions-section {
 .wallet-detail-action-copy strong,
 .wallet-overlay-action-copy strong {
   font-size: var(--text-14);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .wallet-detail-action-copy span,
@@ -1677,7 +1683,7 @@ body.is-pluspay .transactions-section {
   top: 0;
   right: 50%;
   bottom: 0;
-  width: 375px;
+  width: 400px;
   height: 100dvh;
   max-width: 100%;
   display: flex;
@@ -1719,7 +1725,7 @@ body.is-pluspay .transactions-section {
   top: 0;
   right: 50%;
   bottom: 0;
-  width: 375px;
+  width: 400px;
   height: 100dvh;
   max-height: 100dvh;
   max-width: 100%;
@@ -1781,7 +1787,7 @@ body.is-pluspay .transactions-section {
 .merchant-directory-eyebrow {
   color: var(--subtle);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -1794,7 +1800,7 @@ body.is-pluspay .transactions-section {
 
 .merchant-directory-title-group h2 {
   font-size: var(--text-20);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .merchant-directory-scroll {
@@ -1899,7 +1905,7 @@ body.is-pluspay .transactions-section {
   background: transparent;
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -1943,7 +1949,7 @@ body.is-pluspay .transactions-section {
 .merchant-directory-location strong {
   color: var(--brand-900);
   font-size: var(--text-16);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .merchant-directory-summary strong {
@@ -2021,7 +2027,7 @@ body.is-pluspay .transactions-section {
   flex: 0 0 auto;
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .merchant-directory-chip-row {
@@ -2040,7 +2046,7 @@ body.is-pluspay .transactions-section {
   background: rgba(255, 255, 255, 0.78);
   color: var(--muted);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .merchant-directory-chip.is-active {
@@ -2135,7 +2141,7 @@ body.is-pluspay .transactions-section {
   overflow: hidden;
   color: var(--ink);
   font-size: 0.92rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -2158,7 +2164,7 @@ body.is-pluspay .transactions-section {
 .merchant-directory-item-meta strong {
   color: var(--brand-900);
   font-size: 0.9rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .merchant-directory-item-meta span {
@@ -2190,7 +2196,7 @@ body.is-merchant-directory-open .bottom-nav {
   top: 0;
   right: 50%;
   bottom: 0;
-  width: 375px;
+  width: 400px;
   height: 100dvh;
   max-width: 100%;
   display: flex;
@@ -2263,7 +2269,7 @@ body.is-merchant-directory-open .bottom-nav {
   overflow: hidden;
   color: #737d82;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.01em;
   line-height: 1;
   text-overflow: ellipsis;
@@ -2281,7 +2287,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-title-group h2 {
   overflow: hidden;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.08;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2333,21 +2339,21 @@ body.is-merchant-directory-open .bottom-nav {
   background: #eafff2;
   color: #16965d;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-hero-copy strong {
   color: #003434;
   font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.1;
 }
 
 .manage-cards-hero-copy span:last-child {
   color: #78938c;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.66;
 }
 
@@ -2371,14 +2377,14 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-status-card span {
   color: #5e7e76;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1;
 }
 
 .manage-cards-status-card strong {
   color: #003434;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -2457,14 +2463,14 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-wallet-card strong {
   color: #003434;
   font-size: 24px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
 .manage-cards-wallet-card span:not(.wallet-icon) {
   color: #5e7e76;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 
@@ -2477,7 +2483,7 @@ body.is-merchant-directory-open .bottom-nav {
   background: rgba(255, 255, 255, 0.68);
   color: #5e7e76;
   font-size: 11px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-carousel-meta {
@@ -2487,7 +2493,7 @@ body.is-merchant-directory-open .bottom-nav {
   min-height: 18px;
   color: #78938c;
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-wallet-dots {
@@ -2525,7 +2531,7 @@ body.is-merchant-directory-open .bottom-nav {
 
 .manage-cards-section h3 {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1;
 }
 
@@ -2616,7 +2622,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-setting-copy strong {
   color: #003434;
   font-size: 18px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.05;
 }
 
@@ -2624,7 +2630,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-setting-copy span {
   color: #78938c;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.45;
 }
 
@@ -2712,7 +2718,7 @@ body.is-merchant-directory-open .bottom-nav {
   background: #eafff2;
   color: #16965d;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-balance-card {
@@ -2730,7 +2736,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-balance-card small {
   color: #5e7e76;
   font-size: 11px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 1.1;
   text-transform: uppercase;
 }
@@ -2738,7 +2744,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-balance-card strong {
   color: #003434;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -2774,19 +2780,19 @@ body.is-merchant-directory-open .bottom-nav {
 
 .manage-cards-preview span {
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   opacity: 0.82;
 }
 
 .manage-cards-preview strong {
   font-size: 18px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.04em;
 }
 
 .manage-cards-preview small {
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -2813,7 +2819,7 @@ body.is-merchant-directory-open .bottom-nav {
   grid-column: 1 / -1;
   color: #78938c;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 1;
   text-transform: uppercase;
 }
@@ -2822,7 +2828,7 @@ body.is-merchant-directory-open .bottom-nav {
   min-width: 0;
   color: #003434;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 
@@ -2870,7 +2876,7 @@ body.is-merchant-directory-open .bottom-nav {
   background: transparent;
   color: #005656;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-setting-list {
@@ -2912,7 +2918,7 @@ body.is-merchant-directory-open .bottom-nav {
   gap: 12px;
   color: #78938c;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 /* Manage Cards reference recreation */
@@ -2965,7 +2971,7 @@ body.is-merchant-directory-open .bottom-nav {
   font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
   overflow: visible;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 0.95;
   letter-spacing: 0;
   text-overflow: clip;
@@ -2975,7 +2981,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-title-group > span {
   color: #5f7281;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.35;
 }
 
@@ -3090,7 +3096,7 @@ body.is-merchant-directory-open .bottom-nav {
   color: #007a51;
   font-size: 14px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-wallet-card.is-selected .manage-cards-selected-badge {
@@ -3101,14 +3107,14 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-wallet-card span:not(.wallet-icon) {
   color: #143d3e;
   font-size: 22px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.15;
 }
 
 .manage-cards-wallet-card strong {
   color: #003434;
   font-size: 29px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -3125,7 +3131,7 @@ body.is-merchant-directory-open .bottom-nav {
   color: #073839;
   font-size: 14px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   box-shadow: 0 8px 20px rgba(0, 52, 52, 0.04);
 }
 
@@ -3140,7 +3146,7 @@ body.is-merchant-directory-open .bottom-nav {
   gap: 28px;
   min-height: 26px;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .manage-cards-wallet-dots {
@@ -3184,14 +3190,14 @@ body.is-merchant-directory-open .bottom-nav {
   font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
   color: #052f33;
   font-size: 17px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.08;
 }
 
 .manage-cards-section-head > span {
   color: #637786;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.35;
 }
 
@@ -3232,7 +3238,7 @@ body.is-merchant-directory-open .bottom-nav {
   gap: 13px;
   color: #667a89;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.2;
 }
 
@@ -3271,13 +3277,13 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-balance-card small {
   color: #6d7f8c;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   text-transform: none;
 }
 
 .manage-cards-balance-card strong {
   font-size: 30px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-balance-card svg {
@@ -3338,7 +3344,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-preview-brand {
   color: #ffffff;
   font-size: 25px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   opacity: 0.95;
 }
 
@@ -3361,14 +3367,14 @@ body.is-merchant-directory-open .bottom-nav {
   gap: 8px;
   color: rgba(255, 255, 255, 0.9);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   text-transform: none;
 }
 
 .manage-cards-preview-meta b {
   color: #ffffff;
   font-size: 17px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-detail-list article {
@@ -3381,7 +3387,7 @@ body.is-merchant-directory-open .bottom-nav {
   grid-column: auto;
   color: #627889;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.2;
   text-transform: none;
 }
@@ -3389,7 +3395,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-detail-list strong {
   color: #052f33;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   text-align: right;
 }
 
@@ -3441,19 +3447,19 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-setting-list .manage-cards-setting-copy strong {
   color: #052f33;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-setting-list .manage-cards-setting-copy span {
   color: #657b89;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .manage-cards-setting-value {
   color: #0a9b46;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-action-arrow {
@@ -3500,13 +3506,13 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-limit-total strong {
   color: #052f33;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-limit-total small {
   color: #0a9b46;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-limit-control {
@@ -3528,7 +3534,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-limit-labels {
   color: #647988;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .manage-cards-security-note {
@@ -3538,7 +3544,7 @@ body.is-merchant-directory-open .bottom-nav {
   margin: 2px 4px 0;
   color: #647988;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .manage-cards-security-note svg {
@@ -3555,7 +3561,7 @@ body.is-merchant-directory-open .bottom-nav {
 
 /* Wallet management screen */
 .manage-cards-panel {
-  width: 375px;
+  width: 400px;
   max-width: 100%;
   background: var(--bg);
 }
@@ -3601,7 +3607,7 @@ body.is-merchant-directory-open .bottom-nav {
   display: block;
   color: #7d9790;
   font-size: 10px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
@@ -3612,7 +3618,7 @@ body.is-merchant-directory-open .bottom-nav {
   color: #003434;
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   line-height: 1.08;
   white-space: normal;
 }
@@ -3645,14 +3651,14 @@ body.is-merchant-directory-open .bottom-nav {
   color: #003434;
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: var(--text-20);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   line-height: 1.06;
 }
 
 .manage-cards-section-title-row span {
   color: #7d9790;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-wallet-carousel {
@@ -3777,7 +3783,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-wallet-card .manage-visa-expiry span {
   color: rgba(255, 255, 255, 0.7);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.2;
 }
 
@@ -3795,7 +3801,7 @@ body.is-merchant-directory-open .bottom-nav {
   gap: 14px;
   color: #ffffff;
   min-width: 0;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   line-height: 1.28;
   white-space: nowrap;
 }
@@ -3803,7 +3809,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-wallet-card span.manage-visa-number-dots {
   color: #ffffff;
   font-size: clamp(13px, 3.9vw, 26px);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   letter-spacing: 5px;
   line-height: 1;
   overflow: hidden;
@@ -3814,7 +3820,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-wallet-card span.manage-visa-number-last {
   color: #ffffff;
   font-size: clamp(26px, 6vw, 40px);
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   letter-spacing: 4px;
   line-height: 1;
 }
@@ -3863,7 +3869,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-visa-expiry strong {
   color: #ffffff;
   font-size: clamp(18px, 4.2vw, 28px);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   line-height: 1;
 }
 
@@ -3879,7 +3885,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-wallet-card span.manage-visa-name {
   color: #ffffff;
   font-size: clamp(18px, 4.25vw, 28px);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.2;
   letter-spacing: 6px;
   white-space: nowrap;
@@ -3888,7 +3894,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-visa-cvv strong {
   color: #ffffff;
   font-size: clamp(18px, 4.25vw, 28px);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.2;
 }
 
@@ -3934,7 +3940,7 @@ body.is-merchant-directory-open .bottom-nav {
   background: #ebfaf1;
   color: #1d8f63;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-section {
@@ -4004,7 +4010,7 @@ body.is-merchant-directory-open .bottom-nav {
   color: #595e70;
   font-family: "Lato", ui-sans-serif, system-ui, sans-serif;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 15px;
   letter-spacing: 0;
 }
@@ -4058,13 +4064,13 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-setting-copy strong {
   color: #003434;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .manage-cards-setting-copy span {
   color: #7d9790;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .manage-monthly-limit-progress {
@@ -4150,7 +4156,7 @@ body.is-merchant-directory-open .bottom-nav {
 .manage-cards-setting-value {
   color: #005656;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 @keyframes manage-monthly-progress {
@@ -4198,7 +4204,7 @@ body.is-merchant-directory-open .bottom-nav {
 .wallet-overlay-eyebrow {
   color: var(--subtle);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -4211,7 +4217,7 @@ body.is-merchant-directory-open .bottom-nav {
 
 .wallet-overlay-title-group h2 {
   font-size: var(--text-20);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .wallet-overlay-scroll {
@@ -4261,14 +4267,14 @@ body.is-merchant-directory-open .bottom-nav {
 .wallet-overlay-balance-label {
   color: var(--muted);
   font-size: 0.76rem;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
 .wallet-overlay-summary strong {
   font-size: var(--text-32);
   line-height: 0.95;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .wallet-overlay-summary p {
@@ -4276,48 +4282,6 @@ body.is-merchant-directory-open .bottom-nav {
   color: var(--muted);
   font-size: var(--text-12);
   line-height: 1.45;
-}
-
-.wallet-overlay-limit {
-  display: grid;
-  gap: var(--space-8);
-  padding-top: var(--space-4);
-}
-
-.wallet-overlay-limit-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-12);
-}
-
-.wallet-overlay-limit-head span {
-  color: var(--subtle);
-  font-size: var(--text-12);
-  font-weight: 700;
-}
-
-.wallet-overlay-limit-head strong {
-  color: var(--brand-900);
-  font-size: var(--text-14);
-  font-weight: 900;
-}
-
-.wallet-overlay-limit-bar {
-  position: relative;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(0, 86, 86, 0.1);
-  overflow: hidden;
-}
-
-.wallet-overlay-limit-bar span {
-  display: block;
-  height: 100%;
-  width: 0;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--brand-700), #36cc8b);
-  transition: width 220ms ease;
 }
 
 .wallet-overlay-pill-row {
@@ -4356,7 +4320,7 @@ body.is-merchant-directory-open .bottom-nav {
   border-radius: 999px;
   color: var(--muted);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   transition:
     background 180ms ease,
     color 180ms ease,
@@ -4385,14 +4349,14 @@ body.is-merchant-directory-open .bottom-nav {
 
 .wallet-overlay-section h3 {
   font-size: var(--text-20);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .wallet-overlay-section-head a {
   flex: 0 0 auto;
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .wallet-overlay-cta {
@@ -4507,7 +4471,7 @@ body.is-merchant-directory-open .bottom-nav {
 .wallet-overlay-cta-copy strong {
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: var(--text-18);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .wallet-cta-text {
@@ -4639,7 +4603,7 @@ body.is-merchant-directory-open .bottom-nav {
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: var(--text-16);
   line-height: 1.24;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   color: var(--brand-900);
 }
 
@@ -4724,7 +4688,7 @@ body.is-merchant-directory-open .bottom-nav {
 .utility-card small {
   color: var(--subtle);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   text-transform: uppercase;
 }
 
@@ -4740,7 +4704,7 @@ body.is-merchant-directory-open .bottom-nav {
   sans-serif;
   font-size: 12px;
   line-height: 15px;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
   letter-spacing: 0;
 }
 
@@ -4766,7 +4730,7 @@ body.is-merchant-directory-open .bottom-nav {
   background: var(--surface-strong);
   color: var(--muted);
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .filter-chips button.active {
@@ -4828,7 +4792,7 @@ body.is-merchant-directory-open .bottom-nav {
   overflow: hidden;
   color: var(--ink);
   font-size: 0.92rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4838,7 +4802,7 @@ body.is-merchant-directory-open .bottom-nav {
   overflow: hidden;
   color: var(--subtle);
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: var(--fw-regular);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4852,7 +4816,7 @@ body.is-merchant-directory-open .bottom-nav {
   background: var(--mint-soft);
   color: var(--brand-700);
   font-size: 0.68rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .transaction-status.processed {
@@ -4881,7 +4845,7 @@ body.is-merchant-directory-open .bottom-nav {
 .transaction-amount strong {
   color: var(--ink);
   font-size: 0.94rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .transaction-amount.positive strong {
@@ -4937,7 +4901,7 @@ body.is-merchant-directory-open .bottom-nav {
     "Segoe UI",
     sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: var(--fw-regular);
   line-height: 1.2;
   text-align: center;
 }
@@ -5169,14 +5133,14 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .overlay-card-brand,
 .overlay-card-name {
   font-size: 0.86rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.04em;
 }
 
 .overlay-card-number {
   align-self: end;
   font-size: 1.22rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   letter-spacing: 0.08em;
 }
 
@@ -5190,12 +5154,12 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin-bottom: var(--space-4);
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .overlay-card-meta strong {
   font-size: 0.9rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .overlay-heading {
@@ -5227,14 +5191,14 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .card-details-meta span {
   color: var(--subtle);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .card-details-row strong,
 .card-details-meta strong {
   color: var(--ink);
   font-size: 0.92rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .card-details-meta {
@@ -5261,7 +5225,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   box-shadow: var(--shadow-card);
   color: var(--ink);
   font-size: 0.84rem;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   opacity: 0;
   pointer-events: none;
   transform: translateY(12px);
@@ -5299,7 +5263,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   bottom: 0;
   display: flex;
   flex-direction: column;
-  width: min(100%, 375px);
+  width: min(100%, 400px);
   max-width: 100%;
   background:
     radial-gradient(circle at 50% 18%, rgba(0, 86, 86, 0.05), transparent 34%),
@@ -5321,7 +5285,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   padding: calc(env(safe-area-inset-top, 0px) + 10px) 28px 6px;
   color: #050505;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -5446,7 +5410,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   overflow: hidden;
   color: #737d82;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   letter-spacing: 0.01em;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -5459,7 +5423,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: var(--brand-900);
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.08;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -5487,7 +5451,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-balance.wallet-rail-pill span {
   color: #737d82;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 1;
   text-transform: uppercase;
 }
@@ -5495,7 +5459,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-balance.wallet-rail-pill strong {
   color: var(--brand-900);
   font-size: 16px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -5568,7 +5532,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-status-card .transaction-meta strong {
   color: #737d82;
   font-size: 10px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 1.15;
   text-transform: uppercase;
 }
@@ -5577,7 +5541,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   display: -webkit-box;
   color: #617b74;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.25;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -5667,7 +5631,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   gap: 8px;
   color: #7e8c90;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1;
 }
 
@@ -5758,7 +5722,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: var(--brand-900);
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: var(--text-20);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   line-height: 1.16;
 }
 
@@ -5864,7 +5828,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-loading-card.merchant-directory-summary strong {
   color: #102b29;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-loading-card.merchant-directory-summary::after {
@@ -5899,7 +5863,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin-top: 6px;
   color: #003434;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.04;
   overflow-wrap: anywhere;
 }
@@ -5910,7 +5874,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-review-amount span {
   color: #7b928d;
   font-size: 11px;
-  font-weight: 900;
+  font-weight: var(--fw-semibold);
   line-height: 1;
   text-transform: uppercase;
 }
@@ -5925,7 +5889,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #003434;
   background: #eaf8f1;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 26px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5948,7 +5912,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #003434;
   font-size: 34px;
   line-height: 0.92;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   letter-spacing: 0;
 }
 
@@ -6010,14 +5974,14 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-document-card .merchant-directory-item-copy strong {
   color: #003434;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.12;
 }
 
 .claims-document-card .merchant-directory-item-copy small {
   color: #78938c;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.15;
 }
 
@@ -6032,7 +5996,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: #ffffff;
   color: #005656;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   white-space: nowrap;
 }
 
@@ -6093,7 +6057,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-field-row .transaction-meta strong {
   color: #5e7e76;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1;
 }
 
@@ -6106,7 +6070,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #003434;
   font: inherit;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.08;
   text-overflow: ellipsis;
 }
@@ -6141,7 +6105,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #003434;
   font: inherit;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1.08;
 }
 
@@ -6181,7 +6145,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin-top: 1px;
   color: #5e7e76;
   font-size: 8px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -6231,6 +6195,51 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   gap: var(--space-12);
 }
 
+.claims-submit-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.claims-submit-summary div,
+.claims-submit-note {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e1e7e4;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.claims-submit-summary span {
+  color: #7b928d;
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.claims-submit-summary strong,
+.claims-submit-note strong {
+  color: var(--brand-900);
+  font-size: 13px;
+  line-height: 1.25;
+  font-weight: var(--fw-bold);
+}
+
+.claims-submit-note {
+  background: #f4faf6;
+}
+
+.claims-submit-note p {
+  margin: 0;
+  color: var(--subtle);
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: var(--fw-semibold);
+}
+
 .claims-review-list.transaction-list .transaction-item {
   grid-template-columns: 38px minmax(0, 1fr);
   min-height: 56px;
@@ -6275,7 +6284,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-success-meta span {
   color: var(--subtle);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-success-meta strong {
@@ -6313,7 +6322,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .claims-tracking-card p.is-complete {
   color: var(--brand-900);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-tracking-card p.is-complete i {
@@ -6324,7 +6333,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .claims-tracking-card p.is-pending {
   color: #b66a12;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-tracking-card p.is-pending i {
@@ -6411,7 +6420,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: var(--surface-strong);
   color: #102b29;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   min-width: 0;
   white-space: nowrap;
   transition:
@@ -6464,7 +6473,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #102b29;
   font: inherit;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.4;
 }
 
@@ -6588,7 +6597,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: var(--brand-900);
   font-size: 14px;
   line-height: 1.15;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-action-option-card small {
@@ -6596,7 +6605,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: var(--subtle);
   font-size: 12px;
   line-height: 1.25;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 @keyframes claims-menu-rise {
@@ -6702,7 +6711,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin: 0;
   color: var(--brand-900);
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-prompt-grid,
@@ -6717,7 +6726,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: var(--brand-900);
   font-size: 14px;
   line-height: 1.2;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-prompt-card small,
@@ -6727,7 +6736,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: var(--subtle);
   font-size: var(--text-12);
   line-height: 1.35;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .claims-upload-options-card,
@@ -6800,7 +6809,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: rgba(255, 255, 255, 0.84);
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claim-stepper {
@@ -6844,12 +6853,12 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #6d7c78;
   font-size: 12px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claim-stepper small {
   font-size: 11px;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .claim-stepper .is-active i,
@@ -6889,7 +6898,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .upload-bill-card strong {
   color: var(--brand-900);
   font-size: 18px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .upload-bill-card p {
@@ -6914,7 +6923,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .decision-summary-card strong {
   color: var(--brand-900);
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-tips-card span,
@@ -6972,26 +6981,69 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: white;
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scanning-progress-card {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  overflow: visible;
+}
+
+.scanning-progress-head {
+  display: grid;
   grid-template-columns: 48px minmax(0, 1fr) auto;
   align-items: center;
-  position: relative;
-  overflow: hidden;
+  gap: 12px;
+}
+
+.scanning-progress-head > div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.scanning-progress-head strong {
+  color: var(--brand-900);
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: var(--fw-bold);
+}
+
+.scanning-progress-head p {
+  margin: 0;
+  color: var(--subtle);
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: var(--fw-semibold);
 }
 
 .scanning-progress-card em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(0, 86, 86, 0.08);
   color: var(--brand-700);
   font-size: 13px;
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
+}
+
+.claims-progress-meter {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
 }
 
 .claims-progress-track {
-  grid-column: 1 / -1;
-  height: 7px;
+  display: block;
+  width: 100%;
+  height: 10px;
   border-radius: 999px;
   background: rgba(0, 86, 86, 0.08);
   overflow: hidden;
@@ -6999,10 +7051,40 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .claims-progress-track i {
   display: block;
+  min-width: 10px;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--brand-700), var(--brand-500));
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28), transparent 42%),
+    linear-gradient(90deg, var(--brand-700), var(--brand-500));
+  box-shadow: 0 5px 12px rgba(0, 86, 86, 0.16);
   transition: width 220ms ease;
+}
+
+.scanning-progress-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.scanning-progress-steps span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 8px;
+  border: 1px solid #dfe8e4;
+  border-radius: 999px;
+  background: rgba(247, 250, 248, 0.9);
+  color: var(--subtle);
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+}
+
+.scanning-progress-steps span.is-active {
+  border-color: rgba(54, 204, 139, 0.32);
+  background: rgba(231, 244, 240, 0.92);
+  color: var(--brand-700);
 }
 
 .extracted-details-card .claims-field-row .transaction-meta strong {
@@ -7054,7 +7136,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-metric-grid small {
   color: var(--subtle);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .quick-reply-chips {
@@ -7074,7 +7156,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: rgba(255, 255, 255, 0.78);
   color: var(--brand-700);
   font-size: var(--text-12);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claims-edge-scenarios,
@@ -7160,7 +7242,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .metric-card span {
   color: var(--subtle);
   font-size: 11px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claim-summary-card strong,
@@ -7169,7 +7251,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .metric-card strong {
   color: var(--brand-900);
   font-size: 16px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claim-status-timeline {
@@ -7225,7 +7307,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claim-status-timeline strong {
   color: var(--brand-900);
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .claim-status-timeline span {
@@ -7297,7 +7379,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: #fff1d9;
   color: #b66a12;
   font-size: 11px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
 }
 
@@ -7437,13 +7519,13 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .claims-donut span {
   color: var(--brand-900);
   font-size: 20px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   text-align: center;
 }
 
 .claims-donut small {
   font-size: 10px;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .dashboard-insights {
@@ -7498,7 +7580,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: white;
   color: var(--brand-900);
   font-size: var(--text-14);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .dashboard-action-list svg {
@@ -7970,7 +8052,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   align-items: center;
   justify-content: space-between;
   min-height: 24px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   font-size: 13px;
 }
 
@@ -7987,7 +8069,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-light-topbar > strong {
   justify-self: center;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-icon-button,
@@ -8131,7 +8213,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   background: rgba(14, 119, 91, 0.92);
   color: #ffffff;
   font-style: normal;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   transform: translateX(-50%);
 }
 
@@ -8145,7 +8227,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin: 18px 0 0;
   text-align: center;
   color: rgba(255, 255, 255, 0.86);
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-action-dock {
@@ -8165,7 +8247,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   gap: 8px;
   color: #ffffff;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-action-dock span {
@@ -8201,7 +8283,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #0d1728;
   font-family: "PP Telegraf", "Times New Roman", serif;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.05;
 }
 
@@ -8251,14 +8333,14 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   display: block;
   color: #0d1728;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-merchant-card span,
 .scan-pay-merchant-mini small,
 .scan-pay-wallet-row small {
   color: #526779;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-merchant-card em {
@@ -8269,7 +8351,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #1fbd71;
   font-style: normal;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-merchant-card em svg {
@@ -8285,7 +8367,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-amount-section label {
   color: #0d1728;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-amount-input {
@@ -8308,7 +8390,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-amount-input input {
   color: #111827;
   font-size: 24px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-amount-input input {
@@ -8330,7 +8412,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   border-radius: 8px;
   background: #f1f3f6;
   color: #364456;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-quick-row button.is-active,
@@ -8341,7 +8423,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .scan-pay-error {
   color: #b42318;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-reward-strip {
@@ -8380,7 +8462,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   gap: 7px;
   color: #667085;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-secure-copy svg,
@@ -8411,7 +8493,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   width: 100%;
   min-height: 54px;
   border-radius: 10px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-primary {
@@ -8462,13 +8544,13 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-sheet h2 {
   margin: 0;
   font-size: 22px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-sheet p {
   margin: -5px 0 0;
   color: #526779;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-input-block {
@@ -8484,7 +8566,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-mini-label {
   color: #667085;
   font-size: 12px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-input-block input {
@@ -8492,7 +8574,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   outline: 0;
   color: #111827;
   font: inherit;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-input-block i {
@@ -8538,7 +8620,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin: 10px 0 4px;
   color: #0d1728;
   font-size: 28px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-merchant-mini,
@@ -8651,14 +8733,14 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-reward-content > p {
   margin: 0;
   color: #526779;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
   line-height: 1.45;
 }
 
 .scan-pay-processing > strong {
   color: #0d1728;
   font-size: 28px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-processing .scan-pay-merchant-mini {
@@ -8686,7 +8768,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   justify-content: center;
   gap: 7px;
   color: var(--brand-700);
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-security-card svg {
@@ -8703,6 +8785,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 }
 
 .scan-pay-success-check {
+  position: relative;
   display: grid;
   place-items: center;
   width: 78px;
@@ -8714,43 +8797,157 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 }
 
 .scan-pay-success-check svg {
+  position: relative;
+  z-index: 1;
   width: 42px;
   height: 42px;
+}
+
+.scan-pay-success-burst {
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(32, 200, 120, 0.32),
+    transparent 68%
+  );
+  z-index: -1;
+  animation: scan-pay-success-burst 1500ms ease-out infinite;
 }
 
 .scan-pay-success-amount {
   color: #0d1728;
   font-size: 27px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
-.scan-pay-unlocked-card {
+.scan-pay-mystery-card {
+  position: relative;
   display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
-  gap: 12px;
+  justify-items: center;
+  gap: 5px;
   width: 100%;
-  margin-top: 12px;
-  padding: 12px;
-  border: 1px solid #dcebdd;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #f7fff4, #edf8ea);
-  text-align: left;
+  margin-top: 18px;
+  padding: 22px 18px 20px;
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255, 214, 107, 0.3),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 86% 88%,
+      rgba(54, 204, 139, 0.34),
+      transparent 48%
+    ),
+    linear-gradient(150deg, #0a6f64, #00514c 60%, #013a39);
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 22px 44px rgba(0, 70, 64, 0.28);
+  overflow: hidden;
+  animation: scan-pay-mystery-rise 560ms cubic-bezier(0.2, 1, 0.35, 1) both
+    180ms;
 }
 
-.scan-pay-unlocked-card > span {
-  grid-row: span 2;
+.scan-pay-mystery-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.28);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.scan-pay-mystery-shine {
+  position: absolute;
+  top: 0;
+  left: -65%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.38),
+    transparent
+  );
+  transform: skewX(-18deg);
+  animation: scan-pay-shine 2800ms ease-in-out infinite;
+  pointer-events: none;
+}
+
+.scan-pay-mystery-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.02em;
+}
+
+.scan-pay-mystery-gift {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  background: #ffffff;
-  color: #f59e0b;
+  width: 62px;
+  height: 62px;
+  margin: 10px 0 4px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #ffd66b, #f3b72e);
+  color: #00514c;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
+  animation: scan-pay-gift-bob 2200ms ease-in-out infinite;
 }
 
-.scan-pay-unlocked-card .scan-pay-primary {
-  grid-column: 1 / -1;
-  min-height: 44px;
+.scan-pay-mystery-gift svg {
+  width: 34px;
+  height: 34px;
+}
+
+.scan-pay-mystery-card strong {
+  position: relative;
+  z-index: 1;
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+}
+
+.scan-pay-mystery-card small {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: var(--fw-semibold);
+}
+
+.scan-pay-mystery-card small b {
+  color: #ffd66b;
+  font-weight: var(--fw-bold);
+}
+
+.scan-pay-mystery-cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 11px 24px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #00514c;
+  font-weight: var(--fw-bold);
+  animation: scan-pay-cta-pulse 1900ms ease-in-out infinite;
+}
+
+.scan-pay-mystery-cta svg {
+  width: 16px;
+  height: 16px;
 }
 
 .scan-pay-secondary-actions {
@@ -8769,7 +8966,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   border: 1px solid #e2e8ec;
   border-radius: 10px;
   color: var(--brand-700);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-secondary-actions svg {
@@ -8792,7 +8989,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   margin: 0;
   color: #0d1728;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-details-card div {
@@ -8803,7 +9000,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .scan-pay-details-card span {
   color: #667085;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-details-card strong {
@@ -8812,6 +9009,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 }
 
 .scan-pay-reward-content {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: 13px;
@@ -8819,84 +9017,134 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   text-align: center;
 }
 
-.scratch-card {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 0.9;
-  margin-top: 14px;
-  border-radius: 12px;
+.scan-pay-reward-rays {
+  position: absolute;
+  top: 188px;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
   background:
     radial-gradient(
-      circle at 18% 72%,
-      rgba(255, 255, 255, 0.13),
-      transparent 12%
+      circle,
+      rgba(255, 214, 107, 0.3),
+      transparent 58%
     ),
-    radial-gradient(
-      circle at 82% 26%,
-      rgba(255, 255, 255, 0.13),
-      transparent 10%
-    ),
-    linear-gradient(145deg, #006c62, #00524f 58%, #003d3c);
-  color: #ffffff;
-  box-shadow: 0 20px 38px rgba(0, 86, 86, 0.18);
-  overflow: hidden;
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 214, 107, 0.16) 0deg 8deg,
+      transparent 8deg 22deg
+    );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  animation: scan-pay-spin 16s linear infinite;
 }
 
-.scratch-card::before {
-  content: "";
-  position: absolute;
-  inset: 26% 9% 27%;
-  border-radius: 46% 54% 47% 53% / 42% 45% 55% 58%;
-  background: repeating-linear-gradient(
-    -12deg,
-    rgba(255, 255, 255, 0.94) 0 7px,
-    rgba(238, 242, 244, 0.96) 8px 13px
-  );
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
-  transform: rotate(-3deg);
-}
-
-.scratch-card span {
-  position: absolute;
-  top: 24px;
-  font-weight: 900;
-}
-
-.scratch-card i {
-  position: absolute;
-  right: 22px;
-  bottom: 18px;
-  display: grid;
-  place-items: center;
-  width: 74px;
-  height: 74px;
-  border-radius: 18px;
-  background: linear-gradient(145deg, #0a8070, #005656);
-  color: #f5d76e;
-  box-shadow: 0 18px 24px rgba(0, 0, 0, 0.16);
-}
-
-.scratch-card i svg {
-  width: 42px;
-  height: 42px;
-}
-
-.scratch-card em {
+.scratch-stage {
   position: relative;
-  z-index: 1;
-  color: #667085;
-  font-style: normal;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 1.1;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  margin-top: 18px;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 46px rgba(0, 86, 86, 0.22);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.scratch-card b {
+.scratch-prize {
   position: absolute;
-  bottom: -42px;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 4px;
+  background:
+    radial-gradient(
+      circle at 50% 26%,
+      rgba(255, 255, 255, 0.34),
+      transparent 52%
+    ),
+    linear-gradient(150deg, #fff6da, #ffe9ad 55%, #ffd66b);
+  color: #5a3d00;
+  text-align: center;
+}
+
+.scratch-prize-label,
+.scratch-prize-sub {
+  font-size: 15px;
+  font-weight: var(--fw-semibold);
+}
+
+.scratch-prize-amount {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #00514c;
+  font-size: 58px;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
+
+.scratch-prize-amount i {
+  font-style: normal;
+  font-size: 40px;
+}
+
+.scratch-foil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  transition: opacity 520ms ease;
+}
+
+.scratch-foil:active {
+  cursor: grabbing;
+}
+
+.scratch-stage.is-clearing .scratch-foil {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scratch-stage.is-clearing .scratch-prize {
+  animation: scan-pay-prize-pop 520ms cubic-bezier(0.2, 1.4, 0.35, 1) both;
+}
+
+.scratch-hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.92);
+  pointer-events: none;
+  transition: opacity 240ms ease;
+  animation: scan-pay-hint-bob 1500ms ease-in-out infinite;
+}
+
+.scratch-hint svg {
+  width: 46px;
+  height: 46px;
+}
+
+.scratch-hint em {
+  font-style: normal;
+  font-size: 15px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.04em;
+}
+
+.scratch-progress-copy {
+  margin: 4px 0 0;
   color: #526779;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-reward-content.revealed {
@@ -8904,17 +9152,21 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 }
 
 .scan-pay-coin-win {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 12px;
   color: var(--brand-700);
   font-size: 58px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
   line-height: 1;
+  animation: scan-pay-prize-pop 560ms cubic-bezier(0.2, 1.4, 0.35, 1) both;
 }
 
-.scan-pay-coin-win span {
+.scan-pay-coin-emoji {
   font-size: 42px;
+  animation: scan-pay-gift-bob 2000ms ease-in-out infinite;
 }
 
 .scan-pay-coin-box {
@@ -9001,7 +9253,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .woohoo-balance-card strong {
   font-size: 36px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .woohoo-balance-card button {
@@ -9013,7 +9265,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   padding: 8px 14px;
   border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 999px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-white-card {
@@ -9035,7 +9287,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   border: 1px solid #e2e8ec;
   border-radius: 12px;
   color: #667085;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-summary-grid strong {
@@ -9056,7 +9308,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .scan-pay-activity-list h2 button {
   color: var(--brand-700);
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-activity-list article {
@@ -9082,7 +9334,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-confirm-card small {
   display: block;
   color: #667085;
-  font-weight: 700;
+  font-weight: var(--fw-semibold);
 }
 
 .scan-pay-activity-list article > strong {
@@ -9110,7 +9362,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .scan-pay-available-card strong {
   display: block;
   font-size: 26px;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .voucher-grid {
@@ -9164,7 +9416,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 
 .voucher-card p {
   color: #344054;
-  font-weight: 800;
+  font-weight: var(--fw-bold);
 }
 
 .voucher-card > strong {
@@ -9179,7 +9431,7 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   border-radius: 8px;
   background: linear-gradient(145deg, var(--brand-700), #00806e);
   color: #ffffff;
-  font-weight: 900;
+  font-weight: var(--fw-bold);
 }
 
 .scan-pay-promo-strip {
@@ -9297,6 +9549,83 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   100% {
     opacity: 0;
     transform: translateY(190px) rotate(220deg);
+  }
+}
+
+@keyframes scan-pay-success-burst {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.7);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes scan-pay-mystery-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scan-pay-shine {
+  0% {
+    left: -65%;
+  }
+  55%,
+  100% {
+    left: 130%;
+  }
+}
+
+@keyframes scan-pay-gift-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(3deg);
+  }
+}
+
+@keyframes scan-pay-cta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+  }
+  60% {
+    box-shadow: 0 0 0 12px rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes scan-pay-prize-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scan-pay-hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
   }
 }
 
