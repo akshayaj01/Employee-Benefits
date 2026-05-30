@@ -219,7 +219,15 @@
           </div>
         </header>
 
-        <section class="balance-card" aria-labelledby="balance-title">
+        <section class="pluspay-corporate-message" data-pluspay-show>
+          <p>Manage your Corporate payment with Pluspay</p>
+        </section>
+
+        <section
+          class="balance-card"
+          aria-labelledby="balance-title"
+          data-pluspay-hide
+        >
           <div class="card-strip">
             <span
               class="category-title"
@@ -451,8 +459,8 @@
             data-wallet-balance="₹9,100"
             data-wallet-description="Flexible spends"
             data-wallet-detail="PPI on UPI flow for reimbursement-led spend categories where QR acceptance matters most."
-            data-wallet-actions="scan"
-            data-wallet-cta="Reimbursement Wallet ready for Scan & Pay"
+            data-wallet-actions="tap,scan"
+            data-wallet-cta="Reimbursement Wallet supports Tap & Pay and Scan & Pay"
             aria-pressed="false"
           >
             <div class="wallet-topline">
@@ -466,6 +474,9 @@
             <span class="wallet-name">Reimbursement Wallet</span>
             <strong>₹9,100</strong>
             <div class="wallet-rail-pills" aria-hidden="true">
+              <span class="wallet-rail-pill is-active"
+                ><svg><use href="#icon-nfc" /></svg>Tap &amp; Pay</span
+              >
               <span class="wallet-rail-pill is-active"
                 ><svg><use href="#icon-scan" /></svg>Scan &amp; Pay</span
               >
@@ -525,7 +536,7 @@
             <span class="utility-icon" aria-hidden="true"
               ><svg><use href="#icon-settings" /></svg
             ></span>
-            <strong>Manage Wallets</strong>
+            <strong>Manage Card</strong>
           </button>
           <button
             class="utility-card"
@@ -714,6 +725,17 @@
             ><svg><use href="#icon-claim" /></svg
           ></span>
           <span>Claims</span>
+        </button>
+        <button
+          class="claims-button pluspay-scan-button"
+          type="button"
+          aria-label="Scan &amp; Pay"
+          data-scan-pay-open
+        >
+          <span
+            ><img src="./assets/icons/scanner.svg" alt="" aria-hidden="true"
+          /></span>
+          <span>Scan &amp; Pay</span>
         </button>
         <button
           class="nav-item notification-nav-item"
@@ -982,22 +1004,22 @@
       <button
         class="manage-cards-backdrop"
         type="button"
-        aria-label="Close Manage Wallets"
+        aria-label="Close Manage Card"
         data-manage-cards-close
       ></button>
-      <section class="manage-cards-panel" aria-label="Manage Wallets">
+      <section class="manage-cards-panel" aria-label="Manage Card">
         <header class="manage-cards-header">
           <button
             class="manage-cards-back"
             type="button"
-            aria-label="Close Manage Wallets"
+            aria-label="Close Manage Card"
             data-manage-cards-close
           >
             <svg aria-hidden="true"><use href="#icon-arrow-right" /></svg>
           </button>
           <div class="manage-cards-title-group">
             <span class="manage-cards-eyebrow">CONTROL CENTER</span>
-            <h2>Manage Wallets</h2>
+            <h2>Manage Card</h2>
             <span>Select a wallet to view and manage its card details.</span>
           </div>
           <button
@@ -1015,8 +1037,7 @@
             aria-label="Wallet selector"
           >
             <div class="manage-cards-section-title-row">
-              <h3>Your Wallets</h3>
-              <span data-manage-wallet-count>1/4</span>
+              <h3>Your Wallet</h3>
             </div>
             <div class="manage-cards-wallet-carousel" aria-label="Card wallets">
               <button
@@ -1028,93 +1049,12 @@
                 data-wallet-limit="₹3,000"
                 aria-pressed="true"
               >
-                <span class="wallet-icon meal-icon" aria-hidden="true"
-                  ><svg><use href="#icon-food" /></svg
-                ></span>
-                <small class="manage-cards-selected-badge">Selected</small>
-                <small class="manage-cards-status-badge">Active</small>
-                <span>Meal Wallet</span>
-                <b>Pine Card ending 7845</b>
-                <strong>₹6,400</strong>
-                <em
-                  ><i></i>Daily essentials<svg aria-hidden="true">
-                    <use href="#icon-nfc" /></svg
-                ></em>
+                <img
+                  class="manage-card-details-image"
+                  src="./assets/icons/card-details.svg"
+                  alt="Visa card details"
+                />
               </button>
-              <button
-                class="manage-cards-wallet-card fuel"
-                type="button"
-                data-manage-wallet
-                data-wallet-key="fuel"
-                data-wallet-label="Fuel Wallet"
-                data-wallet-limit="₹8,000"
-                aria-pressed="false"
-              >
-                <span class="wallet-icon fuel-icon" aria-hidden="true"
-                  ><svg><use href="#icon-fuel" /></svg
-                ></span>
-                <small class="manage-cards-selected-badge">Selected</small>
-                <small class="manage-cards-status-badge">Active</small>
-                <span>Fuel Wallet</span>
-                <b>Pine Card ending 7846</b>
-                <strong>₹3,150</strong>
-                <em
-                  ><i></i>Commute ready<svg aria-hidden="true">
-                    <use href="#icon-scan" /></svg
-                ></em>
-              </button>
-              <button
-                class="manage-cards-wallet-card misc"
-                type="button"
-                data-manage-wallet
-                data-wallet-key="misc"
-                data-wallet-label="Reimbursement Wallet"
-                data-wallet-limit="₹9,100"
-                aria-pressed="false"
-              >
-                <span class="wallet-icon misc-icon" aria-hidden="true"
-                  ><svg><use href="#icon-scan" /></svg
-                ></span>
-                <small class="manage-cards-selected-badge">Selected</small>
-                <small class="manage-cards-status-badge">Active</small>
-                <span>Reimbursement Wallet</span>
-                <b>Pine Card ending 7847</b>
-                <strong>₹9,100</strong>
-                <em
-                  ><i></i>Flexible spends<svg aria-hidden="true">
-                    <use href="#icon-receipt" /></svg
-                ></em>
-              </button>
-              <button
-                class="manage-cards-wallet-card gift"
-                type="button"
-                data-manage-wallet
-                data-wallet-key="gift"
-                data-wallet-label="Gift Wallet"
-                data-wallet-limit="6,200 pts"
-                aria-pressed="false"
-              >
-                <span class="wallet-icon gift-icon" aria-hidden="true"
-                  ><svg><use href="#icon-gift" /></svg
-                ></span>
-                <small class="manage-cards-selected-badge">Selected</small>
-                <small class="manage-cards-status-badge">Active</small>
-                <span>Gift Wallet</span>
-                <b>Pine Card ending 7848</b>
-                <strong>6,200 pts</strong>
-                <em
-                  ><i></i>Rewards &amp; gifting<svg aria-hidden="true">
-                    <use href="#icon-gift" /></svg
-                ></em>
-              </button>
-            </div>
-            <div class="manage-cards-carousel-meta" aria-hidden="true">
-              <span class="manage-cards-wallet-dots">
-                <i class="is-active"></i>
-                <i></i>
-                <i></i>
-                <i></i>
-              </span>
             </div>
           </section>
 
@@ -1259,12 +1199,55 @@
           <div class="claims-workspace" data-claims-workspace></div>
         </div>
         <footer class="claims-composer">
+          <div class="claims-action-menu" data-claims-action-menu hidden>
+            <span class="claims-action-menu-handle" aria-hidden="true"></span>
+            <div class="claims-action-option-grid">
+              <button
+                type="button"
+                class="claims-action-option-card"
+                data-claims-action="start-telephone"
+              >
+                <span aria-hidden="true"><svg><use href="#icon-card" /></svg></span>
+                <strong>Telephone claim</strong>
+                <small>Submit a telephone or internet bill</small>
+              </button>
+              <button
+                type="button"
+                class="claims-action-option-card"
+                data-claims-action="start-meal"
+              >
+                <span aria-hidden="true"><svg><use href="#icon-food" /></svg></span>
+                <strong>Meal claim</strong>
+                <small>Submit meal expenses</small>
+              </button>
+              <button
+                type="button"
+                class="claims-action-option-card"
+                data-claims-action="start-fuel"
+              >
+                <span aria-hidden="true"><svg><use href="#icon-fuel" /></svg></span>
+                <strong>Fuel claim</strong>
+                <small>Submit fuel expenses</small>
+              </button>
+              <button
+                type="button"
+                class="claims-action-option-card"
+                data-claims-action="upload-start"
+              >
+                <span aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
+                <strong>Upload a bill</strong>
+                <small>Scan and extract details</small>
+              </button>
+            </div>
+          </div>
           <div class="claims-input-row merchant-directory-search">
             <button
               class="claims-upload-button wallet-overlay-back"
               type="button"
-              aria-label="Upload bill"
-              data-claims-action="upload"
+              aria-label="Open claim options"
+              aria-expanded="false"
+              data-claims-action="toggle-claim-menu"
+              data-claims-action-menu-toggle
             >
               <svg aria-hidden="true"><use href="#icon-plus" /></svg>
             </button>

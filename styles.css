@@ -153,6 +153,7 @@ svg {
 .hero-panel,
 .upi-panel,
 .pluspay-actions-panel,
+.pluspay-corporate-message,
 .tap-pay-discovery,
 .utility-panel,
 .transactions-section,
@@ -678,6 +679,54 @@ svg {
 
 [data-pluspay-show] {
   display: none;
+}
+
+.pluspay-corporate-message {
+  position: relative;
+  margin-top: var(--space-20);
+  padding: 18px 18px 18px 20px;
+  border: 1px solid rgba(54, 204, 139, 0.34);
+  border-radius: 18px;
+  background:
+    radial-gradient(92% 140% at 12% 0%, rgba(255, 255, 255, 0.18), transparent 42%),
+    radial-gradient(95% 120% at 86% 18%, rgba(54, 204, 139, 0.24), transparent 48%),
+    linear-gradient(135deg, #005656 0%, #007c66 46%, #002e20 100%);
+  box-shadow: 0 18px 34px rgba(0, 52, 52, 0.16);
+  overflow: hidden;
+}
+
+.pluspay-corporate-message::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.pluspay-corporate-message::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: -28px 30px 0 rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.pluspay-corporate-message p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 260px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.24;
+  letter-spacing: 0;
 }
 
 body.is-pluspay [data-pluspay-hide] {
@@ -3607,205 +3656,240 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .manage-cards-wallet-carousel {
-  grid-auto-columns: calc(100% - 20px);
-  grid-auto-rows: 256px;
-  gap: 16px;
-  min-height: 280px;
-  margin: -4px -10px -10px;
-  padding: 4px 10px 20px;
-  scroll-padding-inline: 10px;
+  grid-auto-columns: 100%;
+  grid-auto-rows: auto;
+  gap: 0;
+  min-height: 186px;
+  margin: 0;
+  padding: 0;
+  scroll-padding-inline: 0;
 }
 
 .manage-cards-wallet-card {
   position: relative;
   display: grid;
-  grid-template-rows: 64px min-content min-content min-content 1fr;
-  gap: 0;
-  min-height: 256px;
-  padding: 24px;
-  border: 0.5px solid transparent;
-  border-radius: 32px;
-  box-shadow: 0 10px 24px rgba(0, 52, 52, 0.08);
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  justify-items: stretch;
+  gap: 13%;
+  width: 100%;
+  aspect-ratio: 681 / 352;
+  min-height: unset;
+  padding: 4.35% 4.7% 5.8%;
+  border: 0;
+  border-radius: 16px;
+  background:
+    linear-gradient(108deg, transparent 0 52%, rgba(255, 255, 255, 0.08) 53%, transparent 70%),
+    linear-gradient(303deg, #002e20 0%, #007c66 22%, #00b176 35%, #008169 64%, #005656 100%);
+  box-shadow: 0 18px 34px rgba(0, 52, 52, 0.16);
+  color: #ffffff;
   overflow: hidden;
+  text-align: left;
   transition:
     transform 500ms ease,
     box-shadow 500ms ease;
 }
 
-.manage-cards-wallet-card::before,
-.manage-cards-wallet-card::after {
+.manage-cards-wallet-card::before {
   content: "";
   position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
+  inset: 0;
+  background:
+    radial-gradient(120% 130% at 83% 25%, rgba(0, 46, 32, 0.42), transparent 42%),
+    radial-gradient(120% 130% at 8% 12%, rgba(255, 255, 255, 0.08), transparent 34%);
   pointer-events: none;
-}
-
-.manage-cards-wallet-card::before {
-  top: -48px;
-  right: -48px;
-  width: 160px;
-  height: 160px;
-}
-
-.manage-cards-wallet-card::after {
-  bottom: -42px;
-  left: -36px;
-  width: 128px;
-  height: 128px;
 }
 
 .manage-cards-wallet-card.is-selected {
   outline: 0;
-  box-shadow: 0 10px 24px rgba(0, 52, 52, 0.08);
-  transform: scale(1.01);
+  box-shadow: 0 18px 34px rgba(0, 52, 52, 0.16);
+  transform: none;
 }
 
 .manage-cards-wallet-card.meal {
-  border-color: #d97706;
-  background: linear-gradient(165deg, #fff4db, #fff9ed);
+  border-color: transparent;
+  background:
+    linear-gradient(108deg, transparent 0 52%, rgba(255, 255, 255, 0.08) 53%, transparent 70%),
+    linear-gradient(303deg, #002e20 0%, #007c66 22%, #00b176 35%, #008169 64%, #005656 100%);
 }
 
-.manage-cards-wallet-card.fuel {
-  border-color: #2563eb;
-  background: linear-gradient(165deg, #e5f3ff, #f0f8ff);
-}
-
-.manage-cards-wallet-card.misc {
-  border-color: #7c3aed;
-  background: linear-gradient(165deg, #ece9ff, #f5f3ff);
-}
-
-.manage-cards-wallet-card.gift {
-  border-color: #16a34a;
-  background: linear-gradient(165deg, #e8f8ee, #f0fdf4);
-}
-
-.manage-cards-wallet-card .wallet-icon {
-  position: relative;
-  z-index: 1;
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 16px 32px rgba(0, 52, 52, 0.08);
-}
-
-.manage-cards-wallet-card .wallet-icon svg {
-  width: 32px;
-  height: 32px;
-}
-
-.manage-cards-selected-badge {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  display: none;
-  align-items: center;
-  min-height: 32px;
-  padding: 0 12px;
+.manage-cards-wallet-card:has(.manage-card-details-image) {
+  display: block;
+  aspect-ratio: auto;
+  min-height: 0;
+  padding: 0;
   border: 0;
-  border-radius: 999px;
-  background: rgba(0, 86, 86, 0.9);
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 900;
-  box-shadow: 0 12px 24px rgba(0, 52, 52, 0.16);
-  backdrop-filter: blur(12px);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
 
-.manage-cards-status-badge {
-  position: absolute;
-  top: 64px;
-  right: 24px;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 10px;
-  border: 1px solid rgba(0, 86, 86, 0.08);
-  border-radius: 999px;
-  background: rgba(235, 250, 241, 0.82);
-  color: #1d8f63;
-  font-size: 11px;
-  font-weight: 900;
-  box-shadow: 0 8px 16px rgba(0, 52, 52, 0.08);
-  backdrop-filter: blur(12px);
+.manage-cards-wallet-card:has(.manage-card-details-image)::before {
+  content: none;
 }
 
-.manage-cards-wallet-card.is-selected .manage-cards-selected-badge {
-  display: inline-flex;
+.manage-card-details-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.manage-cards-wallet-card.is-frozen .manage-cards-status-badge {
-  border-color: rgba(17, 24, 39, 0.1);
-  background: rgba(17, 24, 39, 0.88);
-  color: #ffffff;
-}
-
-.manage-cards-wallet-card span:not(.wallet-icon) {
+.manage-visa-card-top,
+.manage-visa-card-body,
+.manage-visa-number-row,
+.manage-visa-expiry,
+.manage-visa-footer,
+.manage-visa-actions,
+.manage-visa-cvv {
   position: relative;
   z-index: 1;
-  margin-top: 24px;
-  color: rgba(0, 52, 52, 0.7);
-  font-size: 14px;
-  font-weight: 900;
-  line-height: 1.15;
 }
 
-.manage-cards-wallet-card b {
-  position: relative;
-  z-index: 1;
-  margin-top: 5px;
-  color: rgba(0, 52, 52, 0.62);
-  font-size: 12px;
-  font-weight: 900;
-  line-height: 1.2;
+.manage-cards-wallet-card span[class^="manage-visa"] {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: normal;
 }
 
-.manage-cards-wallet-card strong {
-  position: relative;
-  z-index: 1;
-  margin-top: 6px;
-  color: #003434;
-  font-size: 36px;
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 0.95;
-}
-
-.manage-cards-wallet-card em {
-  position: relative;
-  z-index: 1;
+.manage-visa-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 0;
+}
+
+.manage-visa-card-top img {
+  width: clamp(42px, 9.5%, 65px);
+  height: auto;
+}
+
+.manage-visa-card-body {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
   gap: 8px;
-  align-self: end;
-  min-height: 42px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 2px solid rgba(255, 255, 255, 0.4);
-  background: transparent;
-  color: rgba(0, 52, 52, 0.7);
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 900;
-  box-shadow: none;
+  min-height: 0;
 }
 
-.manage-cards-wallet-card em i {
-  width: 8px;
-  height: 8px;
+.manage-cards-wallet-card span.manage-visa-label,
+.manage-cards-wallet-card .manage-visa-expiry span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.manage-visa-number-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.manage-cards-wallet-card span.manage-visa-number {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #ffffff;
+  min-width: 0;
+  font-weight: 400;
+  line-height: 1.28;
+  white-space: nowrap;
+}
+
+.manage-cards-wallet-card span.manage-visa-number-dots {
+  color: #ffffff;
+  font-size: clamp(13px, 3.9vw, 26px);
+  font-weight: 700;
+  letter-spacing: 5px;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.manage-cards-wallet-card span.manage-visa-number-last {
+  color: #ffffff;
+  font-size: clamp(26px, 6vw, 40px);
+  font-weight: 400;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.manage-visa-actions,
+.manage-visa-cvv {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.manage-visa-action {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(32px, 8.2vw, 56px);
+  height: clamp(32px, 8.2vw, 56px);
   border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 2px 5px rgba(0, 52, 52, 0.12);
+  background: rgba(0, 46, 32, 0.28);
+  color: #ffffff;
 }
 
-.manage-cards-wallet-card em svg {
-  margin-left: auto;
+.manage-visa-action svg {
+  width: clamp(18px, 3.8vw, 26px);
+  height: clamp(18px, 3.8vw, 26px);
+  stroke-width: 2;
+}
+
+.manage-visa-action.is-hidden::after {
+  content: "";
+  position: absolute;
   width: 18px;
-  height: 18px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: rotate(42deg);
+}
+
+.manage-visa-expiry {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.manage-visa-expiry strong {
+  color: #ffffff;
+  font-size: clamp(18px, 4.2vw, 28px);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.manage-visa-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  align-self: end;
+  margin-top: 0;
+}
+
+.manage-cards-wallet-card span.manage-visa-name {
+  color: #ffffff;
+  font-size: clamp(18px, 4.25vw, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 6px;
+  white-space: nowrap;
+}
+
+.manage-visa-cvv strong {
+  color: #ffffff;
+  font-size: clamp(18px, 4.25vw, 28px);
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .manage-cards-carousel-meta {
@@ -4591,11 +4675,11 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .utility-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: flex-start;
-  gap: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
+  justify-items: start;
+  gap: 8px;
   padding-bottom: 4px;
 }
 
@@ -4604,13 +4688,14 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .utility-card {
-  flex: 0 0 92.5px;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
-  min-height: 115px;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 108px;
   padding: 0 0 12px;
   border: 0;
   border-radius: 0;
@@ -4622,8 +4707,8 @@ body.is-merchant-directory-open .bottom-nav {
 .utility-icon {
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   border-radius: 999px;
   background: #ffffff;
   box-shadow: 2px 3.17px 4.33px rgba(0, 0, 0, 0.04);
@@ -4652,8 +4737,8 @@ body.is-merchant-directory-open .bottom-nav {
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
-    sans-serif;
-  font-size: 13px;
+  sans-serif;
+  font-size: 12px;
   line-height: 15px;
   font-weight: 500;
   letter-spacing: 0;
@@ -4947,6 +5032,18 @@ body.is-merchant-directory-open .bottom-nav {
 
 .claims-button span:first-child img {
   display: block;
+}
+
+.bottom-nav .pluspay-scan-button {
+  display: none;
+}
+
+body.is-pluspay .bottom-nav .claims-button[data-claims-open] {
+  display: none;
+}
+
+body.is-pluspay .bottom-nav .pluspay-scan-button {
+  display: grid;
 }
 
 .claims-button span:last-child {
@@ -6411,6 +6508,106 @@ body.is-merchant-directory-open .bottom-nav {
   background: rgba(0, 86, 86, 0.08);
   color: rgba(0, 86, 86, 0.2);
   box-shadow: none;
+}
+
+.claims-upload-button.wallet-overlay-back.is-open {
+  background: rgba(231, 244, 240, 1);
+}
+
+.claims-upload-button.wallet-overlay-back.is-open svg {
+  transform: rotate(45deg);
+}
+
+.claims-action-menu[hidden] {
+  display: none;
+}
+
+.claims-action-menu {
+  display: grid;
+  gap: 16px;
+  margin: -8px -16px 12px;
+  padding: 20px 16px 18px;
+  border: 1px solid #e1e7e4;
+  border-bottom: 0;
+  border-radius: 28px 28px 0 0;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 -18px 34px rgba(0, 52, 52, 0.08);
+  animation: claims-menu-rise 220ms ease both;
+}
+
+.claims-action-menu-handle {
+  justify-self: center;
+  width: 44px;
+  height: 6px;
+  border-radius: 999px;
+  background: #dbe2e0;
+}
+
+.claims-action-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.claims-action-option-card {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 5px;
+  align-items: center;
+  min-width: 0;
+  min-height: 86px;
+  padding: 14px;
+  border: 1px solid #e1e7e4;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--brand-900);
+  box-shadow: 0 12px 24px rgba(0, 52, 52, 0.045);
+  text-align: left;
+}
+
+.claims-action-option-card span {
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 15px;
+  background: rgba(231, 244, 240, 0.92);
+  color: var(--brand-700);
+}
+
+.claims-action-option-card svg {
+  width: 20px;
+  height: 20px;
+}
+
+.claims-action-option-card strong {
+  min-width: 0;
+  color: var(--brand-900);
+  font-size: 14px;
+  line-height: 1.15;
+  font-weight: 900;
+}
+
+.claims-action-option-card small {
+  min-width: 0;
+  color: var(--subtle);
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+@keyframes claims-menu-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .claims-home,
@@ -9121,7 +9318,6 @@ body.is-merchant-directory-open .bottom-nav {
 @media (max-width: 360px) {
   .balance-copy,
   .wallet-strip,
-  .utility-grid,
   .pluspay-actions-grid {
     grid-template-columns: 1fr;
   }

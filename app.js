@@ -148,6 +148,10 @@ const claimsScroll = document.querySelector("[data-claims-scroll]");
 const claimsInput = document.querySelector("[data-claims-input]");
 const claimsSendButton = document.querySelector("[data-claims-send]");
 const claimsActionButtons = document.querySelectorAll("[data-claims-action]");
+const claimsActionMenu = document.querySelector("[data-claims-action-menu]");
+const claimsActionMenuButton = document.querySelector(
+  "[data-claims-action-menu-toggle]",
+);
 const tapPayDiscovery = document.querySelector("[data-tap-pay-discovery]");
 const scanPayOpenButtons = document.querySelectorAll("[data-scan-pay-open]");
 const scanPayFlow = document.querySelector("[data-scan-pay-flow]");
@@ -885,6 +889,7 @@ const claimState = {
   historyFilter: "All",
   historySearch: "",
   selectedHistoryId: "CLM-2026-0428",
+  isActionMenuOpen: false,
   manualDetails: {
     vendor: "Airtel Broadband",
     amount: "₹2,149",
@@ -1001,6 +1006,7 @@ function resetClaimJourney() {
   claimState.historyFilter = "All";
   claimState.historySearch = "";
   claimState.selectedHistoryId = "CLM-2026-0428";
+  claimState.isActionMenuOpen = false;
   claimState.isThinking = false;
 }
 
@@ -1536,6 +1542,17 @@ function syncClaimsComposer() {
   const hasText = Boolean(claimsInput.value.trim());
   claimsSendButton.disabled = !hasText;
   claimsSendButton.setAttribute("aria-disabled", String(!hasText));
+  claimsActionMenuButton?.setAttribute(
+    "aria-expanded",
+    String(claimState.isActionMenuOpen),
+  );
+  claimsActionMenuButton?.classList.toggle(
+    "is-open",
+    claimState.isActionMenuOpen,
+  );
+  if (claimsActionMenu) {
+    claimsActionMenu.hidden = !claimState.isActionMenuOpen;
+  }
   claimsInput.placeholder =
     claimState.view === "track"
       ? "Ask about this claim..."
@@ -1598,6 +1615,7 @@ function closeClaimsAssistant() {
 }
 
 function goToClaimsView(view) {
+  setClaimsActionMenu(false);
   claimState.view = view;
   claimState.isThinking = false;
   renderClaimsAssistant();
@@ -1608,7 +1626,47 @@ function goToClaimsHome() {
   renderClaimsAssistant();
 }
 
+function setClaimsActionMenu(isOpen) {
+  claimState.isActionMenuOpen = isOpen;
+  claimsActionMenuButton?.setAttribute("aria-expanded", String(isOpen));
+  claimsActionMenuButton?.classList.toggle("is-open", isOpen);
+  if (claimsActionMenu) {
+    claimsActionMenu.hidden = !isOpen;
+  }
+}
+
+function startClaimFromPrompt(id) {
+  const card =
+    claimsMockData.promptCards.find((promptCard) => promptCard.id === id) ||
+    claimsMockData.promptCards[0];
+  claimState.selectedClaim = card.id;
+  claimState.view = "claimStart";
+  claimState.isActionMenuOpen = false;
+  claimState.messages = [
+    {
+      id: "start-1",
+      role: "assistant",
+      text: `Sure - let's start your ${card.title}.`,
+      time: "9:41 AM",
+    },
+    {
+      id: "start-2",
+      role: "user",
+      text: `<strong>${card.title}</strong><br><span>${card.subtitle}</span>`,
+      time: "9:41 AM",
+    },
+    {
+      id: "start-3",
+      role: "assistant",
+      text: "Great. Please upload your bill so I can extract the details and check policy compliance.",
+      time: "9:41 AM",
+    },
+  ];
+  renderClaimsAssistant();
+}
+
 function startTelephoneClaim() {
+  setClaimsActionMenu(false);
   claimState.selectedClaim = "telephone";
   claimState.view = "claimStart";
   claimState.messages = [
@@ -1635,6 +1693,7 @@ function startTelephoneClaim() {
 }
 
 function openUploadFlow(addMessage = false) {
+  setClaimsActionMenu(false);
   claimState.view = "upload";
   claimState.uploaded = false;
   claimState.scanningProgress = 0;
@@ -1837,12 +1896,6 @@ function renderClaimsHome() {
   return `
     <section class="claims-home">
       ${renderClaimsQuickActions()}
-      <div class="claims-prompt-section">
-        <h3>Try asking me about</h3>
-        <div class="claims-prompt-grid">
-          ${claimsMockData.promptCards.map((card) => renderPromptCard(card)).join("")}
-        </div>
-      </div>
     </section>
   `;
 }
@@ -2554,11 +2607,18 @@ function handleClaimsReply(reply) {
 }
 
 function handleClaimsAction(action) {
+  if (action === "toggle-claim-menu") {
+    setClaimsActionMenu(!claimState.isActionMenuOpen);
+    return;
+  }
+  setClaimsActionMenu(false);
   if (action === "home") goToClaimsHome();
   if (action === "history") goToClaimsView("history");
   if (action === "track") goToClaimsView("track");
   if (action === "dashboard") goToClaimsView("dashboard");
   if (action === "start-telephone") startTelephoneClaim();
+  if (action === "start-meal") startClaimFromPrompt("meal");
+  if (action === "start-fuel") startClaimFromPrompt("fuel");
   if (action === "upload" || action === "upload-start")
     openUploadFlow(action === "upload");
   if (action === "mock-upload") selectMockBill();
@@ -3162,7 +3222,7 @@ function openManageCardsOverlay() {
     manageCardsOverlay.classList.add("is-open");
     syncPageScrollLock();
   });
-  showToast("Manage Wallets opened");
+  showToast("Manage Card opened");
 }
 
 function openWalletOverlay(button) {
