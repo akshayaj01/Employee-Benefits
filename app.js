@@ -127,11 +127,6 @@ const managePreviewExpiry = document.querySelector(
   "[data-manage-preview-expiry]",
 );
 const manageWalletType = document.querySelector("[data-manage-wallet-type]");
-const manageFreezeButton = document.querySelector(
-  "[data-manage-freeze-toggle]",
-);
-const manageFreezeTitle = document.querySelector("[data-manage-freeze-title]");
-const manageFreezeCopy = document.querySelector("[data-manage-freeze-copy]");
 const claimsOpenButton = document.querySelector("[data-claims-open]");
 const claimsAssistant = document.querySelector("[data-claims-assistant]");
 const claimsCloseButtons = document.querySelectorAll("[data-claims-close]");
@@ -764,14 +759,23 @@ const claimsMockData = {
       status: "Pending",
       icon: "icon-card",
     },
+    // {
+    //   id: "CLM-2026-0417",
+    //   title: "Meal claim",
+    //   vendor: "Team lunch with client",
+    //   amount: "₹1,250",
+    //   date: "29 Apr 2026",
+    //   status: "Approved",
+    //   icon: "icon-food",
+    // },
     {
-      id: "CLM-2026-0417",
-      title: "Meal claim",
-      vendor: "Team lunch with client",
-      amount: "₹1,250",
+      id: "CLM-2026-0341",
+      title: "Driver Salary",
+      vendor: "Delhi to Bengaluru",
+      amount: "₹2,320",
       date: "29 Apr 2026",
-      status: "Approved",
-      icon: "icon-food",
+      status: "Pending",
+      icon: "icon-send",
     },
     {
       id: "CLM-2026-0398",
@@ -782,24 +786,24 @@ const claimsMockData = {
       status: "Approved",
       icon: "icon-fuel",
     },
-    {
-      id: "CLM-2026-0384",
-      title: "Travel claim",
-      vendor: "Bengaluru to Mumbai",
-      amount: "₹4,850",
-      date: "24 Apr 2026",
-      status: "Rejected",
-      icon: "icon-send",
-    },
-    {
-      id: "CLM-2026-0372",
-      title: "Cab/Taxi",
-      vendor: "Airport pickup",
-      amount: "₹720",
-      date: "22 Apr 2026",
-      status: "Approved",
-      icon: "icon-car",
-    },
+    // {
+    //   id: "CLM-2026-0384",
+    //   title: "Travel claim",
+    //   vendor: "Bengaluru to Mumbai",
+    //   amount: "₹4,850",
+    //   date: "24 Apr 2026",
+    //   status: "Rejected",
+    //   icon: "icon-send",
+    // },
+    // {
+    //   id: "CLM-2026-0372",
+    //   title: "Cab/Taxi",
+    //   vendor: "Airport pickup",
+    //   amount: "₹720",
+    //   date: "22 Apr 2026",
+    //   status: "Approved",
+    //   icon: "icon-car",
+    // },
     {
       id: "CLM-2026-0366",
       title: "Software subscription",
@@ -808,15 +812,6 @@ const claimsMockData = {
       date: "25 Apr 2026",
       status: "Pending",
       icon: "icon-receipt",
-    },
-    {
-      id: "CLM-2026-0341",
-      title: "Travel claim",
-      vendor: "Delhi to Bengaluru",
-      amount: "₹6,320",
-      date: "29 Apr 2026",
-      status: "Pending",
-      icon: "icon-send",
     },
   ],
   dashboard: {
@@ -851,12 +846,12 @@ const claimsMockData = {
         status: "Rejected",
         meta: "Bill date: 20 Apr 2026",
       },
-      {
-        vendor: "Electricity Bill",
-        amount: "₹1,880",
-        status: "Reimbursed",
-        meta: "Bill date: 15 Apr 2026",
-      },
+      // {
+      //   vendor: "Electricity Bill",
+      //   amount: "₹1,880",
+      //   status: "Reimbursed",
+      //   meta: "Bill date: 15 Apr 2026",
+      // },
     ],
   },
 };
@@ -882,7 +877,12 @@ const claimState = {
     billDate: "30 Apr 2026",
   },
   isThinking: false,
+  greetingAnimating: false,
 };
+
+const CLAIMS_GREETING_TEXT =
+  "Hi, I’m your Claims Assistant. Let’s get your claim sorted quickly.";
+let claimsGreetingShown = false;
 
 const scanPayMock = {
   merchant: {
@@ -994,6 +994,7 @@ function resetClaimJourney() {
   claimState.selectedHistoryId = "CLM-2026-0428";
   claimState.isActionMenuOpen = false;
   claimState.isThinking = false;
+  claimState.greetingAnimating = false;
 }
 
 function scanPayIcon(id) {
@@ -1538,8 +1539,7 @@ function initScratchCard() {
       ctx.fill();
     }
     ctx.fillStyle = "rgba(255, 255, 255, 0.82)";
-    ctx.font =
-      "600 15px 'PP Telegraf', system-ui, -apple-system, sans-serif";
+    ctx.font = "600 15px 'PP Telegraf', system-ui, -apple-system, sans-serif";
     ctx.textAlign = "center";
     ctx.fillText("SCRATCH HERE", rect.width / 2, rect.height / 2 + 56);
     return true;
@@ -1758,6 +1758,18 @@ function openClaimsAssistant() {
     claimsAssistant.classList.add("is-open");
     syncPageScrollLock();
   });
+  maybeAnimateClaimsGreeting();
+}
+
+function maybeAnimateClaimsGreeting() {
+  if (claimsGreetingShown || claimState.view !== "home") return;
+  claimsGreetingShown = true;
+  claimState.greetingAnimating = true;
+  renderClaimsAssistant();
+  window.setTimeout(() => {
+    claimState.greetingAnimating = false;
+    renderClaimsAssistant();
+  }, 900);
 }
 
 function closeClaimsAssistant() {
@@ -1979,7 +1991,7 @@ function renderClaimsAssistant() {
   bindClaimsWorkspaceActions();
   syncClaimsComposer();
   window.requestAnimationFrame(() => {
-    if (["home", "history", "dashboard", "detail"].includes(claimState.view)) {
+    if (["history", "dashboard", "detail"].includes(claimState.view)) {
       claimsScroll?.scrollTo({ top: 0, behavior: "auto" });
       return;
     }
@@ -1992,6 +2004,7 @@ function renderClaimsAssistant() {
 
 function renderClaimsThread() {
   const shouldShowThread = ![
+    "home",
     "history",
     "filteredHistory",
     "detail",
@@ -2000,6 +2013,10 @@ function renderClaimsThread() {
     "track",
   ].includes(claimState.view);
   if (!shouldShowThread) return "";
+  return renderClaimsMessageStream();
+}
+
+function renderClaimsMessageStream() {
   const messages = claimState.messages
     .map((message) => renderClaimMessage(message))
     .join("");
@@ -2049,9 +2066,21 @@ function renderClaimsWorkspace() {
 }
 
 function renderClaimsHome() {
+  const greeting = claimState.greetingAnimating
+    ? renderClaimMessage({
+        role: "assistant",
+        text: `<span class="claims-mini-typing"><i></i><i></i><i></i></span>`,
+        typing: true,
+      })
+    : renderClaimMessage({
+        role: "assistant",
+        text: CLAIMS_GREETING_TEXT,
+      });
   return `
     <section class="claims-home">
       ${renderClaimsQuickActions()}
+      ${greeting}
+      ${renderClaimsMessageStream()}
     </section>
   `;
 }
@@ -2609,11 +2638,6 @@ function renderClaimDashboardScreen() {
   return `
     <section class="claims-screen">
       <div class="claims-subscreen-head"><h3>Claim dashboard</h3></div>
-      <section class="dashboard-balance-card">
-        <span>Total reimbursement balance</span>
-        <strong>${dashboard.totalBalance}</strong>
-        <div><p><small>Available balance</small><b>${dashboard.availableBalance}</b></p><p><small>Pending payouts</small><b>${dashboard.pendingPayouts}</b></p></div>
-      </section>
       <section class="dashboard-month-card"><span>This month: Apr 2026</span><div><p><b>${dashboard.monthlyTotalClaims}</b><small>Total claims</small></p><p><b>${dashboard.monthlyClaimedAmount}</b><small>Claimed amount</small></p><p><b>${dashboard.monthlyReimbursedAmount}</b><small>Reimbursed</small></p></div></section>
       <div class="dashboard-metric-grid">${dashboard.statusCounts.map((metric) => renderMetricCard(metric)).join("")}</div>
       <section class="dashboard-chart-card">
@@ -3006,22 +3030,8 @@ function renderManageWalletState() {
 
   const progress = Math.round((state.limitUsed / state.limitTotal) * 100);
   const onlineEnabled = Boolean(state.online);
-  const frozen = Boolean(state.frozen);
 
   if (manageWalletType) manageWalletType.textContent = state.label;
-  if (manageFreezeTitle)
-    manageFreezeTitle.innerHTML = frozen
-      ? "Unfreeze<br />Card"
-      : "Freeze<br />Card";
-  if (manageFreezeCopy)
-    manageFreezeCopy.textContent = frozen
-      ? `${state.label} is frozen`
-      : `Pause ${state.label} instantly`;
-  manageFreezeButton?.classList.toggle("is-enabled", frozen);
-  manageFreezeButton?.setAttribute("aria-pressed", String(frozen));
-  manageFreezeButton
-    ?.querySelector(".manage-cards-toggle")
-    ?.setAttribute("aria-checked", String(frozen));
   if (manageAccessCopy) manageAccessCopy.textContent = state.accessCopy;
   if (manageAccessValue) manageAccessValue.textContent = state.accessValue;
   if (manageOnlineCopy)
@@ -3154,14 +3164,6 @@ manageOnlineButton?.addEventListener("click", () => {
   showToast(
     `${state.label} online transactions ${state.online ? "enabled" : "disabled"}`,
   );
-});
-
-manageFreezeButton?.addEventListener("click", () => {
-  const state = manageWalletState[activeManageWalletKey];
-  if (!state) return;
-  state.frozen = !state.frozen;
-  renderManageWalletState();
-  showToast(`${state.label} ${state.frozen ? "frozen" : "unfrozen"}`);
 });
 
 function formatCurrency(value) {

@@ -687,6 +687,10 @@ svg {
   display: none;
 }
 
+.upi-card[data-pluspay-show] {
+  display: none;
+}
+
 .pluspay-corporate-message {
   position: relative;
   margin-top: var(--space-20);
@@ -741,6 +745,10 @@ body.is-pluspay [data-pluspay-hide] {
 
 body.is-pluspay [data-pluspay-show] {
   display: block;
+}
+
+body.is-pluspay .upi-card[data-pluspay-show] {
+  display: grid !important;
 }
 
 body.is-pluspay .balance-copy {
@@ -829,6 +837,19 @@ body.is-pluspay .transactions-section {
   isolation: isolate;
 }
 
+.upi-card-create {
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  height: 80px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 16px;
+  gap: 16px;
+  background:
+    radial-gradient(92% 130% at 12% 0%, rgba(255, 255, 255, 0.14), transparent 42%),
+    radial-gradient(70% 80% at 88% 18%, rgba(255, 255, 255, 0.1), transparent 44%),
+    linear-gradient(132deg, #41bf7a 0%, #1f6f58 58%, #175646 100%);
+  box-shadow: 0 16px 28px rgba(11, 53, 42, 0.16);
+}
+
 .upi-card::before {
   content: "";
   position: absolute;
@@ -855,6 +876,14 @@ body.is-pluspay .transactions-section {
   pointer-events: none;
 }
 
+.upi-card-create::before {
+  inset: 0;
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.08), transparent 42%),
+    linear-gradient(320deg, rgba(0, 0, 0, 0.1), transparent 40%);
+  transform: none;
+}
+
 .upi-brand-badge,
 .upi-copy,
 .upi-arrow,
@@ -875,6 +904,12 @@ body.is-pluspay .transactions-section {
   font-size: 1.2rem;
 }
 
+.wallet-icon img {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
 .upi-brand-badge {
   display: grid;
   place-items: center;
@@ -882,8 +917,18 @@ body.is-pluspay .transactions-section {
   height: 40px;
 }
 
+.upi-brand-badge-create {
+  width: 40px;
+  height: 40px;
+}
+
 .upi-brand-badge img {
   display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.upi-brand-badge-create img {
   width: 40px;
   height: 40px;
 }
@@ -926,6 +971,49 @@ body.is-pluspay .transactions-section {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.upi-copy-create {
+  gap: 2px;
+}
+
+.upi-copy-create strong {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: var(--fw-regular);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upi-copy-create small {
+  max-width: none;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 13px;
+  line-height: 14px;
+  font-weight: var(--fw-regular);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upi-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 66, 45, 0.14),
+    0 8px 14px rgba(8, 37, 30, 0.14);
+  color: #0f5d4c;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
 }
 
 .upi-copy-icon,
@@ -7397,6 +7485,11 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   color: #d32f2f;
 }
 
+.status-badge.pending,
+.transaction-status.pending {
+  color: #8a6d00;
+}
+
 .claims-empty-inline {
   display: grid;
   gap: 10px;
@@ -7555,6 +7648,11 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
 .dashboard-activity-card article strong {
   display: grid;
   gap: 3px;
+}
+
+.dashboard-activity-card article strong {
+  justify-items: end;
+  text-align: right;
 }
 
 .dashboard-activity-card small,

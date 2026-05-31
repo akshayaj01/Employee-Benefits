@@ -290,7 +290,7 @@
               >
                 Current balance
               </p>
-              <strong>₹24,850</strong>
+              <strong>₹18,650</strong>
               <span
                 class="balance-caption"
                 data-lens-text="Available balance across wallets"
@@ -344,7 +344,31 @@
           <h2 data-lens-text="UPI" data-pluspay-text="PlusPay UPI">UPI</h2>
           <a href="#" data-lens-text="Manage" data-pluspay-text="View QR">Manage</a>
         </div> -->
-        <button class="upi-card" type="button" data-toast="UPI settings opened">
+        <button
+          class="upi-card upi-card-create"
+          type="button"
+          data-pluspay-hide
+          data-toast="Create UPI ID opened"
+          aria-label="Create UPI ID to link credit line to UPI for seamless payments"
+        >
+          <span
+            class="upi-brand-badge upi-brand-badge-create"
+            aria-hidden="true"
+          >
+            <img src="./assets/icons/upi.svg" alt="" />
+          </span>
+          <span class="upi-copy upi-copy-create">
+            <!-- <strong>Pay with UPI</strong> -->
+            <strong>Link your UPI for </br> seamless payments.</strong>
+          </span>
+          <span class="upi-card-cta" aria-hidden="true">Create UPI ID</span>
+        </button>
+        <button
+          class="upi-card upi-card-id"
+          type="button"
+          data-pluspay-show
+          data-toast="UPI settings opened"
+        >
           <span class="upi-brand-badge" aria-hidden="true">
             <img src="./assets/icons/upi.svg" alt="" />
           </span>
@@ -500,9 +524,9 @@
             aria-pressed="false"
           >
             <div class="wallet-topline">
-              <span class="wallet-icon misc-icon" aria-hidden="true"
-                ><svg><use href="#icon-scan" /></svg
-              ></span>
+              <span class="wallet-icon misc-icon" aria-hidden="true">
+                <img src="./assets/icons/reimbursement-wallet.svg" alt="" />
+              </span>
             </div>
             <span class="wallet-name">Reimbursement</span>
             <small>Flexible spends</small>
@@ -563,9 +587,9 @@
           </button>
           <button class="utility-card" type="button">
             <span class="utility-icon" aria-hidden="true">
-              <img src="./assets/icons/block.svg" alt="" />
+              <img src="./assets/icons/UPI-PIN-Reset-home.svg" alt="" />
             </span>
-            <strong>Block Card</strong>
+            <strong>Set/ Reset PIN</strong>
           </button>
           <button class="utility-card" type="button">
             <span class="utility-icon" aria-hidden="true">
@@ -1114,16 +1138,6 @@
                 <span>Block<br />Card</span>
               </button>
               <button
-                class="manage-cards-control-tile manage-cards-freeze-action"
-                type="button"
-                data-manage-freeze-toggle
-              >
-                <span class="manage-cards-control-icon" aria-hidden="true">
-                  <img src="./assets/icons/card-freeze.svg" alt="" />
-                </span>
-                <span data-manage-freeze-title>Freeze<br />Card</span>
-              </button>
-              <button
                 class="manage-cards-control-tile"
                 type="button"
                 data-toast="Token management opened"
@@ -1227,7 +1241,9 @@
                 class="claims-action-option-card"
                 data-claims-action="start-telephone"
               >
-                <span aria-hidden="true"><svg><use href="#icon-card" /></svg></span>
+                <span aria-hidden="true"
+                  ><svg><use href="#icon-card" /></svg
+                ></span>
                 <strong>Telephone claim</strong>
                 <small>Submit a telephone or internet bill</small>
               </button>
@@ -1236,16 +1252,20 @@
                 class="claims-action-option-card"
                 data-claims-action="start-meal"
               >
-                <span aria-hidden="true"><svg><use href="#icon-food" /></svg></span>
-                <strong>Meal claim</strong>
-                <small>Submit meal expenses</small>
+                <span aria-hidden="true"
+                  ><svg><use href="#icon-car" /></svg
+                ></span>
+                <strong>Driver Salary</strong>
+                <small>Submit driver salary expenses</small>
               </button>
               <button
                 type="button"
                 class="claims-action-option-card"
                 data-claims-action="start-fuel"
               >
-                <span aria-hidden="true"><svg><use href="#icon-fuel" /></svg></span>
+                <span aria-hidden="true"
+                  ><svg><use href="#icon-fuel" /></svg
+                ></span>
                 <strong>Fuel claim</strong>
                 <small>Submit fuel expenses</small>
               </button>
@@ -1254,7 +1274,9 @@
                 class="claims-action-option-card"
                 data-claims-action="upload-start"
               >
-                <span aria-hidden="true"><svg><use href="#icon-receipt" /></svg></span>
+                <span aria-hidden="true"
+                  ><svg><use href="#icon-receipt" /></svg
+                ></span>
                 <strong>Upload a bill</strong>
                 <small>Scan and extract details</small>
               </button>
