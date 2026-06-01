@@ -1166,9 +1166,9 @@ body.is-pluspay .transactions-section {
 .scan-pay-tooltip-icon {
   display: grid;
   place-items: center;
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
   border: 2px solid #31534e;
   border-radius: 50%;
   color: #31534e;
@@ -9797,9 +9797,9 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   }
 
   .scan-pay-tooltip-icon {
-    width: 16px;
-    height: 16px;
-    flex-basis: 16px;
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
     font-size: 13px;
   }
 
