@@ -339,17 +339,17 @@ svg {
 .balance-card {
   position: relative;
   display: grid;
-  gap: 20px;
-  margin-top: var(--space-20);
-  min-height: 224px;
-  padding: 20px 22px 18px;
+  gap: 8px;
+  margin-top: var(--space-16);
+  min-height: 200px;
+  padding: 16px 24px 16px;
   border: 1px solid rgba(3, 41, 37, 0.98);
   border-radius: 24px;
   background:
     radial-gradient(
       110% 82% at 18% 3%,
       rgba(255, 255, 255, 0.13),
-      transparent 34%
+      transparent 32%
     ),
     radial-gradient(
       88% 64% at 87% 18%,
@@ -484,7 +484,7 @@ svg {
   position: relative;
   z-index: 1;
   color: #ffffff;
-  font-size: clamp(40px, 13.5vw, 50px);
+  font-size: clamp(32px, 13.5vw, 40px);
   line-height: 1;
   font-family:
     "Lato",
@@ -500,10 +500,11 @@ svg {
 
 .balance-caption {
   display: block;
-  margin-top: 11px;
+  margin-top: 13px;
   color: #ffffff;
+  opacity: 0.8;
   font-size: 13px;
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-regular);
 }
 
 .balance-copy::before {
@@ -511,7 +512,7 @@ svg {
 }
 
 .balance-copy::after {
-  content: "Tap anywhere on the wallet to view card details";
+  /* content: "Tap anywhere on the wallet to view card details"; */
   display: block;
   margin-top: 18px;
   padding-top: 16px;
@@ -803,6 +804,7 @@ body.is-pluspay .transactions-section {
 .upi-panel {
   display: grid;
   gap: 14px;
+  margin-top: 16px;
   padding-bottom: 0;
 }
 
@@ -1047,7 +1049,7 @@ body.is-pluspay .transactions-section {
   gap: 12px;
   width: 100%;
   min-height: 122px;
-  margin-top: 6px;
+  margin-top: 2px;
   padding: 14px 16px;
   border: 1.5px solid rgba(198, 224, 182, 0.9);
   border-radius: 20px;
@@ -1182,9 +1184,9 @@ body.is-pluspay .transactions-section {
   gap: 9px;
   width: 100%;
   max-height: 120px;
-  min-height: 84px;
-  margin-top: 30px;
-  padding: 9px 12px 9px 8px;
+  min-height: 72px;
+  margin-top: 16px;
+  padding: 8px 8px 8px 8px;
   border: 1px solid rgba(54, 204, 139, 0.48);
   border-radius: 16px;
   background:
@@ -1329,7 +1331,7 @@ body.is-pluspay .transactions-section {
 .tap-pay-discovery-copy {
   position: relative;
   display: grid;
-  gap: 5px;
+  gap: 3px;
   min-width: 0;
 }
 
@@ -4951,8 +4953,8 @@ body.is-merchant-directory-open .bottom-nav {
   align-items: start;
   width: min(100%, 402px);
   max-width: 100vw;
-  height: 107px;
-  padding: 0 0 34px;
+  height: 92px;
+  padding: 0 0 24px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   background: #ffffff;
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.04);
@@ -4966,7 +4968,7 @@ body.is-merchant-directory-open .bottom-nav {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 34px;
+  height: 24px;
   background: #ffffff;
   backdrop-filter: blur(17.5px);
   pointer-events: none;
