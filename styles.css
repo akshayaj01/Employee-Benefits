@@ -841,8 +841,8 @@ body.is-pluspay .transactions-section {
 
 .upi-card-create {
   grid-template-columns: 40px minmax(0, 1fr) auto;
-  height: 80px;
-  padding: 12px 18px 12px 14px;
+  height: 64px;
+  padding: 4px 18px 4px 14px;
   border-radius: 16px;
   gap: 16px;
   background:
@@ -1004,7 +1004,7 @@ body.is-pluspay .transactions-section {
   align-items: center;
   justify-content: center;
   align-self: center;
-  min-height: 38px;
+  min-height: 24px;
   padding: 0 12px;
   border-radius: 12px;
   background: #ffffff;
@@ -1012,7 +1012,7 @@ body.is-pluspay .transactions-section {
     inset 0 0 0 1px rgba(0, 66, 45, 0.14),
     0 8px 14px rgba(8, 37, 30, 0.14);
   color: #0f5d4c;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
   font-weight: var(--fw-bold);
   white-space: nowrap;
@@ -1146,7 +1146,7 @@ body.is-pluspay .transactions-section {
   align-items: center;
   gap: 10px;
   min-height: 44px;
-  padding: 10px 14px;
+  padding: 4px 14px;
   border-radius: 16px;
   background: linear-gradient(90deg, #eef8e8, #e6f4dd);
   color: #274440;
@@ -1166,9 +1166,9 @@ body.is-pluspay .transactions-section {
 .scan-pay-tooltip-icon {
   display: grid;
   place-items: center;
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
   border: 2px solid #31534e;
   border-radius: 50%;
   color: #31534e;
@@ -4953,8 +4953,8 @@ body.is-merchant-directory-open .bottom-nav {
   align-items: start;
   width: min(100%, 402px);
   max-width: 100vw;
-  height: 92px;
-  padding: 0 0 24px;
+  height: 76px;
+  padding: 0 0 8px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   background: #ffffff;
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.04);
@@ -4968,7 +4968,7 @@ body.is-merchant-directory-open .bottom-nav {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 24px;
+  height: 8px;
   background: #ffffff;
   backdrop-filter: blur(17.5px);
   pointer-events: none;
@@ -5001,7 +5001,7 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .nav-item.is-active {
-  color: #535862;
+  color: var(--brand-700);
 }
 
 .nav-icon-shell {
@@ -5014,7 +5014,9 @@ body.is-merchant-directory-open .bottom-nav {
 }
 
 .nav-item.is-active .nav-icon-shell {
-  color: #535862;
+  color: var(--brand-700);
+  background: var(--mint-soft);
+  border-radius: 10px;
 }
 
 .nav-icon-shell.has-dot::after {
@@ -5048,7 +5050,7 @@ body.is-merchant-directory-open .bottom-nav {
   justify-items: center;
   align-content: start;
   gap: 8px;
-  padding-top: 31px;
+  padding-top: 16px;
   color: #595e70 !important;
   transform: none;
   z-index: 2;
@@ -5060,14 +5062,14 @@ body.is-merchant-directory-open .bottom-nav {
 
 .claims-button span:first-child {
   position: absolute;
-  top: -31px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
   isolation: isolate;
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
   border: 0;
   border-radius: 50%;
   background: var(--brand-700);
@@ -5078,8 +5080,8 @@ body.is-merchant-directory-open .bottom-nav {
 
 .claims-button span:first-child svg,
 .claims-button span:first-child img {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   stroke-width: 2.25;
   animation: none;
 }
@@ -9789,15 +9791,15 @@ body.is-pluspay .bottom-nav .pluspay-scan-button {
   .scan-pay-tooltip {
     gap: 10px;
     min-height: 42px;
-    padding: 9px 12px;
+    padding: 4px 12px;
     border-radius: 16px;
     font-size: 12px;
   }
 
   .scan-pay-tooltip-icon {
-    width: 22px;
-    height: 22px;
-    flex-basis: 22px;
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
     font-size: 13px;
   }
 
