@@ -2502,7 +2502,7 @@ function renderTrackClaimScreen() {
     ],
     pending: [
       "Your claim is under review.",
-      "Our team and assistant are reviewing your claim. We may request more information if needed.",
+      "The assistant is checking the submitted bill and policy details.",
     ],
     approved: [
       "Great news! Your claim is approved.",
@@ -2851,6 +2851,1378 @@ function handleClaimsAction(action) {
     bindClaimsWorkspaceActions();
   }
 }
+
+const claimsAssistantData = {
+  wallet: {
+    name: "Reimbursement Wallet",
+    balance: "₹9,100",
+    monthlyLimit: "₹15,000",
+    used: "₹4,699",
+  },
+  uploadClaim: {
+    id: "CLM-43872",
+    category: "Telephone & Internet",
+    vendor: "Airtel Broadband",
+    provider: "Airtel Broadband",
+    amount: "₹1,299",
+    billDate: "12 May 2026",
+    billingMonth: "May 2026",
+    invoiceNo: "INV-AT-9021",
+    confidence: "96%",
+    document: {
+      name: "Airtel_Broadband_May.pdf",
+      size: "1.2 MB",
+      type: "PDF",
+    },
+  },
+  dashboard: {
+    metrics: [
+      ["Available balance", "₹9,100"],
+      ["Claimed this month", "₹4,699"],
+      ["Pending claims", "₹3,400"],
+      ["Approved this month", "₹1,299"],
+      ["Rejected", "₹0"],
+    ],
+    categories: [
+      ["Telephone & Internet", "₹1,299"],
+      ["Fuel & Maintenance", "₹3,400"],
+      ["Professional Development", "₹0"],
+      ["Driver Salary", "₹0"],
+    ],
+    recent: [
+      ["CLM-43872", "Airtel Broadband", "₹1,299", "Under review"],
+      ["CLM-42812", "Indian Oil", "₹3,400", "Needs info"],
+      ["CLM-40111", "Coursera", "₹7,999", "Approved"],
+    ],
+  },
+  policies: {
+    "Telephone & Internet": [
+      "Monthly mobile/internet bills are eligible",
+      "Bill must show name/number, billing period, amount, and date",
+      "Duplicate claim for same month is not allowed",
+    ],
+    "Fuel & Maintenance": [
+      "Fuel receipts and vehicle maintenance invoices are eligible",
+      "Vehicle number is required",
+      "Blurry receipts or missing amount/date cannot be submitted",
+    ],
+    "Professional Development": [
+      "Courses, certifications, and conferences are eligible",
+      "Invoice and course name are required",
+      "Approval or completion proof may be required",
+    ],
+    "Driver Salary": [
+      "Monthly driver salary can be claimed",
+      "Driver name, month, amount, and payment proof are required",
+      "Cash payment requires signed receipt/declaration",
+    ],
+  },
+  history: [
+    {
+      id: "CLM-43872",
+      vendor: "Airtel Broadband",
+      amount: "₹1,299",
+      category: "Telephone & Internet",
+      status: "Under review",
+      submitted: "12 May 2026",
+      icon: "icon-card",
+      timelineStatus: "under-review",
+    },
+    {
+      id: "CLM-42812",
+      vendor: "Indian Oil",
+      amount: "₹3,400",
+      category: "Fuel & Maintenance",
+      status: "Needs info",
+      submitted: "11 May 2026",
+      icon: "icon-fuel",
+      timelineStatus: "needs-info",
+    },
+    {
+      id: "CLM-40111",
+      vendor: "Coursera",
+      amount: "₹7,999",
+      category: "Professional Development",
+      status: "Approved",
+      submitted: "03 May 2026",
+      icon: "icon-receipt",
+      timelineStatus: "approved",
+    },
+  ],
+};
+
+const claimsScenarioAliases = {
+  "duplicate month": "duplicate-month",
+  duplicate: "duplicate-month",
+  "missing billing period": "missing-billing-period",
+  "name mismatch": "name-mismatch",
+  "amount mismatch": "amount-mismatch",
+  "missing vehicle number": "missing-vehicle-number",
+  "blurry receipt": "blurry-receipt",
+  blurry: "blurry-receipt",
+  "future date": "future-date",
+  "invalid bill type": "invalid-bill-type",
+  "multiple items": "multiple-items",
+  "missing course name": "missing-course-name",
+  "missing approval proof": "missing-approval",
+  "missing completion certificate": "missing-completion",
+  "payment screenshot": "payment-screenshot",
+  "personal subscription": "personal-subscription",
+  "missing driver name": "missing-driver-name",
+  "missing month": "missing-month",
+  "payment proof missing": "payment-proof-missing",
+  "cash receipt not signed": "cash-receipt-not-signed",
+  "driver limit exceeded": "driver-limit-exceeded",
+  "unsupported file": "unsupported-file",
+  "file too large": "file-too-large",
+  "network error": "network-failure",
+  "ocr failed": "ocr-failed",
+  "wallet balance": "wallet-balance-insufficient",
+  "policy limit": "policy-limit-exceeded",
+  "duplicate invoice": "duplicate-invoice",
+  timeout: "session-timeout",
+};
+
+let claimMessageCounter = 0;
+
+function escapeHTML(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeAttribute(value = "") {
+  return escapeHTML(value).replace(/`/g, "&#096;");
+}
+
+function claimIcon(id) {
+  return `<svg aria-hidden="true"><use href="#${id}" /></svg>`;
+}
+
+function getClaimMessageTime() {
+  return claimState.messages.length < 4 ? "10:30 AM" : "10:31 AM";
+}
+
+function beginClaimsFlow(view = "chat") {
+  claimState.view = view;
+  claimState.flowToken = (claimState.flowToken || 0) + 1;
+  claimState.isActionMenuOpen = false;
+  setClaimsActionMenu(false);
+  return claimState.flowToken;
+}
+
+function isActiveClaimsFlow(token) {
+  return claimState.flowToken === token;
+}
+
+function resetWorkspace() {
+  if (claimsWorkspace) claimsWorkspace.innerHTML = "";
+}
+
+function resetClaimJourney() {
+  claimState.view = "home";
+  claimState.messages = [];
+  claimState.scanningProgress = 0;
+  claimState.uploaded = false;
+  claimState.selectedClaim = null;
+  claimState.anomalyResolved = false;
+  claimState.supportingDocumentAttached = false;
+  claimState.declarationAccepted = [false];
+  claimState.claimSubmitted = false;
+  claimState.trackStatus = "under-review";
+  claimState.historyFilter = "All";
+  claimState.historySearch = "";
+  claimState.selectedHistoryId = "CLM-43872";
+  claimState.isActionMenuOpen = false;
+  claimState.manualDetails = {};
+  claimState.isThinking = false;
+  claimState.greetingAnimating = false;
+  claimState.activeJourney = "home";
+  claimState.awaiting = "";
+  claimState.flowToken = (claimState.flowToken || 0) + 1;
+}
+
+function addClaimMessage(role, text, type = "normal") {
+  claimState.messages.push({
+    id: `claim-chat-${++claimMessageCounter}`,
+    kind: "message",
+    role,
+    text,
+    type,
+    time: getClaimMessageTime(),
+  });
+  renderClaimsAssistant();
+}
+
+function addUserMessage(text) {
+  addClaimMessage("user", escapeHTML(text));
+}
+
+function addBotMessage(text, type = "normal") {
+  addClaimMessage("assistant", text, type);
+}
+
+function addTypingIndicator() {
+  claimState.isThinking = true;
+  renderClaimsAssistant();
+}
+
+function removeTypingIndicator() {
+  claimState.isThinking = false;
+  renderClaimsAssistant();
+}
+
+function addQuickReplies(replies) {
+  claimState.messages.push({
+    id: `claim-chat-${++claimMessageCounter}`,
+    kind: "quickReplies",
+    replies: replies.map((reply) =>
+      typeof reply === "string" ? { label: reply, action: reply } : reply,
+    ),
+    time: getClaimMessageTime(),
+  });
+  renderClaimsAssistant();
+}
+
+function addInlineCard(html, cardType = "generic") {
+  claimState.messages.push({
+    id: `claim-chat-${++claimMessageCounter}`,
+    kind: "card",
+    role: "assistant",
+    html,
+    cardType,
+    time: getClaimMessageTime(),
+  });
+  renderClaimsAssistant();
+}
+
+function scrollClaimsToBottom(behavior = "smooth") {
+  window.requestAnimationFrame(() => {
+    claimsScroll?.scrollTo({
+      top: claimsScroll.scrollHeight,
+      behavior,
+    });
+  });
+}
+
+function simulateDelay(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+async function botSay(text, delay = 420, type = "normal", token) {
+  addTypingIndicator();
+  await simulateDelay(delay);
+  if (token && !isActiveClaimsFlow(token)) return;
+  removeTypingIndicator();
+  addBotMessage(text, type);
+}
+
+async function botCard(html, delay = 280, cardType = "generic", token) {
+  addTypingIndicator();
+  await simulateDelay(delay);
+  if (token && !isActiveClaimsFlow(token)) return;
+  removeTypingIndicator();
+  addInlineCard(html, cardType);
+}
+
+function renderHomeJourney() {
+  resetClaimJourney();
+  resetWorkspace();
+  addBotMessage(
+    "Hi Akshay 👋 I can help you claim reimbursements from your Reimbursement Wallet. What would you like to do?",
+  );
+  addQuickReplies(["Upload bill", "View dashboard", "View policy", "Claim history"]);
+}
+
+async function startUploadBillJourney() {
+  const token = beginClaimsFlow("upload");
+  claimState.activeJourney = "upload";
+  await botSay("Sure. Upload a bill and I’ll read it for you.", 380, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderUploadOptionsCard(), "upload-options");
+}
+
+async function simulateBillUploadJourney() {
+  const token = beginClaimsFlow("upload-scan");
+  claimState.declarationAccepted = [false];
+  const claim = claimsAssistantData.uploadClaim;
+  addInlineCard(renderFilePreviewCard(claim.document), "file-preview");
+  await botSay("Reading your bill...", 520, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderScanningCard(), "scanning");
+  await simulateDelay(1250);
+  if (!isActiveClaimsFlow(token)) return;
+  await botSay(
+    "I found an Airtel Broadband bill. It looks like a Telephone & Internet claim.",
+    360,
+    "normal",
+    token,
+  );
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderExtractionCard(), "extraction");
+  addQuickReplies(["Looks good", "Edit details", "Change category"]);
+}
+
+async function continueUploadValidationJourney() {
+  const token = beginClaimsFlow("validate");
+  await botSay(
+    "Great. I’ll check your wallet balance and policy eligibility.",
+    420,
+    "normal",
+    token,
+  );
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderValidationCard(), "validation");
+  await simulateDelay(900);
+  if (!isActiveClaimsFlow(token)) return;
+  await botSay("Everything looks good. Ready to submit?", 320, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderFinalReviewCard(), "final-review");
+}
+
+async function submitClaimJourney() {
+  if (!claimState.declarationAccepted[0]) {
+    showToast("Please confirm the declaration to submit");
+    return;
+  }
+  const token = beginClaimsFlow("submit");
+  addUserMessage("Submit claim");
+  await botSay("Done 🎉 Your claim has been submitted.", 650, "success", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderSuccessCard(), "success");
+  addQuickReplies(["Track status", "Submit another claim", "View dashboard"]);
+}
+
+async function renderDashboardJourney() {
+  const token = beginClaimsFlow("dashboard");
+  await botSay("Here’s your Reimbursement Wallet dashboard.", 360, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderDashboardCard(), "dashboard");
+  addQuickReplies(["Upload bill", "View policy", "Claim history"]);
+}
+
+async function renderPolicyJourney(category = "") {
+  const token = beginClaimsFlow("policy");
+  if (!category) {
+    await botSay(
+      "Here’s the reimbursement policy summary. Which category do you want to check?",
+      360,
+      "normal",
+      token,
+    );
+    if (!isActiveClaimsFlow(token)) return;
+    addQuickReplies([
+      "Telephone & Internet",
+      "Fuel & Maintenance",
+      "Professional Development",
+      "Driver Salary",
+      "All categories",
+    ]);
+    return;
+  }
+
+  if (category === "All categories") {
+    addInlineCard(renderPolicySummaryCard(), "policy-summary");
+    addQuickReplies(["Upload bill", "Ask about a category", "Claim history"]);
+    return;
+  }
+
+  addInlineCard(renderPolicyCategoryCard(category), "policy-category");
+  await botSay("Do you want to start this claim now?", 280, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addQuickReplies(["Start claim", "View another policy"]);
+}
+
+async function renderClaimHistoryJourney(filter = "All") {
+  const token = beginClaimsFlow("history");
+  claimState.historyFilter = filter;
+  await botSay("Here are your recent reimbursement claims.", 360, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderClaimHistoryCard(filter), "history");
+}
+
+async function renderClaimDetailJourney(id) {
+  const token = beginClaimsFlow("claim-detail");
+  const claim =
+    claimsAssistantData.history.find((item) => item.id === id) ||
+    claimsAssistantData.history[0];
+  claimState.selectedHistoryId = claim.id;
+  await botSay(`Here’s the detail for ${claim.id}.`, 300, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderClaimDetailCard(claim), "claim-detail");
+  if (claim.id === "CLM-42812") {
+    await botSay(
+      "This fuel claim needs your vehicle number before it can be submitted further.",
+      360,
+      "warning",
+      token,
+    );
+    if (!isActiveClaimsFlow(token)) return;
+    addQuickReplies(["Add vehicle number", "Upload different bill"]);
+  }
+}
+
+async function renderClaimStatusJourney() {
+  const token = beginClaimsFlow("status");
+  await botSay("Here’s the latest status of your claim.", 300, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderClaimStatusCard(), "status");
+  addQuickReplies(["View dashboard", "Claim history", "Submit another claim"]);
+}
+
+async function startTelephoneJourney() {
+  const token = beginClaimsFlow("telephone");
+  await botSay(
+    "Telephone & Internet claims are checked for billing month, employee name, amount, invoice number, and duplicate month.",
+    360,
+    "normal",
+    token,
+  );
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(renderPolicyCategoryCard("Telephone & Internet"), "policy-category");
+  addQuickReplies([
+    "Upload bill",
+    "Duplicate month",
+    "Missing billing period",
+    "Name mismatch",
+    "Amount mismatch",
+  ]);
+}
+
+async function startFuelJourney() {
+  const token = beginClaimsFlow("fuel");
+  await botSay("Let’s read a Fuel & Maintenance bill.", 320, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(
+    renderMockExtractionCard({
+      title: "IndianOil_Receipt.jpg",
+      icon: "icon-fuel",
+      rows: [
+        ["Category", "Fuel & Maintenance"],
+        ["Vendor", "Indian Oil"],
+        ["Amount", "₹3,400"],
+        ["Date", "11 May 2026"],
+        ["Vehicle number", "Not found"],
+      ],
+      tone: "warning",
+    }),
+    "fuel-extraction",
+  );
+  await botSay("I couldn’t find the vehicle number. Please enter it.", 360, "warning", token);
+  if (!isActiveClaimsFlow(token)) return;
+  claimState.awaiting = "vehicle-number";
+  addQuickReplies([
+    "DL01AB1234",
+    "Missing vehicle number",
+    "Blurry receipt",
+    "Future date",
+    "Invalid bill type",
+    "Multiple items",
+  ]);
+}
+
+async function startProfessionalDevelopmentJourney() {
+  const token = beginClaimsFlow("professional-development");
+  await botSay("I found a Professional Development claim from Coursera.", 340, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  addInlineCard(
+    renderMockExtractionCard({
+      title: "Coursera_AI_PM.pdf",
+      icon: "icon-receipt",
+      rows: [
+        ["Category", "Professional Development"],
+        ["Provider", "Coursera"],
+        ["Course", "AI Product Management"],
+        ["Amount", "₹7,999"],
+        ["Date", "03 May 2026"],
+      ],
+      footer: "This category may need approval or completion proof.",
+    }),
+    "professional-extraction",
+  );
+  addQuickReplies([
+    "Upload approval",
+    "Missing course name",
+    "Missing approval proof",
+    "Missing completion certificate",
+    "Payment screenshot",
+    "Personal subscription",
+  ]);
+}
+
+async function startDriverSalaryJourney() {
+  const token = beginClaimsFlow("driver-salary");
+  await botSay(
+    "Driver salary claims need a few details. I’ll ask only what’s required.",
+    340,
+    "normal",
+    token,
+  );
+  if (!isActiveClaimsFlow(token)) return;
+  await botSay("I need the driver’s name to continue. What’s the driver’s name?", 260, "normal", token);
+  if (!isActiveClaimsFlow(token)) return;
+  claimState.awaiting = "driver-name";
+  addQuickReplies([
+    "Ramesh Kumar",
+    "Enter manually",
+    "Missing driver name",
+    "Payment proof missing",
+    "Cash receipt not signed",
+    "Driver limit exceeded",
+  ]);
+}
+
+async function renderErrorScenario(type) {
+  const scenario = getErrorScenario(type);
+  if (!scenario) return;
+  const token = beginClaimsFlow(`error-${type}`);
+  await botSay(scenario.message, 300, scenario.tone || "warning", token);
+  if (!isActiveClaimsFlow(token)) return;
+  if (scenario.card) addInlineCard(scenario.card, scenario.cardType || "error");
+  if (scenario.replies?.length) addQuickReplies(scenario.replies);
+}
+
+function renderUploadOptionsCard() {
+  return `
+    <article class="claims-inline-card upload-options">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-receipt")}</span>
+        <div><strong>Upload options</strong><small>PDF, JPG or PNG up to 10 MB</small></div>
+      </div>
+      <div class="claims-option-list">
+        ${[
+          ["Take photo", "icon-eye"],
+          ["Upload PDF", "icon-receipt"],
+          ["Choose from gallery", "icon-image"],
+        ]
+          .map(
+            ([label, icon]) => `
+          <button type="button" data-claims-workspace-action="simulate-upload" data-user-message="${escapeAttribute(label)}">
+            <span aria-hidden="true">${claimIcon(icon)}</span>
+            <strong>${label}</strong>
+          </button>
+        `,
+          )
+          .join("")}
+      </div>
+    </article>
+  `;
+}
+
+function renderFilePreviewCard(doc) {
+  return `
+    <article class="claims-inline-card file-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-receipt")}</span>
+        <div><strong>${doc.name}</strong><small>${doc.type} • ${doc.size}</small></div>
+      </div>
+      <span class="claims-card-status success">Uploaded</span>
+    </article>
+  `;
+}
+
+function renderScanningCard() {
+  return `
+    <article class="claims-inline-card scan-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-scan")}</span>
+        <div><strong>Scanning bill...</strong><small>Extracting key details from your document</small></div>
+      </div>
+      <div class="claims-scan-steps">
+        ${["Vendor detected", "Amount detected", "Bill date detected", "Checking policy"]
+          .map((step) => `<span>${claimIcon("icon-checks")}${step}</span>`)
+          .join("")}
+      </div>
+    </article>
+  `;
+}
+
+function renderExtractionCard() {
+  const claim = claimsAssistantData.uploadClaim;
+  return `
+    <article class="claims-inline-card extraction-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-card")}</span>
+        <div><strong>Claim details extracted</strong><small>Confidence ${claim.confidence}</small></div>
+      </div>
+      ${renderClaimsDataGrid([
+        ["Category", claim.category],
+        ["Vendor", claim.vendor],
+        ["Amount", claim.amount],
+        ["Bill date", claim.billDate],
+        ["Billing month", claim.billingMonth],
+        ["Invoice no", claim.invoiceNo],
+      ])}
+    </article>
+  `;
+}
+
+function renderValidationCard() {
+  return `
+    <article class="claims-inline-card scan-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-wallet")}</span>
+        <div><strong>Validating policy...</strong><small>Wallet balance, policy and duplicate checks</small></div>
+      </div>
+      <div class="claims-scan-steps">
+        ${["Wallet balance available", "Monthly policy matched", "Invoice number unique", "No duplicate month found"]
+          .map((step) => `<span>${claimIcon("icon-checks")}${step}</span>`)
+          .join("")}
+      </div>
+    </article>
+  `;
+}
+
+function renderFinalReviewCard() {
+  const isChecked = Boolean(claimState.declarationAccepted[0]);
+  return `
+    <article class="claims-inline-card final-review-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-claim")}</span>
+        <div><strong>Final review</strong><small>Reimbursement Wallet</small></div>
+      </div>
+      ${renderClaimsDataGrid([
+        ["Wallet", "Reimbursement Wallet"],
+        ["Category", "Telephone & Internet"],
+        ["Amount", "₹1,299"],
+        ["Balance before", "₹9,100"],
+        ["Balance after", "₹7,801"],
+        ["Document", "Airtel_Broadband_May.pdf"],
+      ])}
+      <label class="claims-declaration">
+        <input type="checkbox" ${isChecked ? "checked" : ""} data-claims-declaration="0" />
+        <span>I confirm this claim is genuine and not submitted earlier.</span>
+      </label>
+      <button type="button" class="claims-primary-action" ${isChecked ? "" : "disabled"} data-claims-workspace-action="submit-claim">
+        Submit claim
+      </button>
+    </article>
+  `;
+}
+
+function renderSuccessCard() {
+  return `
+    <article class="claims-inline-card success-card">
+      <div class="claims-success-mark">${claimIcon("icon-checks")}</div>
+      <strong>Claim submitted</strong>
+      ${renderClaimsDataGrid([
+        ["Claim ID", "CLM-43872"],
+        ["Amount", "₹1,299"],
+        ["Status", "Under review"],
+        ["Expected update", "2 working days"],
+      ])}
+    </article>
+  `;
+}
+
+function renderDashboardCard() {
+  const dashboard = claimsAssistantData.dashboard;
+  return `
+    <article class="claims-inline-card dashboard-chat-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-wallet")}</span>
+        <div><strong>Reimbursement Wallet dashboard</strong><small>May 2026 overview</small></div>
+      </div>
+      ${renderClaimsDataGrid(dashboard.metrics)}
+      <div class="claims-usage-block">
+        <div><span>Used: ₹4,699</span><strong>Monthly limit: ₹15,000</strong><span>Available: ₹9,100</span></div>
+        <i><b style="width:31%"></b></i>
+      </div>
+      <section class="claims-card-section">
+        <strong>Category breakdown</strong>
+        ${dashboard.categories.map(([label, value]) => `<p><span>${label}</span><b>${value}</b></p>`).join("")}
+      </section>
+      <section class="claims-card-section">
+        <strong>Recent activity</strong>
+        ${dashboard.recent
+          .map(
+            ([id, vendor, amount, status]) =>
+              `<button type="button" data-claims-workspace-action="claim-detail" data-claim-id="${id}"><span>${id}<small>${vendor}</small></span><b>${amount}<em>${status}</em></b></button>`,
+          )
+          .join("")}
+      </section>
+    </article>
+  `;
+}
+
+function renderPolicySummaryCard() {
+  return `
+    <article class="claims-inline-card policy-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-help")}</span>
+        <div><strong>Reimbursement Wallet Policy</strong><small>All categories</small></div>
+      </div>
+      ${Object.entries(claimsAssistantData.policies)
+        .map(
+          ([category, rules]) => `
+        <section class="claims-policy-group">
+          <strong>${category}</strong>
+          <ul>${rules.map((rule) => `<li>${rule}</li>`).join("")}</ul>
+        </section>
+      `,
+        )
+        .join("")}
+    </article>
+  `;
+}
+
+function renderPolicyCategoryCard(category) {
+  const rules = claimsAssistantData.policies[category] || claimsAssistantData.policies["Telephone & Internet"];
+  return `
+    <article class="claims-inline-card policy-card compact">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon(category === "Fuel & Maintenance" ? "icon-fuel" : "icon-card")}</span>
+        <div><strong>${category}</strong><small>Policy summary</small></div>
+      </div>
+      <ul>${rules.map((rule) => `<li>${rule}</li>`).join("")}</ul>
+    </article>
+  `;
+}
+
+function renderClaimHistoryCard(filter = "All") {
+  const claims = claimsAssistantData.history.filter(
+    (claim) => filter === "All" || claim.status === filter,
+  );
+  return `
+    <article class="claims-inline-card history-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-receipt")}</span>
+        <div><strong>Claim history</strong><small>${filter} claims</small></div>
+      </div>
+      <div class="claims-history-filters">
+        ${["All", "Under review", "Needs info", "Approved", "Rejected"]
+          .map(
+            (item) =>
+              `<button type="button" class="${item === filter ? "active" : ""}" data-claims-workspace-action="history-filter" data-filter="${item}">${item}</button>`,
+          )
+          .join("")}
+      </div>
+      <div class="claims-history-list-chat">
+        ${claims.length
+          ? claims.map((claim) => renderHistoryItemButton(claim)).join("")
+          : `<p>No claims match this filter.</p>`}
+      </div>
+    </article>
+  `;
+}
+
+function renderHistoryItemButton(claim) {
+  return `
+    <button type="button" class="claim-history-item" data-claims-workspace-action="claim-detail" data-claim-id="${claim.id}">
+      <span class="transaction-icon" aria-hidden="true">${claimIcon(claim.icon)}</span>
+      <span class="transaction-meta"><strong>${claim.id}</strong><span>${claim.vendor}<br>${claim.category}</span></span>
+      <span class="transaction-amount"><strong>${claim.amount}</strong><span>${claim.submitted}</span>${renderStatusBadge(claim.status)}</span>
+    </button>
+  `;
+}
+
+function renderClaimDetailCard(claim) {
+  return `
+    <article class="claims-inline-card detail-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon(claim.icon)}</span>
+        <div><strong>${claim.id}</strong><small>${claim.vendor}</small></div>
+      </div>
+      ${renderClaimsDataGrid([
+        ["Category", claim.category],
+        ["Vendor", claim.vendor],
+        ["Amount", claim.amount],
+        ["Submitted", claim.submitted],
+        ["Current status", claim.status],
+      ])}
+      ${renderTimeline(claim.timelineStatus)}
+    </article>
+  `;
+}
+
+function renderClaimStatusCard() {
+  return `
+    <article class="claims-inline-card detail-card">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon("icon-claim")}</span>
+        <div><strong>CLM-43872</strong><small>Airtel Broadband</small></div>
+      </div>
+      ${renderClaimsDataGrid([
+        ["Category", "Telephone & Internet"],
+        ["Amount", "₹1,299"],
+        ["Submitted", "12 May 2026, 10:33 AM"],
+        ["Current status", "Under review"],
+      ])}
+      ${renderTimeline("under-review")}
+      <p class="claims-card-note">I’ll notify you once it’s approved.</p>
+    </article>
+  `;
+}
+
+function renderTimeline(status) {
+  const steps = [
+    ["submitted", "Submitted"],
+    ["policy", "Policy checked"],
+    ["under-review", status === "needs-info" ? "Needs info" : status === "approved" ? "Approved" : "Under review"],
+    ["reimbursed", "Reimbursed"],
+  ];
+  const currentIndex = status === "approved" ? 2 : status === "needs-info" ? 2 : 2;
+  return `
+    <div class="claim-status-timeline compact">
+      ${steps
+        .map(
+          ([id, label], index) => `
+        <article class="${index < currentIndex ? "is-complete" : ""} ${index === currentIndex ? "is-current" : ""}">
+          <i>${index <= currentIndex ? "✓" : ""}</i>
+          <div><strong>${label}</strong><span>${index <= currentIndex ? "12 May 2026" : "Upcoming"}</span></div>
+        </article>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderMockExtractionCard({ title, icon, rows, footer = "", tone = "" }) {
+  return `
+    <article class="claims-inline-card extraction-card ${tone}">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon(icon)}</span>
+        <div><strong>${title}</strong><small>Mock extraction</small></div>
+      </div>
+      ${renderClaimsDataGrid(rows)}
+      ${footer ? `<p class="claims-card-note">${footer}</p>` : ""}
+    </article>
+  `;
+}
+
+function renderClaimsDataGrid(rows) {
+  return `
+    <div class="claims-data-grid">
+      ${rows
+        .map(
+          ([label, value]) => `
+        <p><span>${label}</span><strong>${value}</strong></p>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function getErrorScenario(type) {
+  const card = (title, rows, tone = "error") => `
+    <article class="claims-inline-card scenario-card ${tone}">
+      <div class="claims-card-title">
+        <span aria-hidden="true">${claimIcon(tone === "danger" ? "icon-close" : "icon-help")}</span>
+        <div><strong>${title}</strong><small>Recovery available</small></div>
+      </div>
+      ${rows?.length ? renderClaimsDataGrid(rows) : ""}
+    </article>
+  `;
+
+  const scenarios = {
+    "duplicate-month": {
+      message: "I found a similar Telephone & Internet claim for May 2026.",
+      card: card("Duplicate Claim Found", [
+        ["Existing claim", "CLM-32811"],
+        ["Category", "Telephone & Internet"],
+        ["Month", "May 2026"],
+        ["Amount", "₹1,299"],
+        ["Status", "Approved"],
+      ]),
+      replies: ["View existing claim", "Upload different bill"],
+    },
+    "missing-billing-period": {
+      message: "I couldn’t identify the billing month on this bill.",
+      card: `<article class="claims-inline-card scenario-card"><strong>Which month is this bill for?</strong></article>`,
+      replies: ["May 2026", "June 2026", "Other"],
+    },
+    "name-mismatch": {
+      message: "The name on this bill doesn’t match your employee profile.",
+      card: card("Name mismatch", [
+        ["Bill name", "Rohan Mehta"],
+        ["Employee profile", "Akshay"],
+      ]),
+      replies: ["Upload proof", "Change bill", "Cancel claim"],
+    },
+    "amount-mismatch": {
+      message: "The amount entered doesn’t match the bill.",
+      card: card("Amount mismatch", [
+        ["Detected amount", "₹1,299"],
+        ["Entered amount", "₹1,500"],
+      ]),
+      replies: ["Use ₹1,299", "Edit amount", "Cancel"],
+    },
+    "missing-vehicle-number": {
+      message: "I couldn’t find the vehicle number. Please enter it.",
+      replies: ["DL01AB1234", "Upload different bill"],
+    },
+    "blurry-receipt": {
+      message: "Hmm... this receipt is too blurry. I can’t read the amount and date clearly.",
+      replies: ["Retake photo", "Upload another file", "Enter manually"],
+    },
+    "future-date": {
+      message: "The bill date appears to be in the future: 18 July 2026. Please check the date.",
+      replies: ["Edit date", "Upload another bill"],
+    },
+    "invalid-bill-type": {
+      message: "This doesn’t look like a fuel or vehicle maintenance bill.",
+      replies: ["Change category", "Upload fuel bill", "Cancel"],
+    },
+    "multiple-items": {
+      message: "This bill has multiple line items. Select what you want to claim.",
+      card: card("Eligible line items", [
+        ["Fuel", "₹2,800"],
+        ["Car wash", "₹600"],
+        ["Snacks", "₹250 - not eligible"],
+      ]),
+      replies: ["Fuel ₹2,800", "Car wash ₹600", "Upload another bill"],
+    },
+    "missing-course-name": {
+      message: "I couldn’t detect the course name. What course is this for?",
+      replies: ["AI Product Management", "Enter manually"],
+    },
+    "missing-approval": {
+      message: "This claim needs approval proof before submission.",
+      replies: ["Upload approval", "Save as draft"],
+    },
+    "missing-completion": {
+      message: "This claim needs a completion certificate before submission.",
+      replies: ["Upload certificate", "Save as draft"],
+    },
+    "payment-screenshot": {
+      message:
+        "This looks like a payment screenshot. I need an invoice or receipt with provider, course, date and amount.",
+      replies: ["Upload invoice", "Save draft", "Cancel"],
+    },
+    "personal-subscription": {
+      message: "This looks like a personal subscription, not a professional development course.",
+      replies: ["Change category", "Upload course invoice", "Save draft"],
+    },
+    "missing-driver-name": {
+      message: "I need the driver’s name to continue. What’s the driver’s name?",
+      replies: ["Ramesh Kumar", "Enter manually"],
+    },
+    "missing-month": {
+      message: "Which month is this driver salary claim for?",
+      replies: ["May 2026", "June 2026", "Other"],
+    },
+    "payment-proof-missing": {
+      message: "Please upload payment proof or a signed receipt for this salary claim.",
+      replies: ["Upload payment proof", "Upload signed receipt", "Save draft"],
+    },
+    "cash-receipt-not-signed": {
+      message: "The cash receipt is missing a signature.",
+      replies: ["Upload signed receipt", "Change payment mode", "Save draft"],
+    },
+    "driver-limit-exceeded": {
+      message: "This amount exceeds the monthly limit for Driver Salary.",
+      card: card("Policy limit exceeded", [
+        ["Claimed amount", "₹18,000"],
+        ["Allowed limit", "₹15,000"],
+      ]),
+      replies: ["Claim ₹15,000", "Edit amount", "Cancel"],
+    },
+    "unsupported-file": {
+      message: "I can only read PDF, JPG or PNG files right now.",
+      replies: ["Upload PDF", "Upload image"],
+    },
+    "file-too-large": {
+      message: "This file is larger than 10 MB. Please upload a smaller file.",
+      replies: ["Upload smaller file"],
+    },
+    "network-failure": {
+      message: "I couldn’t connect for a moment. Your draft is safe.",
+      replies: ["Try again", "Save draft"],
+    },
+    "ocr-failed": {
+      message: "I couldn’t read this bill clearly.",
+      replies: ["Retake photo", "Upload another", "Enter manually"],
+    },
+    "wallet-balance-insufficient": {
+      message: "Your Reimbursement Wallet balance is lower than this claim amount.",
+      card: card("Wallet balance insufficient", [
+        ["Claim amount", "₹12,000"],
+        ["Available balance", "₹9,100"],
+      ]),
+      replies: ["Claim ₹9,100", "Edit amount", "Cancel"],
+    },
+    "policy-limit-exceeded": {
+      message: "This claim exceeds the category limit.",
+      replies: ["Claim allowed amount", "View policy", "Edit amount"],
+    },
+    "duplicate-invoice": {
+      message: "This invoice number was already used in another claim.",
+      replies: ["View existing claim", "Upload another bill"],
+    },
+    "session-timeout": {
+      message: "You were away for a while, so I saved this as a draft.",
+      replies: ["Resume draft", "Start new claim"],
+    },
+  };
+  return scenarios[type];
+}
+
+function renderClaimsAssistant() {
+  if (!claimsStatus || !claimsThread || !claimsWorkspace) return;
+  claimsStatus.hidden = true;
+  claimsThread.innerHTML = renderClaimsThread();
+  claimsWorkspace.innerHTML = "";
+  bindClaimsWorkspaceActions();
+  syncClaimsComposer();
+  scrollClaimsToBottom();
+}
+
+function renderClaimsThread() {
+  return renderClaimsMessageStream();
+}
+
+function renderClaimsMessageStream() {
+  const messages = claimState.messages.map((message) => renderClaimMessage(message)).join("");
+  const typing = claimState.isThinking
+    ? renderClaimMessage({
+        role: "assistant",
+        text: `<span class="claims-mini-typing"><i></i><i></i><i></i></span>`,
+        typing: true,
+        type: "normal",
+      })
+    : "";
+  return messages + typing;
+}
+
+function renderClaimMessage(message) {
+  if (message.kind === "quickReplies") return renderQuickReplyMessage(message);
+  if (message.kind === "card") return renderInlineCardMessage(message);
+
+  const isUser = message.role === "user";
+  const typingClass = message.typing ? " is-typing" : "";
+  const variantClass = message.type ? ` is-${message.type}` : "";
+  const time = message.time || "10:30 AM";
+  return `
+    <div class="claims-message-row ${isUser ? "user" : "bot"}">
+      ${isUser ? "" : `<span class="claims-avatar" aria-hidden="true">${claimIcon("icon-claim")}</span>`}
+      <div class="claims-message ${isUser ? "user" : "bot"}${typingClass}${variantClass}">
+        <span class="claims-message-text">${message.text}</span>
+        ${message.typing ? "" : `<span class="claims-message-meta">${time}${isUser ? claimIcon("icon-checks") : ""}</span>`}
+      </div>
+    </div>
+  `;
+}
+
+function renderInlineCardMessage(message) {
+  const html =
+    message.cardType === "final-review" ? renderFinalReviewCard() : message.html;
+  return `
+    <div class="claims-message-row bot card-row">
+      <span class="claims-avatar" aria-hidden="true">${claimIcon("icon-claim")}</span>
+      <div class="claims-message bot claims-card-message">${html}</div>
+    </div>
+  `;
+}
+
+function renderQuickReplyMessage(message) {
+  return `
+    <div class="claims-message-row bot quick-row">
+      <span class="claims-avatar" aria-hidden="true">${claimIcon("icon-claim")}</span>
+      <div class="quick-reply-chips">
+        ${message.replies
+          .map(
+            ({ label, action }) =>
+              `<button type="button" data-claims-reply="${escapeAttribute(action || label)}">${escapeHTML(label)}</button>`,
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderClaimsWorkspace() {
+  return "";
+}
+
+function syncClaimsComposer() {
+  if (!claimsInput || !claimsSendButton) return;
+  const hasText = Boolean(claimsInput.value.trim());
+  claimsSendButton.disabled = !hasText;
+  claimsSendButton.setAttribute("aria-disabled", String(!hasText));
+  claimsActionMenuButton?.setAttribute(
+    "aria-expanded",
+    String(claimState.isActionMenuOpen),
+  );
+  claimsActionMenuButton?.classList.toggle(
+    "is-open",
+    claimState.isActionMenuOpen,
+  );
+  if (claimsActionMenu) claimsActionMenu.hidden = !claimState.isActionMenuOpen;
+  claimsInput.placeholder = "Message Claims Assistant...";
+}
+
+function openClaimsAssistant() {
+  if (!claimsAssistant) return;
+  closeCardOverlay();
+  closeWalletOverlay();
+  closeMerchantDirectory();
+  closeManageCardsOverlay();
+  claimsAssistant.hidden = false;
+  if (!claimState.messages.length) renderHomeJourney();
+  syncClaimsComposer();
+  renderClaimsAssistant();
+  window.requestAnimationFrame(() => {
+    claimsAssistant.classList.add("is-open");
+    syncPageScrollLock();
+  });
+}
+
+function closeClaimsAssistant() {
+  if (!claimsAssistant) return;
+  claimsAssistant.classList.remove("is-open");
+  syncPageScrollLock();
+  window.setTimeout(() => {
+    claimsAssistant.hidden = true;
+  }, 260);
+}
+
+function goToClaimsHome() {
+  renderHomeJourney();
+}
+
+function setClaimsActionMenu(isOpen) {
+  claimState.isActionMenuOpen = isOpen;
+  claimsActionMenuButton?.setAttribute("aria-expanded", String(isOpen));
+  claimsActionMenuButton?.classList.toggle("is-open", isOpen);
+  if (claimsActionMenu) claimsActionMenu.hidden = !isOpen;
+}
+
+function toggleDeclaration(index) {
+  claimState.declarationAccepted[index] = !claimState.declarationAccepted[index];
+  renderClaimsAssistant();
+}
+
+function bindClaimsWorkspaceActions() {
+  const roots = [claimsThread, claimsWorkspace].filter(Boolean);
+  roots.forEach((root) => {
+    root.querySelectorAll("[data-claims-workspace-action]").forEach((button) => {
+      button.addEventListener("click", () =>
+        handleClaimsAction(button.dataset.claimsWorkspaceAction, button),
+      );
+    });
+    root.querySelectorAll("[data-claims-reply]").forEach((button) => {
+      button.addEventListener("click", () =>
+        handleClaimsReply(button.dataset.claimsReply),
+      );
+    });
+    root.querySelectorAll("[data-claims-declaration]").forEach((input) => {
+      input.addEventListener("change", () =>
+        toggleDeclaration(Number(input.dataset.claimsDeclaration)),
+      );
+    });
+  });
+}
+
+function handleClaimsReply(reply = "") {
+  addUserMessage(reply);
+  routeClaimIntent(reply);
+}
+
+function handleClaimsAction(action, target) {
+  if (action === "toggle-claim-menu") {
+    setClaimsActionMenu(!claimState.isActionMenuOpen);
+    return;
+  }
+
+  setClaimsActionMenu(false);
+  const userMessage = target?.dataset?.userMessage;
+  if (userMessage) addUserMessage(userMessage);
+  if (!userMessage && target?.classList?.contains("claims-action-option-card")) {
+    const menuLabels = {
+      "upload-start": "Upload bill",
+      dashboard: "View dashboard",
+      policy: "View policy",
+      history: "Claim history",
+    };
+    if (menuLabels[action]) addUserMessage(menuLabels[action]);
+  }
+
+  if (action === "upload-start" || action === "upload") startUploadBillJourney();
+  if (action === "dashboard") renderDashboardJourney();
+  if (action === "policy") renderPolicyJourney();
+  if (action === "history") renderClaimHistoryJourney();
+  if (action === "simulate-upload") simulateBillUploadJourney();
+  if (action === "submit-claim") submitClaimJourney();
+  if (action === "claim-detail") {
+    const id = target?.dataset?.claimId || "CLM-43872";
+    if (!userMessage) addUserMessage(id);
+    renderClaimDetailJourney(id);
+  }
+  if (action === "history-filter") {
+    const filter = target?.dataset?.filter || "All";
+    addUserMessage(filter);
+    addInlineCard(renderClaimHistoryCard(filter), "history");
+  }
+  if (action === "start-telephone") startTelephoneJourney();
+  if (action === "start-fuel") startFuelJourney();
+  if (action === "start-professional-development") startProfessionalDevelopmentJourney();
+  if (action === "start-driver-salary" || action === "start-meal") startDriverSalaryJourney();
+}
+
+function routeClaimIntent(rawText = "") {
+  const text = rawText.trim();
+  const key = text.toLowerCase();
+
+  if (/^upload bill$|upload pdf|upload image|upload smaller file|upload another|upload different bill|submit another claim|start new claim|resume draft|try again/.test(key)) {
+    startUploadBillJourney();
+    return;
+  }
+  if (/dashboard|show dashboard/.test(key)) {
+    renderDashboardJourney();
+    return;
+  }
+  if (/claim history|^history$/.test(key)) {
+    renderClaimHistoryJourney();
+    return;
+  }
+  if (/track status|status|clm-43872/.test(key)) {
+    renderClaimStatusJourney();
+    return;
+  }
+  if (/^policy$|view policy|ask about a category|view another policy/.test(key)) {
+    renderPolicyJourney();
+    return;
+  }
+  if (claimsAssistantData.policies[text]) {
+    renderPolicyJourney(text);
+    return;
+  }
+  if (key === "all categories") {
+    renderPolicyJourney("All categories");
+    return;
+  }
+  if (/telephone/.test(key)) {
+    startTelephoneJourney();
+    return;
+  }
+  if (/fuel/.test(key) && !/₹/.test(key)) {
+    startFuelJourney();
+    return;
+  }
+  if (/professional development|coursera/.test(key)) {
+    startProfessionalDevelopmentJourney();
+    return;
+  }
+  if (/driver salary/.test(key)) {
+    startDriverSalaryJourney();
+    return;
+  }
+  if (key === "looks good") {
+    continueUploadValidationJourney();
+    return;
+  }
+  if (key === "edit details") {
+    addBotMessage("Sure. Tell me which detail you want to change: amount, bill date, billing month, or category.");
+    addQuickReplies(["Amount mismatch", "Missing billing period", "Change category"]);
+    return;
+  }
+  if (key === "change category") {
+    renderPolicyJourney();
+    return;
+  }
+  if (key === "view existing claim") {
+    renderClaimDetailJourney("CLM-43872");
+    return;
+  }
+  if (/dl01ab1234/.test(key)) {
+    claimState.awaiting = "";
+    addBotMessage("Thanks. I added vehicle number DL01AB1234 to the fuel claim.");
+    addInlineCard(
+      renderMockExtractionCard({
+        title: "Fuel claim updated",
+        icon: "icon-fuel",
+        rows: [
+          ["Vendor", "Indian Oil"],
+          ["Amount", "₹3,400"],
+          ["Vehicle number", "DL01AB1234"],
+          ["Status", "Ready to submit"],
+        ],
+      }),
+      "fuel-updated",
+    );
+    addQuickReplies(["Submit another claim", "View dashboard", "Claim history"]);
+    return;
+  }
+  if (/ramesh kumar/.test(key)) {
+    claimState.awaiting = "driver-month";
+    addBotMessage("Got it. Which month is this salary for?");
+    addQuickReplies(["May 2026", "June 2026", "Other"]);
+    return;
+  }
+  if (/may 2026|june 2026/.test(key)) {
+    addBotMessage(`Thanks. I’ll use ${text} for this claim.`);
+    addQuickReplies(["Upload bill", "View dashboard", "Claim history"]);
+    return;
+  }
+  if (/upload proof|upload approval|upload certificate|upload payment proof|upload signed receipt|upload invoice/.test(key)) {
+    addInlineCard(
+      renderFilePreviewCard({ name: "Supporting_Document.pdf", type: "PDF", size: "640 KB" }),
+      "file-preview",
+    );
+    addBotMessage("Thanks. I attached it to this draft.");
+    addQuickReplies(["Upload bill", "View dashboard", "Claim history"]);
+    return;
+  }
+  if (/save draft|save as draft/.test(key)) {
+    addBotMessage("Saved as a draft. You can resume it anytime from this assistant.", "success");
+    addQuickReplies(["Resume draft", "Start new claim", "View dashboard"]);
+    return;
+  }
+  if (/claim ₹15,000|claim ₹9,100|claim allowed amount|use ₹1,299|fuel ₹2,800|car wash ₹600|ai product management/.test(key)) {
+    addBotMessage("Done. I updated the claim with that value.", "success");
+    addQuickReplies(["Upload bill", "View dashboard", "Claim history"]);
+    return;
+  }
+  if (/cancel claim|cancel/.test(key)) {
+    addBotMessage("No problem. I cancelled this draft.", "warning");
+    addQuickReplies(["Upload bill", "View dashboard", "View policy", "Claim history"]);
+    return;
+  }
+
+  const directScenario = claimsScenarioAliases[key];
+  if (directScenario) {
+    renderErrorScenario(directScenario);
+    return;
+  }
+
+  const fuzzyScenario = Object.entries(claimsScenarioAliases).find(([alias]) =>
+    key.includes(alias),
+  );
+  if (fuzzyScenario) {
+    renderErrorScenario(fuzzyScenario[1]);
+    return;
+  }
+
+  addBotMessage("I can help you upload a bill, view the dashboard, check policy, review history, or test claim error scenarios.");
+  addQuickReplies(["Upload bill", "View dashboard", "View policy", "Claim history"]);
+}
+
+function getClaimAssistantReply(text) {
+  routeClaimIntent(text);
+  return "";
+}
+
+function addLiveClaimBotMessage(text, delay = 520) {
+  if (!text) return;
+  window.setTimeout(() => addBotMessage(text), delay);
+}
+
+function updateTrackStatus(status) {
+  claimState.trackStatus = status;
+  renderClaimStatusJourney();
+}
+
+function renderStatusBadge(status) {
+  const key = status.toLowerCase().replace(/\s+/g, "-");
+  return `<span class="status-badge ${key}">${status}</span>`;
+}
+
+resetClaimJourney();
 
 function showToast(message) {
   if (!toastRegion) return;
@@ -3209,17 +4581,17 @@ claimsCloseButtons.forEach((button) => {
 
 claimsActionButtons.forEach((button) => {
   button.addEventListener("click", () =>
-    handleClaimsAction(button.dataset.claimsAction),
+    handleClaimsAction(button.dataset.claimsAction, button),
   );
 });
 
 claimsSendButton?.addEventListener("click", () => {
   const text = claimsInput?.value.trim();
   if (!text) return;
-  addClaimMessage("user", text);
+  addUserMessage(text);
   claimsInput.value = "";
   syncClaimsComposer();
-  addLiveClaimBotMessage(getClaimAssistantReply(text), 720);
+  routeClaimIntent(text);
 });
 
 claimsInput?.addEventListener("keydown", (event) => {
