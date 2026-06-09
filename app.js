@@ -4,6 +4,12 @@ const transactions = document.querySelectorAll("[data-wallet]");
 const virtualCardToggle = document.querySelector("[data-virtual-card-toggle]");
 const balanceCard = document.querySelector(".balance-card");
 const cardOverlay = document.querySelector("[data-card-overlay]");
+const virtualCardNumberNodes = document.querySelectorAll(
+  "[data-virtual-card-number]",
+);
+const virtualCardNumberToggle = document.querySelector(
+  "[data-virtual-card-number-toggle]",
+);
 const overlayCloseButtons = document.querySelectorAll(
   "[data-card-overlay-close]",
 );
@@ -4846,6 +4852,23 @@ virtualCardToggle?.addEventListener("click", () => {
     syncPageScrollLock();
   });
   showToast("Virtual card details revealed");
+});
+
+virtualCardNumberToggle?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const isVisible =
+    virtualCardNumberToggle.getAttribute("aria-pressed") === "true";
+  const nextVisible = !isVisible;
+  virtualCardNumberToggle.setAttribute("aria-pressed", String(nextVisible));
+  virtualCardNumberToggle.setAttribute(
+    "aria-label",
+    nextVisible ? "Hide card number" : "Show card number",
+  );
+  virtualCardNumberNodes.forEach((node) => {
+    node.textContent = nextVisible
+      ? "4356 2468 0089 1234"
+      : "xxxx xxxx xxxx 1234";
+  });
 });
 
 balanceCard?.addEventListener("click", (event) => {

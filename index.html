@@ -268,12 +268,15 @@
           data-pluspay-hide
         >
           <div class="card-strip">
-            <span
-              class="category-title"
-              data-lens-text="Pine Card"
-              data-pluspay-text="Pluspay"
-              >Pine Card</span
-            >
+            <span class="hero-card-id">
+              <span
+                class="category-title"
+                data-lens-text="Rupay Card"
+                data-pluspay-text="Pluspay"
+                >Rupay Card</span
+              >
+              <small>xxxx xxxx xxxx 1234</small>
+            </span>
             <span
               class="status-pill"
               data-lens-text="Full KYC"
@@ -281,6 +284,9 @@
               >Full KYC</span
             >
           </div>
+          <span class="balance-card-arrow" aria-hidden="true">
+            <svg><use href="#icon-chevron-right" /></svg>
+          </span>
           <div class="balance-copy">
             <div>
               <p
@@ -306,7 +312,7 @@
               data-virtual-card-toggle
               data-pluspay-hide
             >
-              <span>•••• 7845</span>
+              <span>•••• 1234</span>
               <small>Virtual card</small>
             </button>
           </div>
@@ -823,8 +829,21 @@
       <section class="card-overlay-panel" aria-label="Virtual card details">
         <div class="card-overlay-visual">
           <div class="overlay-card">
-            <span class="overlay-card-brand">Pine Card</span>
-            <span class="overlay-card-number">4356 2468 0089 7845</span>
+            <span class="overlay-card-brand">Rupay Card</span>
+            <span class="overlay-card-number-row">
+              <span class="overlay-card-number" data-virtual-card-number
+                >4356 2468 0089 1234</span
+              >
+              <button
+                class="overlay-card-eye"
+                type="button"
+                aria-label="Hide card number"
+                aria-pressed="true"
+                data-virtual-card-number-toggle
+              >
+                <svg aria-hidden="true"><use href="#icon-eye" /></svg>
+              </button>
+            </span>
             <div class="overlay-card-meta">
               <div>
                 <span>VALID THRU</span>
@@ -852,9 +871,13 @@
           </div>
           <div class="card-details-row">
             <span>Card number</span>
-            <strong>4356 2468 0089 7845</strong>
+            <strong data-virtual-card-number>4356 2468 0089 1234</strong>
           </div>
           <div class="card-details-meta">
+            <div>
+              <span>Name</span>
+              <strong>V. Sharma</strong>
+            </div>
             <div>
               <span>Expiry</span>
               <strong>08/29</strong>
@@ -862,10 +885,6 @@
             <div>
               <span>CVV</span>
               <strong>482</strong>
-            </div>
-            <div>
-              <span>Name</span>
-              <strong>V. Sharma</strong>
             </div>
           </div>
         </div>
