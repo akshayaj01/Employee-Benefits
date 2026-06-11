@@ -3082,10 +3082,15 @@ function removeTypingIndicator() {
 }
 
 function addQuickReplies(replies) {
+  const visibleReplies = replies.flatMap((reply) => {
+    const label = typeof reply === "string" ? reply : reply.label;
+    return label === "Claim history" ? [reply, "View chat history"] : [reply];
+  });
+
   claimState.messages.push({
     id: `claim-chat-${++claimMessageCounter}`,
     kind: "quickReplies",
-    replies: replies.map((reply) =>
+    replies: visibleReplies.map((reply) =>
       typeof reply === "string" ? { label: reply, action: reply } : reply,
     ),
     time: getClaimMessageTime(),
@@ -4084,6 +4089,10 @@ function routeClaimIntent(rawText = "") {
   }
   if (/claim history|^history$/.test(key)) {
     renderClaimHistoryJourney();
+    return;
+  }
+  if (/chat history/.test(key)) {
+    addBotMessage("You can review this conversation above in the current chat thread.");
     return;
   }
   if (/track status|status|clm-43872/.test(key)) {
